@@ -1,0 +1,7 @@
+https://d-mueller.de/blog/facebook-api-tutorial/
+
+https://developers.facebook.com/docs/facebook-login/web
+
+https://knpuniversity.com/screencast/oauth/intro
+
+https://matrix-manuals.squiz.net/oauth2/examples/oauth2-authentication-facebook

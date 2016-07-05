@@ -1,0 +1,6 @@
+{
+    "name": "mike/quiz-server-vs",
+    "require": {
+        "facebook/php-sdk-v4": "^5.2"
+    }
+}

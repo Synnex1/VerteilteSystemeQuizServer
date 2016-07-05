@@ -1,5 +1,5 @@
 {
-    "name": "mike/quiz-server-vs",
+    "name": "mike/web",
     "require": {
         "facebook/php-sdk-v4": "^5.2"
     }

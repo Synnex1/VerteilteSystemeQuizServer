@@ -1,4 +1,4 @@
 /QuizServerVS/nbproject/private/
 /QuizServerVS/build/
-/QuizServerVS/vendor
-/QuizServerVS/composer.lock
+/QuizServerVS/web/vendor
+/QuizServerVS/web/composer.lock

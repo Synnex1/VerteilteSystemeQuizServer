@@ -3,7 +3,8 @@ import java.sql.*;
 public class InsertSql {
     
    // JDBC driver name and database URL
-  // static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+   // Wir haben keinen JDBC Treiber, deswegen auskommentieren
+   // static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
    static final String DB_URL = "jdbc:derby://localhost:1527/QuizServerDB";
 
    //  Database credentials
@@ -15,6 +16,13 @@ public class InsertSql {
    Statement stmt = null;
    
    try{
+<<<<<<< Updated upstream
+=======
+      //STEP 2: Register JDBC driver
+      // Wir haben keinen JDBC Treiber, deswegen auskommentieren
+      // Class.forName("com.mysql.jdbc.Driver");
+
+>>>>>>> Stashed changes
       //STEP 3: Open a connection
       System.out.println("Connecting to a selected database...");
       conn = DriverManager.getConnection(DB_URL, USER, PASS);

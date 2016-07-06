@@ -16,13 +16,10 @@ public class InsertSql {
    Statement stmt = null;
    
    try{
-<<<<<<< Updated upstream
-=======
       //STEP 2: Register JDBC driver
       // Wir haben keinen JDBC Treiber, deswegen auskommentieren
       // Class.forName("com.mysql.jdbc.Driver");
 
->>>>>>> Stashed changes
       //STEP 3: Open a connection
       System.out.println("Connecting to a selected database...");
       conn = DriverManager.getConnection(DB_URL, USER, PASS);

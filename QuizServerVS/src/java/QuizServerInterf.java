@@ -8,6 +8,6 @@
  *
  * @author Mike
  */
-public interface QuizServer {
+public interface QuizServerInterf {
     
 }

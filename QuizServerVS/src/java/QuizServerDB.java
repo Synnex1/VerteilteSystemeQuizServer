@@ -134,12 +134,13 @@ public class QuizServerDB {
         }        
     }
     
+    // Hier anknüpfen
     void updateQuestionWithAnswers(Connection conn, String Question, String Question_Id, String Answer1, String Answer2, String Answer3, String Answer4) {
         try{
             System.out.println("Update Question with Answers...");
             Statement stmt = conn.createStatement();
             String sql = "UPDATE QUESTION " +
-                         "SET name = "+Question+" WHERE Question_Id = "+Question_Id+" ";
+                         "SET question = "+Question+" WHERE Question_Id = "+Question_Id+" ";
             stmt.executeUpdate(sql);
             System.out.println("Updated records in Questions-Table...");
             stmt.close();

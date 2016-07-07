@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Mike
  */
-@WebServlet(urlPatterns = {"/ClientCredentialsServlet"})
-public class ClientCredentialsServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/ClientServlet"})
+public class ClientServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

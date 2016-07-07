@@ -1,4 +1,4 @@
-package Entities;
+package server.entities;
 
 public class Users {
     int user_Id;

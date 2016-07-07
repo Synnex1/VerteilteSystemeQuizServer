@@ -1,4 +1,4 @@
-package Entities;
+package server.entities;
 
 public class Question {
     int question_Id, quiz_Id_f;

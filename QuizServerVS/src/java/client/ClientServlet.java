@@ -72,7 +72,14 @@ public class ClientServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        // Set response content type
+        response.setContentType("text/html");
+
+        // Actual logic goes here.
+        PrintWriter out = response.getWriter();
+        out.println("<h1>Test</h1>");        
+     
     }
 
     /**

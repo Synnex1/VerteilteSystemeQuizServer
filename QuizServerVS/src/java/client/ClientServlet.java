@@ -8,11 +8,19 @@ package client;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import server.QuizServer;
+import server.QuizServerProxy;
 
 /**
  *
@@ -20,7 +28,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(urlPatterns = {"/ClientServlet"})
 public class ClientServlet extends HttpServlet {
-
+    HttpSession session = null;
+    QuizServer qs = null;
+    QuizServerProxy qsp = null;
+    
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -73,12 +86,30 @@ public class ClientServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String infoo;
+        String id;
         String name;
-        infoo = request.getParameter("id");
+        
+        // Erzeuge Session aus Request
+        this.session = request.getSession();
+        
+        // Ziehe Informationen aus dem Request
+        id = request.getParameter("id");
         name = request.getParameter("name");
-        System.out.println("info is: " +infoo);
+        System.out.println("info is: " +id);
         System.out.println("name is: " +name);
+        
+        this.session.setAttribute("id", id);
+        this.session.setAttribute("name", name);
+        
+        try {
+                Registry registry = LocateRegistry.getRegistry();
+                qs = (QuizServer) registry.lookup("QuizServer");
+                //chatsrv = (ChatServer)Naming.lookup("rmi://131.173.110.7/ChatServer");
+                
+                // checkUser im QuizServer implementieren!
+                qsp = qs.checkUser(id, name);
+        } catch (NotBoundException | RemoteException e) { 
+        }
     }
 
     /**

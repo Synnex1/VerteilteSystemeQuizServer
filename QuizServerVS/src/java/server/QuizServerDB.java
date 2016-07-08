@@ -154,16 +154,4 @@ public class QuizServerDB {
         
     } // updateQuestionWithAnswers
     
-   public static void main(String[] args) {
-       
-       QuizServerDB db = new QuizServerDB();
-       
-       Connection conn = db.createConnection(DB_URL, USER, PASS);          
-       db.getAllQuizFromUser(conn, "10");
-       db.closeConnection(conn);
-       
-       
-   } // main
-
-
 } // Class QuizServerDB

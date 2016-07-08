@@ -15,12 +15,13 @@ import java.rmi.server.UnicastRemoteObject;
  * @author Mike
  */
 public class QuizServerImpl implements QuizServer{
-    QuizServerDB qsDB = new QuizServerDB();
     
     public QuizServerImpl() throws RemoteException {
     }
     
     public static void main(String[] args) {
+        CreateTables ct = new CreateTables();
+        ct.createUsers();
         try {
             QuizServerImpl obj = new QuizServerImpl();
             QuizServer stub = (QuizServer) UnicastRemoteObject.exportObject(obj, 0);

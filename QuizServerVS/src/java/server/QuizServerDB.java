@@ -8,27 +8,25 @@ public class QuizServerDB {
     static final String DB_URL = "jdbc:derby://localhost:1527/QuizServerDB";
     static final String USER = "test";
     static final String PASS = "test";
+    String dbName = "TEST";
     
-    Connection createConnection (String DB_URL, String USER, String PASS) {
-        
-        Connection conn = null;
-        // Statement stmt = null;
+    Connection conn = null;
+    
+    QuizServerDB () {      
+
         
         try{
-        
         System.out.println("Connecting to a selected database...");
         conn = DriverManager.getConnection(DB_URL, USER, PASS);
         System.out.println("Connected database successfully...");     
-
+        
         }catch(SQLException se){
            //Handle errors for JDBC
            se.printStackTrace();
         }//end try       
-        return conn;
     }     
     
-    void closeConnection(Connection conn) {
-
+    void closeConnection() {
         try{
             if(conn!=null)
                 conn.close();
@@ -38,7 +36,7 @@ public class QuizServerDB {
         }                  
     }
     
-    void insertIntoUsers(Connection conn, String id, String firstname, String lastname) {
+    void insertIntoUsers(String id, String firstname, String lastname) {
      
         Statement stmt = null;
         
@@ -57,7 +55,7 @@ public class QuizServerDB {
         }
     }
     
-    void insertIntoQuiz(Connection conn, String Quiz_Id, String User_Id_f, String name) {
+    void insertIntoQuiz(String Quiz_Id, String User_Id_f, String name) {
      
         Statement stmt = null;
         
@@ -76,7 +74,7 @@ public class QuizServerDB {
         }              
     }
    
-    void insertIntoQuestion(Connection conn, String Question_Id, String Quiz_Id_f, String question) {
+    void insertIntoQuestion(String Question_Id, String Quiz_Id_f, String question) {
      
         Statement stmt = null;
         
@@ -95,7 +93,7 @@ public class QuizServerDB {
         }              
     }
     
-    void insertIntoAnswer(Connection conn, String Answer_Id, String Question_Id_f, String answer) {
+    void insertIntoAnswer(String Answer_Id, String Question_Id_f, String answer) {
      
         Statement stmt = null;
         
@@ -114,7 +112,7 @@ public class QuizServerDB {
         }              
     }    
     
-    void getAllQuizFromUser(Connection conn, String User_Id) {
+    void getAllQuizFromUser(String User_Id) {
         
         try
         {
@@ -137,7 +135,7 @@ public class QuizServerDB {
     }
     
     // Hier anknüpfen
-    void updateQuestionWithAnswers(Connection conn, String Question, String Question_Id, String Answer1, String Answer2, String Answer3, String Answer4) {
+    void updateQuestionWithAnswers(String Question, String Question_Id, String Answer1, String Answer2, String Answer3, String Answer4) {
         try{
             System.out.println("Update Question with Answers...");
             Statement stmt = conn.createStatement();

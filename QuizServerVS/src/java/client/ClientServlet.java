@@ -40,9 +40,7 @@ import server.entities.Quiz;
 public class ClientServlet extends HttpServlet {
     QuizServer qs = null;
     QuizServerProxy qsp = null;
-    Quiz q = null;
-    
-    
+    Quiz q = null;        
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -80,18 +78,22 @@ public class ClientServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+<<<<<<< Updated upstream
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
+=======
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws RemoteException {
+>>>>>>> Stashed changes
 
-        int i = 0;     
-        ArrayList<Quiz> al = new ArrayList<>();
+        HttpSession session = request.getSession();
+        qsp = (QuizServerProxy)session.getAttribute("qsp");
         
-        Quiz q1 = new Quiz(99, 3, "QuizNummer99");
-        al.add(q1);  
-        Quiz q2 = new Quiz(98, 77, "QuizNoTwo");
-        al.add(q2);
-        Quiz q3 = new Quiz(97, 50, "QuizJep");
-        al.add(q3);        
+        int i = 0;     
+        String id = (String)session.getAttribute("id");
+        
+        System.out.println("qsp: " + (QuizServerProxy)session.getAttribute("qsp") );
+        
+        ArrayList<Quiz> al = qsp.getAllQuizFromUser(id);
         
         Iterator itr = al.iterator();
         JSONObject[] JsonArray = new JSONObject[ al.size() ];        
@@ -108,10 +110,21 @@ public class ClientServlet extends HttpServlet {
                 Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } // foreach
+<<<<<<< Updated upstream
 
         PrintWriter out = response.getWriter();            
         out.println( Arrays.toString(JsonArray));   
     }
+=======
+                    
+        try {
+            PrintWriter out = response.getWriter();
+            out.println( Arrays.toString(JsonArray));             
+        } catch (IOException ex) {
+            Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+        }
+>>>>>>> Stashed changes
 
     /**
      * Handles the HTTP <code>POST</code> method.

@@ -9,8 +9,15 @@ function statusChangeCallback(response) {
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
     testAPI();
+<<<<<<< Updated upstream
     setTimeout(function(){location.href="views/dashboard.html"} , 2000);
     // window.location = "views/dashboard.html";
+=======
+
+    setTimeout(function(){location.href="views/dashboard.html"} , 2000);
+    // window.location = "views/dashboard.html";
+
+>>>>>>> Stashed changes
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
     document.getElementById('status').innerHTML = 'Please log ' +

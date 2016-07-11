@@ -5,10 +5,14 @@
  */
 package server;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+
 /**
  *
  * @author Mike
  */
-public interface QuizServerProxy {
-    
+public interface QuizServerProxy extends Remote{
+    public ArrayList getAllQuizFromUser(String user_Id) throws RemoteException;
 }

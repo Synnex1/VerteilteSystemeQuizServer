@@ -5,10 +5,24 @@
  */
 package server;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+
 /**
  *
  * @author Mike
  */
-public class QuizServerProxyImpl implements QuizServerProxy{
+public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServerProxy{
+    QuizServerDB qsdb;
+    
+    public QuizServerProxyImpl() throws RemoteException {
+        this.qsdb = new QuizServerDB();
+    }
+
+    @Override
+    public ArrayList getAllQuizFromUser(String user_Id) throws RemoteException {
+        return qsdb.getAllQuizFromUser(user_Id);
+    }
     
 }

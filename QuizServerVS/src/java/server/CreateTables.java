@@ -34,20 +34,21 @@ public class CreateTables {
     public void createTables() {
         try{
             Statement stmt = conn.createStatement();
-/*            
+       
             // Drop all Tables
             stmt.executeUpdate(dropAnswer());
             stmt.executeUpdate(dropQuestion());
             stmt.executeUpdate(dropQuiz());
             stmt.executeUpdate(dropUsers());    
-*/ 
+
 
             //Create All Tables
             stmt.executeUpdate(createUsers());
             stmt.executeUpdate(createQuiz());
             stmt.executeUpdate(createQuestion());
             stmt.executeUpdate(createAnswer());
-          
+            
+            conn.close();
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -81,7 +82,7 @@ public class CreateTables {
         String createUsers = 
             "CREATE TABLE " + dbName +
             ".USERS " +
-            "(USERS_ID INTEGER NOT NULL, " +
+            "(USERS_ID BIGINT NOT NULL, " +
             "FIRSTNAME VARCHAR(25) NOT NULL, " +
             "LASTNAME VARCHAR(25) NOT NULL, " +
             "PRIMARY KEY (USERS_ID))";
@@ -94,7 +95,7 @@ public class CreateTables {
                 "CREATE TABLE " + dbName +
                 ".QUIZ " +
                 "(QUIZ_ID INTEGER NOT NULL, " +
-                "USERS_ID_F INTEGER NOT NULL, " +
+                "USERS_ID_F BIGINT NOT NULL, " +
                 "NAME VARCHAR(25) NOT NULL, " +
                 "PRIMARY KEY (QUIZ_ID, USERS_ID_F), " +
                 "FOREIGN KEY (USERS_ID_F) REFERENCES " + dbName +
@@ -109,7 +110,7 @@ public class CreateTables {
                 ".QUESTION " +
                 "(QUESTION_ID INTEGER NOT NULL, " +
                 "QUIZ_ID_F INTEGER NOT NULL, " +
-                "USERS_ID_F INTEGER NOT NULL, " +
+                "USERS_ID_F BIGINT NOT NULL, " +
                 "QUESTION VARCHAR(500) NOT NULL, " +
                 "PRIMARY KEY (QUESTION_ID, QUIZ_ID_F, USERS_ID_F), " +
                 "FOREIGN KEY (QUIZ_ID_F, USERS_ID_F) REFERENCES " + dbName + 
@@ -124,8 +125,9 @@ public class CreateTables {
                 "(ANSWER_ID INTEGER NOT NULL, " +
                 "QUESTION_ID_F INTEGER NOT NULL, " +
                 "QUIZ_ID_F INTEGER NOT NULL, "+
-                "USERS_ID_F INTEGER NOT NULL, " +
+                "USERS_ID_F BIGINT NOT NULL, " +
                 "ANSWER VARCHAR(250) NOT NULL, " +
+                "CORRECT BOOLEAN NOT NULL, " +
                 "PRIMARY KEY (ANSWER_ID, QUESTION_ID_F, QUIZ_ID_F, USERS_ID_F), " +
                 "FOREIGN KEY (QUESTION_ID_F, QUIZ_ID_F, USERS_ID_F) REFERENCES " + dbName + ".QUESTION (QUESTION_ID, QUIZ_ID_F, USERS_ID_F))";  
         return createAnswer;

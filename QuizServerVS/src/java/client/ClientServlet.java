@@ -97,7 +97,7 @@ public class ClientServlet extends HttpServlet {
         String name;
         
         // Erzeuge Session aus Request
-        this.session = request.getSession();
+        //this.session = request.getSession();
         
         // Ziehe Informationen aus dem Request
         id = request.getParameter("id");
@@ -105,8 +105,8 @@ public class ClientServlet extends HttpServlet {
         System.out.println("info is: " +id);
         System.out.println("name is: " +name);
         
-        this.session.setAttribute("id", id);
-        this.session.setAttribute("name", name);
+        //this.session.setAttribute("id", id);
+        //this.session.setAttribute("name", name);
         
         try {
                 Registry registry = LocateRegistry.getRegistry();
@@ -115,6 +115,9 @@ public class ClientServlet extends HttpServlet {
                 
                 // checkUser im QuizServer implementieren!
                 qsp = qs.checkUser(id, name);
+                if(qsp==null) {
+                    System.out.println("YEAH ES HAT GEKLAPPT");
+                }
         } catch (NotBoundException | RemoteException e) { 
         }
     }

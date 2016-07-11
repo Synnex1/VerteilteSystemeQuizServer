@@ -58,7 +58,7 @@ public class QuizServerDB {
     ArrayList getAllQuizFromUser(String User_Id) { 
         try (Statement stmt = conn.createStatement())
         {
-            ResultSet rs = stmt.executeQuery( "SELECT NAME, QUIZ_ID FROM TEST.QUIZ WHERE USER_ID_f = "+User_Id);
+            ResultSet rs = stmt.executeQuery( "SELECT NAME, QUIZ_ID FROM TEST.QUIZ WHERE USERS_ID_f = "+User_Id);
             ArrayList<Quiz> quizList = new ArrayList<>();
             
             while (rs.next()) {

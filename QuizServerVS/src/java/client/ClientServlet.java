@@ -81,7 +81,6 @@ public class ClientServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-<<<<<<< HEAD
             throws ServletException, IOException { 
 
         int i = 0;     
@@ -112,13 +111,6 @@ public class ClientServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();            
         out.println( Arrays.toString(JsonArray));   
-=======
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String id = (String) session.getAttribute("id");
-        System.out.println(id);
-     
->>>>>>> origin/master
     }
 
     /**
@@ -154,8 +146,9 @@ public class ClientServlet extends HttpServlet {
                 
                 // checkUser im QuizServer implementieren!
                 qsp = qs.checkUser(id, name);
-                if(qsp==null) {
+                if(qsp!=null) {
                     System.out.println("YEAH ES HAT GEKLAPPT");
+                    session.setAttribute("qsp", qsp);
                 }
         } catch (NotBoundException | RemoteException e) { 
         }

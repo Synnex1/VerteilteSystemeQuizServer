@@ -37,30 +37,26 @@
                     <p>- Verteilte Systeme -</p>
 
                     <form class="form-inline">
-                            <!-- Über diese drei Elemente müssen wir mit einer Schleife rüber-->
                         <div class="input-group">
-                            <input readonly type="text" class="form-control" size="50" placeholder="Quiz Name">
-                            <button type="button" class="btn btn-danger pull-right RbtnMargin">Starten</button>
-                            <button type="button" class="btn btn-danger pull-right ">Bearbeiten</button>
+                            <div id="quiz">
+                                <script type="text/javascript"> getHttpRequest('../ClientServlet') </script>
+                            </div>
                         <p></p>
                             <!-- Quiz Pin -->                    
                             <input type="tel" maxlength="6" class="form-control" size="50" placeholder="Quiz Pin">
-                            <button type="button" class="btn btn-danger pull-right RbtnMargin">Teilnehmen</button>                          
+                            <button type="button" class="btn btn-danger pull-right RbtnMargin">Teilnehmen</button>
+                            <button type="button" onclick="window.location='createNewQuiz.html'" class="btn btn-danger pull-right RbtnMargin">Eigenes Quiz erstellen</button>
                         </div>
                         <p></p>
                         <div id="timestamp" style="font-family:arial;font-size:10pt;">                            
-                        </div>
-                        <div id="quiz">                        
-                            bla
                         </div>
                     </form>    
             </div>
         </div>
         <script type="text/javascript">
             window.setInterval(function() {
-                getHttpRequest('../ClientServlet');
                 $('timestamp').innerHTML = new Date().toString();
-            }, 5000);
+            }, 10000);
         </script>  
     </body>
 </html>

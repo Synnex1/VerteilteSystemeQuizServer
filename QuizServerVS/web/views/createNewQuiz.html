@@ -1,16 +1,68 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
+<html lang="en">
     <head>
-        <title>Create a new Quiz</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>QuizServer</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../js/fbCheckLogin.js"></script> 
+        <script type="text/javascript" src="../js/createNewQuiz.js"></script>               
+        
+        <style>
+            .jumbotron { 
+                background-color: #f4511e; /* Orange */
+                color: #ffffff;
+                padding: 100px 25px;  
+                height: 100vh;     
+            }
+            input.form-control:read-only { 
+                background-color: white;
+            }
+            input.form-control#q {
+            	background-color: #FFB;
+            }
+            input.form-control#qn {
+            	background-color: #cdecf9;
+            	text-align: center;
+            }            
+            input.form-control#x {
+            	display: invisible;
+            }
+            .RbtnMargin { margin-left: 3px; }
+        </style>
     </head>
     <body>
-        <div>TODO write content</div>
+        <div class="jumbotron text-center">
+            <div class="row">
+                <h1>Quiz Erstellen</h1> 
+                <p>- Verteilte Systeme -</p>  
+
+                <form id="myForm2" action="javascript:postHttpRequest();" method="POST" class="form-inline">
+                	<input type="text" class="form-control" size="50" placeholder="Quizname" name="quizname" id="qn" /> <br><br>
+                </form>
+
+            	<form id="myForm" action="javascript:postHttpRequest();" method="POST" class="form-inline">
+            		<div id="q1">
+                		<input type="text" class="form-control" size="50" placeholder="Frage" name="question_1" id="q" /> <br>  	               	
+                        <input type="text" class="form-control" size="50" placeholder="Antwort1 hier eintragen" name="answer_1_1"/> 
+                		<input type="checkbox" name="chk1_1" /> <br>                            
+                        <input type="text" class="form-control" size="50" placeholder="Antwort2 hier eintragen" name="answer_1_2"/>
+                        <input type="checkbox" name="chk1_2" /> <br>                           
+                        <input type="text" class="form-control" size="50" placeholder="Antwort3 hier eintragen" name="answer_1_3"/>
+                        <input type="checkbox" name="chk1_3" /> <br>
+                        <input type="text" class="form-control" size="50" placeholder="Antwort4 hier eintragen" name="answer_1_4"/>
+                        <input type="checkbox" name="chk1_4" /> <br>
+                        <p></p>                          
+                    </div>
+                    <div id="button">
+                        <button type="button" class="btn btn-danger pull-right RbtnMargin" onclick="nextQuestin()">Weitere Frage...</button>
+                        <button type="submit" class="btn btn-danger pull-right RbtnMargin" >Quiz speichern</button>
+                    </div>
+                </form>   
+            </div>
+        </div> 
     </body>
 </html>

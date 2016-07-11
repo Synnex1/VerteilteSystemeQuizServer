@@ -9,6 +9,6 @@ package server;
  *
  * @author Mike
  */
-public interface QuizServerProxy {
+public interface QuizServerProxy {    
     
 }

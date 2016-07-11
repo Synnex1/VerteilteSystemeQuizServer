@@ -8,19 +8,29 @@ package client;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import server.QuizServer;
 import server.QuizServerProxy;
+import server.entities.Quiz;
 
 /**
  *
@@ -31,6 +41,7 @@ public class ClientServlet extends HttpServlet {
     HttpSession session = null;
     QuizServer qs = null;
     QuizServerProxy qsp = null;
+    Quiz q = null;
     
     
     
@@ -71,15 +82,36 @@ public class ClientServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException { 
 
-        // Set response content type
-        response.setContentType("text/html");
+        int i = 0;     
+        ArrayList<Quiz> al = new ArrayList<>();
+        
+        Quiz q1 = new Quiz(99, 3, "QuizNummer99");
+        al.add(q1);  
+        Quiz q2 = new Quiz(98, 77, "QuizNoTwo");
+        al.add(q2);
+        Quiz q3 = new Quiz(97, 50, "QuizJep");
+        al.add(q3);        
+        
+        Iterator itr = al.iterator();
+        JSONObject[] JsonArray = new JSONObject[ al.size() ];        
+        
+        while( itr.hasNext() ){              
+            try {                
+                Quiz element = (Quiz) itr.next();                
+                JSONObject obj = new JSONObject();            
+                obj.put("quiz_Id", element.getQuiz_Id() );                
+                obj.put("quiz_Id_f", element.getUsers_Id_f() );                
+                obj.put("name", element.getName() );               
+                JsonArray[i++] = obj;                
+            } catch (JSONException ex) {
+                Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } // foreach
 
-        // Actual logic goes here.
-        PrintWriter out = response.getWriter();
-        out.println("<h1>Test</h1>");        
-     
+        PrintWriter out = response.getWriter();            
+        out.println( Arrays.toString(JsonArray));   
     }
 
     /**

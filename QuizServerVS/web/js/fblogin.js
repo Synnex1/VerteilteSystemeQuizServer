@@ -9,7 +9,8 @@ function statusChangeCallback(response) {
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
     testAPI();
-    window.location = "views/dashboard.html";
+    setTimeout(function(){location.href="views/dashboard.html"} , 2000);
+    // window.location = "views/dashboard.html";
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
     document.getElementById('status').innerHTML = 'Please log ' +
@@ -95,6 +96,7 @@ function postHttpRequest(url, cc) {
             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
         // Die open-Funktion Paramterbedeutung ("Get" oder "Post", url = Server-Datei, async: true (asynchronous) or false (synchronous))
+
         xmlhttp.open("POST", url+"?name="+name+"&id="+id, true);
         xmlhttp.send(null);
 }

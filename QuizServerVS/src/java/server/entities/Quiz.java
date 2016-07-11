@@ -9,6 +9,11 @@ public class Quiz {
         this.users_Id_f = users_Id_f;
         this.name = name;
     }
+    
+    public Quiz(int quiz_Id, String name) {
+        this.quiz_Id = quiz_Id;
+        this.name = name;
+    }
 
     public int getQuiz_Id() {
         return quiz_Id;

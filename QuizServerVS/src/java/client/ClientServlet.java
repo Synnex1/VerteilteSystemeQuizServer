@@ -38,7 +38,6 @@ import server.entities.Quiz;
  */
 @WebServlet(urlPatterns = {"/ClientServlet"})
 public class ClientServlet extends HttpServlet {
-    HttpSession session = null;
     QuizServer qs = null;
     QuizServerProxy qsp = null;
     Quiz q = null;
@@ -82,6 +81,7 @@ public class ClientServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+<<<<<<< HEAD
             throws ServletException, IOException { 
 
         int i = 0;     
@@ -112,6 +112,13 @@ public class ClientServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();            
         out.println( Arrays.toString(JsonArray));   
+=======
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String id = (String) session.getAttribute("id");
+        System.out.println(id);
+     
+>>>>>>> origin/master
     }
 
     /**
@@ -127,9 +134,9 @@ public class ClientServlet extends HttpServlet {
             throws ServletException, IOException {
         String id;
         String name;
-        
+        HttpSession session;
         // Erzeuge Session aus Request
-        this.session = request.getSession();
+        session = request.getSession();
         
         // Ziehe Informationen aus dem Request
         id = request.getParameter("id");
@@ -137,8 +144,8 @@ public class ClientServlet extends HttpServlet {
         System.out.println("info is: " +id);
         System.out.println("name is: " +name);
         
-        this.session.setAttribute("id", id);
-        this.session.setAttribute("name", name);
+        session.setAttribute("id", id);
+        session.setAttribute("name", name);
         
         try {
                 Registry registry = LocateRegistry.getRegistry();
@@ -147,6 +154,9 @@ public class ClientServlet extends HttpServlet {
                 
                 // checkUser im QuizServer implementieren!
                 qsp = qs.checkUser(id, name);
+                if(qsp==null) {
+                    System.out.println("YEAH ES HAT GEKLAPPT");
+                }
         } catch (NotBoundException | RemoteException e) { 
         }
     }

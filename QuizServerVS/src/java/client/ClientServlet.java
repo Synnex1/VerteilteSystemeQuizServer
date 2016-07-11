@@ -78,12 +78,8 @@ public class ClientServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-<<<<<<< Updated upstream
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
-=======
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws RemoteException {
->>>>>>> Stashed changes
 
         HttpSession session = request.getSession();
         qsp = (QuizServerProxy)session.getAttribute("qsp");
@@ -109,13 +105,7 @@ public class ClientServlet extends HttpServlet {
             } catch (JSONException ex) {
                 Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } // foreach
-<<<<<<< Updated upstream
-
-        PrintWriter out = response.getWriter();            
-        out.println( Arrays.toString(JsonArray));   
-    }
-=======
+        } // foreach  
                     
         try {
             PrintWriter out = response.getWriter();
@@ -124,7 +114,6 @@ public class ClientServlet extends HttpServlet {
             Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
         }  
         }
->>>>>>> Stashed changes
 
     /**
      * Handles the HTTP <code>POST</code> method.

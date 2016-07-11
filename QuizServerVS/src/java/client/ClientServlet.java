@@ -82,38 +82,67 @@ public class ClientServlet extends HttpServlet {
             throws ServletException, IOException { 
 
         HttpSession session = request.getSession();
-        qsp = (QuizServerProxy)session.getAttribute("qsp");
+        if ( (QuizServerProxy)session.getAttribute("qsp") != null ) {
+            qsp = (QuizServerProxy)session.getAttribute("qsp");        
+        }  else {
+            qsp = null;
+        }
+        
+        System.out.println("qsp: " + qsp);
         
         int i = 0;     
-        String id = (String)session.getAttribute("id");
-        
-        System.out.println("qsp: " + (QuizServerProxy)session.getAttribute("qsp") );
-        
-        ArrayList<Quiz> al = qsp.getAllQuizFromUser(id);
-        
-        Iterator itr = al.iterator();
-        JSONObject[] JsonArray = new JSONObject[ al.size() ];        
-        
-        while( itr.hasNext() ){              
-            try {                
-                Quiz element = (Quiz) itr.next();                
-                JSONObject obj = new JSONObject();            
-                obj.put("quiz_Id", element.getQuiz_Id() );                
-                obj.put("quiz_Id_f", element.getUsers_Id_f() );                
-                obj.put("name", element.getName() );               
-                JsonArray[i++] = obj;                
-            } catch (JSONException ex) {
-                Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+        String id = (String)session.getAttribute("id");        
+                
+        if ( qsp != null ) { 
+            System.out.println("ID: " + id);            
+            System.out.println("Im if");
+            
+            ArrayList<Quiz> al = new ArrayList<Quiz>();
+            try {
+                ArrayList<Quiz> b = new ArrayList<Quiz>(qsp.getAllQuizFromUser(id));            
+            } catch(Exception se) {
+                System.err.println("message: ->" + se.getMessage() );                        
             }
-        } // foreach  
-                    
-        try {
-            PrintWriter out = response.getWriter();
-            out.println( Arrays.toString(JsonArray));             
-        } catch (IOException ex) {
-            Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }  
-        }
+            
+            System.out.println("get: " + al);
+
+            for (int j = 0; j < al.size(); j++) {System.out.println(al.get(j));}
+
+            Iterator itr = al.iterator();
+            JSONObject[] JsonArray = new JSONObject[ al.size() ];        
+
+            while( itr.hasNext() ){              
+                try {                
+                    Quiz element = (Quiz) itr.next();                
+                    JSONObject obj = new JSONObject();            
+                    obj.put("quiz_Id", element.getQuiz_Id() );                
+                    obj.put("quiz_Id_f", element.getUsers_Id_f() );                
+                    obj.put("name", element.getName() );               
+                    JsonArray[i++] = obj;                
+                } catch (JSONException ex) {
+                    Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    System.err.println(ex.getMessage());
+                }
+            } // foreach  
+
+            try {
+                PrintWriter out = response.getWriter();
+                out.print( Arrays.toString(JsonArray));             
+            } catch (IOException ex) {
+                Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+                System.err.println(ex.getMessage());
+            }  
+        } else {
+            try {
+                PrintWriter out = response.getWriter();
+                response.setContentType("text/html");
+                out.print("Noch kein Quiz erstellt!");             
+            } catch (IOException ex) {
+                Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+                System.err.println(ex.getMessage());
+            }                        
+        }            
+} // doGet
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -141,18 +170,26 @@ public class ClientServlet extends HttpServlet {
         session.setAttribute("id", id);
         session.setAttribute("name", name);
         
-        try {
-                Registry registry = LocateRegistry.getRegistry();
+        try {                   
+                Registry registry = LocateRegistry.getRegistry();                
                 qs = (QuizServer) registry.lookup("QuizServer");
-                //chatsrv = (ChatServer)Naming.lookup("rmi://131.173.110.7/ChatServer");
+                System.out.println("qs: " + qs);
+                //chatsrv = (ChatServer)Naming.lookup("rmi://131.173.110.7/ChatServer");               
                 
                 // checkUser im QuizServer implementieren!
                 qsp = qs.checkUser(id, name);
+                System.out.println("checkUser()");
                 if(qsp!=null) {
                     System.out.println("YEAH ES HAT GEKLAPPT");
                     session.setAttribute("qsp", qsp);
+                } else {
+                    System.out.println("MIKE IST EIN NOOB");
                 }
         } catch (NotBoundException | RemoteException e) { 
+            System.out.println("Ich bin im catch");
+            e.printStackTrace();
+            e.getCause();
+            e.getMessage();
         }
     }
 

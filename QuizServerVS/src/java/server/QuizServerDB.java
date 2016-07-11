@@ -55,15 +55,16 @@ public class QuizServerDB {
         return true;
     }
     
-    ArrayList getAllQuizFromUser(String User_Id) { 
+    ArrayList<Quiz> getAllQuizFromUser(String User_Id) { 
         try (Statement stmt = conn.createStatement())
         {
-            ResultSet rs = stmt.executeQuery( "SELECT NAME, QUIZ_ID FROM TEST.QUIZ WHERE USER_ID_f = "+User_Id);
-            ArrayList<Quiz> quizList = new ArrayList<>();
+            ResultSet rs = stmt.executeQuery( "SELECT NAME, QUIZ_ID FROM TEST.QUIZ WHERE USERS_ID_f = "+User_Id);
+            ArrayList<Quiz> quizList = new ArrayList<Quiz>();
             
             while (rs.next()) {
                 Quiz quiz = new Quiz(rs.getInt("QUIZ_ID"), rs.getString("NAME"));
                 quizList.add(quiz);
+                System.out.println("get: "+ quizList.get(0).getName() );
             }
             return quizList;
         }

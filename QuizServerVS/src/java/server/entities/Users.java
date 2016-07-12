@@ -1,10 +1,13 @@
 package server.entities;
 
-public class Users {
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class Users extends UnicastRemoteObject{
     int user_Id;
     String vorname, nachname;
 
-    public Users(int user_id, String Vorname, String Nachname) {
+    public Users(int user_id, String Vorname, String Nachname) throws RemoteException {
         this.user_Id = user_id;
         this.vorname = Vorname;
         this.nachname = Nachname;

@@ -1,11 +1,14 @@
 package server.entities;
 
-public class Question {
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class Question extends UnicastRemoteObject{
     int question_Id, quiz_Id_f;
     String question;
     Boolean trueOrFalse;
 
-    public Question(int question_Id, int quiz_Id_f, String question, Boolean trueOrFalse) {
+    public Question(int question_Id, int quiz_Id_f, String question, Boolean trueOrFalse) throws RemoteException {
         this.question_Id = question_Id;
         this.quiz_Id_f = quiz_Id_f;
         this.question = question;

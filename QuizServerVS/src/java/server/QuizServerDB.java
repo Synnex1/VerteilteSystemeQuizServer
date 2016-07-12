@@ -21,9 +21,10 @@ public class QuizServerDB {
             System.out.println("Connecting to a selected database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             System.out.println("Connected database successfully...");   
-        }catch(SQLException se){
+        }catch(SQLException e){
            //Handle errors for JDBC
-           se.printStackTrace();
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
         }//end try       
     }
     
@@ -75,7 +76,6 @@ public class QuizServerDB {
         }
     }
     
-    // Hier anknüpfen
     void updateQuestionWithAnswers(String Question, String Question_Id, String Answer1, String Answer2, String Answer3, String Answer4) {
         try{
             System.out.println("Update Question with Answers...");
@@ -92,5 +92,29 @@ public class QuizServerDB {
 
         
     } // updateQuestionWithAnswers
+    
+    void insertQuestion(String users_id, String quiz_id, String quest_id, String quest_name, String answer1, Boolean cor1, String answer2, Boolean cor2, String answer3, Boolean cor3, String answer4, Boolean cor4) {
+        try(Statement stmt = conn.createStatement()) {
+            String question = "INSERT INTO " + dbName + ".QUESTION " +
+                    "VALUES (" + quest_id + ", " + quiz_id + ", " + users_id + ", '" + quest_name + "')";
+            String a1 = "INSERT INTO " +dbName + ".ANSWER " +
+                    "VALUES (1, " + quest_id + ", " + quiz_id + ", " + users_id + ", '" + answer1 + "', " + cor1 + ")";
+            String a2 = "INSERT INTO " +dbName + ".ANSWER " +
+                    "VALUES (2, " + quest_id + ", " + quiz_id + ", " + users_id + ", '" + answer2 + "', " + cor2 + ")";
+            String a3 = "INSERT INTO " +dbName + ".ANSWER " +
+                    "VALUES (3, " + quest_id + ", " + quiz_id + ", " + users_id + ", '" + answer3 + "', " + cor3 + ")";
+            String a4 = "INSERT INTO " +dbName + ".ANSWER " +
+                    "VALUES (4, " + quest_id + ", " + quiz_id + ", " + users_id + ", '" + answer4 + "', " + cor4 + ")";
+            
+            stmt.executeUpdate(a1);
+            stmt.executeUpdate(a2);
+            stmt.executeUpdate(a3);
+            stmt.executeUpdate(a4);            
+        } catch (SQLException e) {
+            System.err.println("We got an exception!");
+            System.err.println(e.getMessage());
+        }
+            
+    }
     
 } // Class QuizServerDB

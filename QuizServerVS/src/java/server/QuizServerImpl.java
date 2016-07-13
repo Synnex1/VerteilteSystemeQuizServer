@@ -25,6 +25,7 @@ public class QuizServerImpl implements QuizServer{
     public static void main(String[] args) {
         //CreateTables ct = new CreateTables();
         //ct.createTables();
+        
         try {
             QuizServerImpl obj = new QuizServerImpl();
             QuizServer stub = (QuizServer) UnicastRemoteObject.exportObject(obj, 0);

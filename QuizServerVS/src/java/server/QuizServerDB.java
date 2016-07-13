@@ -1,6 +1,9 @@
 package server;
 
+import java.io.StringReader;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.*;
 
 public class QuizServerDB {
@@ -79,6 +82,28 @@ public class QuizServerDB {
             return null;
         }
     }
+    
+    void createQuiz(String jsonString) {
+        // Credentials
+        String usersId;
+        String quizName;              
+        
+        try (Statement stmt = conn.createStatement()) {
+            JsonObject jsObj = Json.createReader(new StringReader(jsonString)).readObject();
+            usersId = jsObj.getString("users_id");
+            quizName = jsObj.getString("quiz_name");
+            
+            String sql = "INSERT INTO " + dbName + ".QUIZ " +
+                    "Values (" + usersId + "'quizName')";
+            
+            
+        } catch (SQLException e) {
+            System.err.println("Got an exception");
+            System.err.println(e.getMessage());
+        }
+    }
+    
+    
     
     void updateQuestionWithAnswers(String Question, String Question_Id, String Answer1, String Answer2, String Answer3, String Answer4) {
         try{

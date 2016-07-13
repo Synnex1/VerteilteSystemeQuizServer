@@ -94,7 +94,7 @@ public class CreateTables {
         String createQuiz =
                 "CREATE TABLE " + dbName +
                 ".QUIZ " +
-                "(QUIZ_ID INTEGER NOT NULL, " +
+                "(QUIZ_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), " +
                 "USERS_ID_F BIGINT NOT NULL, " +
                 "NAME VARCHAR(25) NOT NULL, " +
                 "PRIMARY KEY (QUIZ_ID, USERS_ID_F), " +
@@ -108,7 +108,7 @@ public class CreateTables {
         String createQuestion = 
                 "CREATE TABLE " + dbName +
                 ".QUESTION " +
-                "(QUESTION_ID INTEGER NOT NULL, " +
+                "(QUESTION_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), " +
                 "QUIZ_ID_F INTEGER NOT NULL, " +
                 "USERS_ID_F BIGINT NOT NULL, " +
                 "QUESTION VARCHAR(500) NOT NULL, " +
@@ -122,7 +122,7 @@ public class CreateTables {
         String createAnswer = 
                 "CREATE TABLE " + dbName +
                 ".ANSWER " +
-                "(ANSWER_ID INTEGER NOT NULL, " +
+                "(ANSWER_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), " +
                 "QUESTION_ID_F INTEGER NOT NULL, " +
                 "QUIZ_ID_F INTEGER NOT NULL, "+
                 "USERS_ID_F BIGINT NOT NULL, " +

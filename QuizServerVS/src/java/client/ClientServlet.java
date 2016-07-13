@@ -81,28 +81,20 @@ public class ClientServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
 
+        int i = 0; 
         HttpSession session = request.getSession();
         if ( (QuizServerProxy)session.getAttribute("qsp") != null ) {
-            qsp = (QuizServerProxy)session.getAttribute("qsp");        
+            qsp = (QuizServerProxy)session.getAttribute("qsp"); 
         }  else {
             qsp = null;
-        }
-        
-        System.out.println("qsp: " + qsp);
-        
-        int i = 0;     
+        }        
+        System.out.println("qsp: " + qsp);            
         String id = (String)session.getAttribute("id");        
                 
         if ( qsp != null ) { 
             System.out.println("ID: " + id);            
-            System.out.println("Im if");
             
-            ArrayList<Quiz> al = new ArrayList<Quiz>();
-            try {
-                ArrayList<Quiz> b = new ArrayList<Quiz>(qsp.getAllQuizFromUser(id));            
-            } catch(Exception se) {
-                System.err.println("message: ->" + se.getMessage() );                        
-            }
+            ArrayList<Quiz> al = qsp.getAllQuizFromUser(id); 
             
             System.out.println("get: " + al);
 
@@ -140,7 +132,7 @@ public class ClientServlet extends HttpServlet {
             } catch (IOException ex) {
                 Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
                 System.err.println(ex.getMessage());
-            }                        
+            } 
         }            
 } // doGet
 

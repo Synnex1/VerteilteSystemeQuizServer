@@ -4,16 +4,16 @@ function $(id) {
 var question_counter = 1;
 
 function questionHtml(question_counter) {
-    var html =  " <input type=\"text\" class=\"form-control\" size=\"50\" placeholder=\"Frage\" name=\"question_"+question_counter+"\" id=\"q\" /> " +
-               " <input type=\"checkbox\" class=\"form-control\" name=\"chk0\" id=\"x\" /> <br> " +
-               " <input type=\"text\" class=\"form-control\" size=\"50\" placeholder=\"Antwort1 hier eintragen\" name=\"answer_"+question_counter+"_1\"/> " +
-               " <input type=\"checkbox\" name=\"chk"+question_counter+"_1\" /> <br> " +                          
-               " <input type=\"text\" class=\"form-control\" size=\"50\" placeholder=\"Antwort2 hier eintragen\" name=\"answer_"+question_counter+"_2\"/> " +
-               " <input type=\"checkbox\" name=\"chk"+question_counter+"_2\" /> <br> " +                           
-               " <input type=\"text\" class=\"form-control\" size=\"50\" placeholder=\"Antwort3 hier eintragen\" name=\"answer_"+question_counter+"_3\"/> " +
-               " <input type=\"checkbox\" name=\"chk"+question_counter+"_3\" /> <br> " +
-               " <input type=\"text\" class=\"form-control\" size=\"50\" placeholder=\"Antwort4 hier eintragen\" name=\"answer_"+question_counter+"_4\"/> " +
-               " <input type=\"checkbox\" name=\"chk"+question_counter+"_4\" /> <p></p> ";
+    var html =  " <input type=\"text\" class=\"form-control\" size=\"50\" placeholder=\"Frage\" name=\"question_"+question_counter+"\" id=\"q\" /> <br>" +
+                " <input type=\"text\" class=\"form-control\" size=\"50\" placeholder=\"Antwort 1 hier eintragen\" name=\"answer_"+question_counter+"_1\"/> " +
+                " <input type=\"checkbox\" name=\"chk"+question_counter+"_1\" /> <br> " +                          
+                " <input type=\"text\" class=\"form-control\" size=\"50\" placeholder=\"Antwort 2 hier eintragen\" name=\"answer_"+question_counter+"_2\"/> " +
+                " <input type=\"checkbox\" name=\"chk"+question_counter+"_2\" /> <br> " +                           
+                " <input type=\"text\" class=\"form-control\" size=\"50\" placeholder=\"Antwort 3 hier eintragen\" name=\"answer_"+question_counter+"_3\"/> " +
+                " <input type=\"checkbox\" name=\"chk"+question_counter+"_3\" /> <br> " +
+                " <input type=\"text\" class=\"form-control\" size=\"50\" placeholder=\"Antwort 4 hier eintragen\" name=\"answer_"+question_counter+"_4\"/> " +
+                " <input type=\"checkbox\" name=\"chk"+question_counter+"_4\" /> <br>" +
+                " <p></p> ";
 
     return html;
 }
@@ -27,9 +27,8 @@ function nextQuestin() {
 
     var divs = document.getElementsByClassName('jumbotron');
     for(var i=0; i < divs.length; i++) { 
-      divs[i].style.height = '100%';
-    }    
-
+      divs[i].style.height = "100%";
+    }   
 }
 
 function createJSON(question_counter) {

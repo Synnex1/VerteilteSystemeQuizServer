@@ -1,6 +1,10 @@
 package server;
 
+<<<<<<< Updated upstream
 import java.math.BigDecimal;
+=======
+import java.rmi.RemoteException;
+>>>>>>> Stashed changes
 import java.sql.*;
 import java.util.ArrayList;
 import server.entities.Quiz;
@@ -58,7 +62,11 @@ public class QuizServerDB {
         return true;
     }
     
+<<<<<<< Updated upstream
     String getAllQuizFromUser(String User_Id) { 
+=======
+    ArrayList<Quiz> getAllQuizFromUser(String User_Id) throws RemoteException { 
+>>>>>>> Stashed changes
         try (Statement stmt = conn.createStatement())
         {
             ResultSet rs = stmt.executeQuery( "SELECT NAME, QUIZ_ID FROM TEST.QUIZ WHERE USERS_ID_f = "+User_Id);

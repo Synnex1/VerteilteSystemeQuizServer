@@ -13,20 +13,26 @@
         
         <style>
             .jumbotron { 
-                background-color: #f4511e; /* Orange */
-                color: #ffffff;
-                padding: 100px 25px;  
-                height: 100vh;     
+			    background-color: #f4511e;
+			    color: #fff;
+			    padding: 100px 25px; 
+                padding-bottom: 20px;    
             }
+			.container-fluid {
+			    padding: 60px 50px;
+			}            
             input.form-control:read-only { 
                 background-color: white;
             }
             input.form-control#q {
             	background-color: #FFB;
+            	margin-left: -16px;
             }
             input.form-control#qn {
             	background-color: #cdecf9;
             	text-align: center;
+            	height: 60px;
+            	font-size: 30px;
             }            
             input.form-control#x {
             	display: invisible;
@@ -47,13 +53,13 @@
             	<form id="myForm" action="javascript:postHttpRequest();" method="POST" class="form-inline">
             		<div id="q1">
                 		<input type="text" class="form-control" size="50" placeholder="Frage" name="question_1" id="q" /> <br>  	               	
-                        <input type="text" class="form-control" size="50" placeholder="Antwort1 hier eintragen" name="answer_1_1"/> 
+                        <input type="text" class="form-control" size="50" placeholder="Antwort 1 hier eintragen" name="answer_1_1"/> 
                 		<input type="checkbox" name="chk1_1" /> <br>                            
-                        <input type="text" class="form-control" size="50" placeholder="Antwort2 hier eintragen" name="answer_1_2"/>
+                        <input type="text" class="form-control" size="50" placeholder="Antwort 2 hier eintragen" name="answer_1_2"/>
                         <input type="checkbox" name="chk1_2" /> <br>                           
-                        <input type="text" class="form-control" size="50" placeholder="Antwort3 hier eintragen" name="answer_1_3"/>
+                        <input type="text" class="form-control" size="50" placeholder="Antwort 3 hier eintragen" name="answer_1_3"/>
                         <input type="checkbox" name="chk1_3" /> <br>
-                        <input type="text" class="form-control" size="50" placeholder="Antwort4 hier eintragen" name="answer_1_4"/>
+                        <input type="text" class="form-control" size="50" placeholder="Antwort 4 hier eintragen" name="answer_1_4"/>
                         <input type="checkbox" name="chk1_4" /> <br>
                         <p></p>                          
                     </div>
@@ -64,5 +70,13 @@
                 </form>   
             </div>
         </div> 
+
+		<div class="container-fluid">
+		  <h2>Über den Quiz Server</h2>
+		  <h4>Lorem ipsum..</h4> 
+		  <p>Lorem ipsum..</p>
+		  <button class="btn btn-default btn-lg">Get in Touch</button>
+		</div>
+
     </body>
 </html>

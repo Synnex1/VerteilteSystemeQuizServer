@@ -25,9 +25,9 @@ public class CreateTables {
             System.out.println("Connecting to a selected database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             System.out.println("Connected database successfully...");
-        }catch(SQLException se){
-           //Handle errors for JDBC
-           se.printStackTrace();
+        }catch(SQLException e){
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
         }//end try            
     }
     
@@ -50,7 +50,8 @@ public class CreateTables {
             
             conn.close();
         } catch (SQLException e){
-            e.printStackTrace();
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
         }
     }
     
@@ -122,7 +123,7 @@ public class CreateTables {
         String createAnswer = 
                 "CREATE TABLE " + dbName +
                 ".ANSWER " +
-                "(ANSWER_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), " +
+                "(ANSWER_ID INTEGER NOT NULL, " +
                 "QUESTION_ID_F INTEGER NOT NULL, " +
                 "QUIZ_ID_F INTEGER NOT NULL, "+
                 "USERS_ID_F BIGINT NOT NULL, " +

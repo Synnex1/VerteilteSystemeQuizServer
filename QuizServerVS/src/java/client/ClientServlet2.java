@@ -60,9 +60,7 @@ public class ClientServlet2 extends HttpServlet {
         } else if (param.equals( request.getParameter("js") )) {   
             
             System.out.println("param: " + param);
-            
-            JsonObject jsObjQuiz = Json.createReader(new StringReader(param)).readObject();                        
-            
+            qsp.createQuiz(param, id);            
         }
     }
 

@@ -87,39 +87,17 @@ public class ClientServlet extends HttpServlet {
             qsp = (QuizServerProxy)session.getAttribute("qsp"); 
         }  else {
             qsp = null;
-        }        
-        System.out.println("qsp: " + qsp);            
+        }                    
         String id = (String)session.getAttribute("id");        
                 
         if ( qsp != null ) { 
-            System.out.println("ID: " + id);            
-            
-            ArrayList<Quiz> al = qsp.getAllQuizFromUser(id); 
-            
-            System.out.println("get: " + al);
-
-            for (int j = 0; j < al.size(); j++) {System.out.println(al.get(j));}
-
-            Iterator itr = al.iterator();
-            JSONObject[] JsonArray = new JSONObject[ al.size() ];        
-
-            while( itr.hasNext() ){              
-                try {                
-                    Quiz element = (Quiz) itr.next();                
-                    JSONObject obj = new JSONObject();            
-                    obj.put("quiz_Id", element.getQuiz_Id() );                
-                    obj.put("quiz_Id_f", element.getUsers_Id_f() );                
-                    obj.put("name", element.getName() );               
-                    JsonArray[i++] = obj;                
-                } catch (JSONException ex) {
-                    Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    System.err.println(ex.getMessage());
-                }
-            } // foreach  
+                       
+            String al = qsp.getAllQuizFromUser(id);             
+            System.out.println("jsonString: " + al);        
 
             try {
                 PrintWriter out = response.getWriter();
-                out.print( Arrays.toString(JsonArray));             
+                out.print( al );             
             } catch (IOException ex) {
                 Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
                 System.err.println(ex.getMessage());

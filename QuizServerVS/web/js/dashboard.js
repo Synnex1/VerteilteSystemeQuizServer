@@ -19,12 +19,9 @@ function getHttpRequest(url) {
         }
         if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 
-            var x = xmlhttp.responseText;
-            var y = "Noch kein Quiz erstellt!";
+            if (xmlhttp.responseText != "[]") {
 
-            if (x != y) {
-
-                console.log( x + " , " + y );
+                console.log("Response: " + xmlhttp.responseText);
             
                 var jsonString = xmlhttp.responseText; 
                 var jsObject = JSON.parse( jsonString );            

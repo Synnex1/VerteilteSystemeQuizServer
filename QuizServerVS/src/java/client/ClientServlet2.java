@@ -6,7 +6,11 @@
 package client;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,12 +37,11 @@ public class ClientServlet2 extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        QuizServerProxy qsp = null;
-        
+               
         HttpSession session = request.getSession();
-        if ( (QuizServerProxy)session.getAttribute("qsp") != null ) {
-            qsp = (QuizServerProxy)session.getAttribute("qsp"); 
+        QuizServerProxy qsp = (QuizServerProxy) session.getAttribute("qsp");
+        
+        if ( qsp != null ) {
             System.out.println("if");
         }  else {
             qsp = null;
@@ -47,7 +50,6 @@ public class ClientServlet2 extends HttpServlet {
         String id = (String)session.getAttribute("id");                       
         
         String param = request.getParameter("js"); 
-        String qname = request.getParameter("quizname"); 
         
         if (param == null) {
             System.out.println("param == null");
@@ -58,14 +60,9 @@ public class ClientServlet2 extends HttpServlet {
         } else if (param.equals( request.getParameter("js") )) {   
             
             System.out.println("param: " + param);
-            System.out.println("qname: " + qname);
             
-                ArrayList<String> array = new ArrayList<String>();
-
-                for(int index = 0; index < 10; index++) {
-                    
-                    System.out.println("str " + index + ": " );
-                }
+            JsonObject jsObjQuiz = Json.createReader(new StringReader(param)).readObject();                        
+            
         }
     }
 

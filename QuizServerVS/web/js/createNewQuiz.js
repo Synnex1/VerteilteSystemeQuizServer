@@ -1,6 +1,7 @@
 function $(id) {
     return document.getElementById(id);
 }
+
 var question_counter = 1;
 
 function questionHtml(question_counter) {
@@ -28,43 +29,38 @@ function nextQuestin() {
     var divs = document.getElementsByClassName('jumbotron');
     for(var i=0; i < divs.length; i++) { 
       divs[i].style.height = "100%";
-    }   
+    }
 }
 
 function createJSON(question_counter) {
 
-    var json = '[';
-    var i = 0;
+  var quizname = document.getElementById("myForm2").elements[0].value;
 
-    for (;i < question_counter;i++) {   
+    var json = "{ \"quiz_name\": \""+quizname+"\", \"questions\": [ ";
+
+    for (var i = 0;i < question_counter;i++) {   
 
         json +=      '{  "question":"'+document.getElementById("myForm").elements[0+(10*i)].value+'", ' +
-                       ' "answer1":"'+document.getElementById("myForm").elements[2+(10*i)].value+'" , ' +
-                       ' "answer1_correct":"'+document.getElementById("myForm").elements[3+(10*i)].checked+'" , ' +
-                       ' "answer2":"'+document.getElementById("myForm").elements[4+(10*i)].value+'" , ' +
-                       ' "answer2_correct":"'+document.getElementById("myForm").elements[5+(10*i)].checked+'" , ' +
-                       ' "answer3":"'+document.getElementById("myForm").elements[6+(10*i)].value+'" , ' +
-                       ' "answer3_correct":"'+document.getElementById("myForm").elements[7+(10*i)].checked+'" , ' +
-                       ' "answer4":"'+document.getElementById("myForm").elements[8+(10*i)].value+'" , ';
+                       ' "answers": [ {' +
+                       ' "answer":"'+document.getElementById("myForm").elements[1+(10*i)].value+'" , ' +
+                       ' "correct":"'+document.getElementById("myForm").elements[2+(10*i)].checked+'" }, ' +
+                       ' {"answer":"'+document.getElementById("myForm").elements[3+(10*i)].value+'" , ' +
+                       ' "correct":"'+document.getElementById("myForm").elements[4+(10*i)].checked+'" }, ' +
+                       ' {"answer":"'+document.getElementById("myForm").elements[5+(10*i)].value+'" , ' +
+                       ' "correct":"'+document.getElementById("myForm").elements[6+(10*i)].checked+'" }, ' +
+                       ' {"answer":"'+document.getElementById("myForm").elements[7+(10*i)].value+'" , ';
                        if (i+1 != question_counter) {
-                        json += ' "answer4_correct":"'+document.getElementById("myForm").elements[9+(10*i)].checked+'" }, ';
+                        json += ' "correct":"'+document.getElementById("myForm").elements[8+(10*i)].checked+'" } ] }, ';
                        } else {
-                        json += ' "answer4_correct":"'+document.getElementById("myForm").elements[9+(10*i)].checked+'" } ';
-                       }
-                       
+                        json += ' "correct":"'+document.getElementById("myForm").elements[8+(10*i)].checked+'" } ] } ] }';
+                       }                       
     }
-    json += " ]}' ";
-
-    json = ' {"users_id": "1252326423","quiz_name": "blabla","question_id": "1","question_name" "diesdas", "answers": [ ' +
-           ' {"answer_id": 1, "answer": "diesdasdabdajdasj", "correct": "true"} {"answer_id": 2, "answer": "wadisjdqaio", "correct": "false" }] }; ';
-
     return json;
 }
 
 function postHttpRequest(url) {
     var xmlhttp = null;
     url = "../ClientServlet2";
-    var quizname = document.getElementById("myForm2").elements[0].value;
                   
     // Mozilla
     if (window.XMLHttpRequest) {
@@ -80,17 +76,15 @@ function postHttpRequest(url) {
             // Do something
         }
         if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            console.log("Übertragung komplett");
+            console.log("Json an Servlet übertragen");
         }
     };
 
-  
     xmlhttp.open("POST", url, true); 
-    //Send the proper header information along with the request
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
     var quiz = createJSON(question_counter);
 
-    var param = "js="+quiz+"&quizname="+quizname+"";
+    var param = "js="+quiz+"";
     xmlhttp.send(param);
 }

@@ -146,12 +146,10 @@ public class ClientServlet extends HttpServlet {
                     System.out.println("YEAH ES HAT GEKLAPPT");
                     session.setAttribute("qsp", qsp);
                 } else {
-                    System.out.println("Alex kann mich mal! Mit seinem kack JSON ORG SCHEIß FICK KACK MIST KACKE FUCK!");
+                    System.out.println("Hast du überhört!");
                 }
         } catch (NotBoundException | RemoteException e) { 
             System.out.println("Ich bin im catch");
-            e.printStackTrace();
-            e.getCause();
             e.getMessage();
         }
     }

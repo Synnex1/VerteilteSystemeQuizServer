@@ -21,7 +21,7 @@ function getHttpRequest(url) {
 
             var Response = xmlhttp.responseText;
 
-            if (Response != "Noch kein Quiz erstellt!") {
+            if (Response != "Noch kein Quiz erstellt!" && Response != "[]") {
 
                 console.log("Response: " + Response);
             

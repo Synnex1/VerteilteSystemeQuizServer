@@ -1,10 +1,6 @@
 package server;
 
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
 import java.sql.*;
-import java.util.ArrayList;
-import server.entities.Quiz;
 import javax.json.*;
 
 public class QuizServerDB {

@@ -7,17 +7,12 @@ package client;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import server.QuizServerProxy;
 
 /**
@@ -65,19 +60,12 @@ public class ClientServlet2 extends HttpServlet {
             System.out.println("param: " + param);
             System.out.println("qname: " + qname);
             
-            try {
-                JSONArray json = new JSONArray(param);
                 ArrayList<String> array = new ArrayList<String>();
 
-                for(int index = 0; index < json.length(); index++) {
-
-                    JSONObject jsonObject = json.getJSONObject(index);
+                for(int index = 0; index < 10; index++) {
                     
                     System.out.println("str " + index + ": " );
-                    
-            }} catch (JSONException ex) {
-                Logger.getLogger(ClientServlet2.class.getName()).log(Level.SEVERE, null, ex);
-            }                    
+                }
         }
     }
 

@@ -54,6 +54,10 @@ function createJSON(question_counter) {
                        
     }
     json += " ]}' ";
+
+    json = ' {"users_id": "1252326423","quiz_name": "blabla","question_id": "1","question_name" "diesdas", "answers": [ ' +
+           ' {"answer_id": 1, "answer": "diesdasdabdajdasj", "correct": "true"} {"answer_id": 2, "answer": "wadisjdqaio", "correct": "false" }] }; ';
+
     return json;
 }
 

@@ -22,9 +22,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import server.QuizServerProxy;
 import server.entities.Quiz;
 
 /**
@@ -45,6 +47,18 @@ public class ClientServlet2 extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        QuizServerProxy qsp = null;
+        
+        HttpSession session = request.getSession();
+        if ( (QuizServerProxy)session.getAttribute("qsp") != null ) {
+            qsp = (QuizServerProxy)session.getAttribute("qsp"); 
+            System.out.println("if");
+        }  else {
+            qsp = null;
+            System.out.println("else");
+        }                    
+        String id = (String)session.getAttribute("id");                       
         
         String param = request.getParameter("js"); 
         String qname = request.getParameter("quizname"); 
@@ -67,12 +81,8 @@ public class ClientServlet2 extends HttpServlet {
                 for(int index = 0; index < json.length(); index++) {
 
                     JSONObject jsonObject = json.getJSONObject(index);
-
-                    String str= jsonObject.getString("question");
-
-                    array.add(str);
                     
-                    System.out.println("str " + index + ": " + str);
+                    System.out.println("str " + index + ": " );
                     
             }} catch (JSONException ex) {
                 Logger.getLogger(ClientServlet2.class.getName()).log(Level.SEVERE, null, ex);

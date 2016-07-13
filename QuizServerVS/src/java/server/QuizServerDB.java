@@ -1,8 +1,10 @@
 package server;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import server.entities.Quiz;
+import javax.json.*;
 
 public class QuizServerDB {
     
@@ -56,18 +58,21 @@ public class QuizServerDB {
         return true;
     }
     
-    ArrayList<Quiz> getAllQuizFromUser(String User_Id) { 
+    String getAllQuizFromUser(String User_Id) { 
         try (Statement stmt = conn.createStatement())
         {
             ResultSet rs = stmt.executeQuery( "SELECT NAME, QUIZ_ID FROM TEST.QUIZ WHERE USERS_ID_f = "+User_Id);
-            ArrayList<Quiz> quizList = new ArrayList<Quiz>();
+            JsonArrayBuilder jsArrB = Json.createArrayBuilder();
+            JsonArray jsonArray;
             
             while (rs.next()) {
-                Quiz quiz = new Quiz(rs.getInt("QUIZ_ID"), rs.getString("NAME"));
-                quizList.add(quiz);
-                System.out.println("get: "+ quizList.get(0).getName() );
+                jsArrB.add(Json.createObjectBuilder()
+                                .add("quiz_id", rs.getInt("QUIZ_ID"))
+                                .add("name", rs.getString("NAME")));
+                
             }
-            return quizList;
+            jsonArray = jsArrB.build();
+            return jsonArray.toString();
         }
         catch ( SQLException e ) {
             System.err.println("Got an exception!");

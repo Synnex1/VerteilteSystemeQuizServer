@@ -21,7 +21,7 @@ public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServ
     }
 
     @Override
-    public ArrayList getAllQuizFromUser(String user_Id) throws RemoteException {
+    public String getAllQuizFromUser(String user_Id) throws RemoteException {
         return qsdb.getAllQuizFromUser(user_Id);
     }
     

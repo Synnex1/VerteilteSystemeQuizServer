@@ -14,5 +14,5 @@ import java.util.ArrayList;
  * @author Mike
  */
 public interface QuizServerProxy extends Remote{
-    public ArrayList getAllQuizFromUser(String user_Id) throws RemoteException;
+    public String getAllQuizFromUser(String user_Id) throws RemoteException;
 }

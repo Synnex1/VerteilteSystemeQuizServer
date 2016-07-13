@@ -7,7 +7,6 @@ package server;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 
 /**
  *
@@ -15,4 +14,5 @@ import java.util.ArrayList;
  */
 public interface QuizServerProxy extends Remote{
     public String getAllQuizFromUser(String user_Id) throws RemoteException;
+    public void createQuiz(String jsonString, String userId) throws RemoteException;
 }

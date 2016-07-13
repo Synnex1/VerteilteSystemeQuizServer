@@ -83,18 +83,79 @@ public class QuizServerDB {
         }
     }
     
-    void createQuiz(String jsonString) {
+    void createQuiz(String jsonString, String userId) {
         // Credentials
-        String usersId;
-        String quizName;              
+        String sql;
+        int quizId = 0;
+        String quizName;
+        int questionId = 0;
+        String question;
+        String answer;
+        Boolean correct;
+        int answerId = 1;
+        ResultSet rs;
+        
+        JsonObject jsObjQuiz = Json.createReader(new StringReader(jsonString)).readObject();
+        JsonArray jsArrQ = jsObjQuiz.getJsonArray("questions");
+        JsonObject jsObjQ;
+        JsonArray jsArrA;
+        JsonObject jsObjA;
+        
+        quizName = jsObjQuiz.getString("quiz_name");
         
         try (Statement stmt = conn.createStatement()) {
-            JsonObject jsObj = Json.createReader(new StringReader(jsonString)).readObject();
-            usersId = jsObj.getString("users_id");
-            quizName = jsObj.getString("quiz_name");
+            // Insert quiz into quiz table
+            sql = "INSERT INTO " + dbName + ".QUIZ " +
+                    "Values (" + userId + ". '" + quizName + "')";
+            stmt.executeUpdate(sql);
             
-            String sql = "INSERT INTO " + dbName + ".QUIZ " +
-                    "Values (" + usersId + "'quizName')";
+            // Get quiz id
+            sql = "SELECT QUIZ_ID FROM " + dbName + ".QUIZ " +
+                    "WHERE NAME = '" + quizName + "'";
+            rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                quizId = rs.getInt("QUIZ_ID");
+            } else {
+                System.err.println("EIN FEHLER!");
+            }
+            rs.close();
+            
+            for (int i = 0; i < jsArrQ.size(); i++) {
+                jsObjQ = jsArrQ.getJsonObject(i);
+                question = jsObjQ.getString("question");
+                jsArrA = jsObjQ.getJsonArray("answers");
+                
+                // Insert question into table question
+                sql = "INSERT INTO " + dbName + ".QUESTION " +
+                        "VALUES (" + quizId + ", " + userId + ", '" + question + "')";
+                stmt.executeUpdate(sql);
+                
+                // Get question id from table question
+                sql = "SELECT QUESTION_ID FROM " + dbName + ".QUESTION " +
+                        "WHERE QUESTION = '" + question + "'";
+                rs = stmt.executeQuery(sql);
+                if ( rs.next() ) {
+                    questionId = rs.getInt("QUESTION_ID");
+                } else {
+                    System.err.println("EIN FEHLER 2!");
+                }
+                rs.close();
+                
+                // Insert answers into table answer
+                for (int j = 0; j < jsArrA.size(); j++) {
+                    jsObjA = jsArrA.getJsonObject(j);
+                    answer = jsObjA.getString("answer");
+                    correct = jsObjA.getBoolean("correct");
+                    
+                    sql = "INSERT INTO " + dbName + ".ANSWER " +
+                            "VALUES (" + answerId + ", " + questionId + ", "  + 
+                            quizId + ", " + userId + ", '" + answer + "', '" + 
+                            correct + "')";
+                    stmt.executeUpdate(sql);
+                    answerId++;
+                }
+                
+            }
             
             
         } catch (SQLException e) {

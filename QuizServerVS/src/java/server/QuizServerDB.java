@@ -1,6 +1,7 @@
 package server;
 
 import java.io.StringReader;
+import java.math.BigDecimal;
 import java.sql.*;
 import javax.json.*;
 
@@ -28,7 +29,7 @@ public class QuizServerDB {
         }//end try       
     }
     
-    boolean checkUser(String id, String name) {
+    public boolean checkUser(String id, String name) {
         try{
             String checkUserSql = "SELECT USERS_ID FROM " + dbName +".USERS " +
                 "WHERE USERS_ID = " + id;
@@ -57,7 +58,7 @@ public class QuizServerDB {
     }
     
 
-    String getAllQuizFromUser(String User_Id) { 
+    public String getAllQuizFromUser(String User_Id) { 
 
         try (Statement stmt = conn.createStatement())
         {
@@ -81,7 +82,7 @@ public class QuizServerDB {
         }
     }
     
-    void createQuiz(String jsonString, String userId) {
+    public void createQuiz(String jsonString, String userId) {
         // Credentials
         String sql;
         int quizId = 0;
@@ -168,47 +169,80 @@ public class QuizServerDB {
         }
     }
     
-    
-    
-    void updateQuestionWithAnswers(String Question, String Question_Id, String Answer1, String Answer2, String Answer3, String Answer4) {
-        try{
-            System.out.println("Update Question with Answers...");
-            Statement stmt = conn.createStatement();
-            String sql = "UPDATE QUESTION " +
-                         "SET question = "+Question+" WHERE Question_Id = "+Question_Id+" ";
-            stmt.executeUpdate(sql);
-            System.out.println("Updated records in Questions-Table...");
-            stmt.close();
-        } catch(SQLException se){
-            //Handle errors
-            se.printStackTrace();
-        }
-
+    public String getQuizInfo(int quizId) {
+        PreparedStatement stmt;
+        String sql;
+        ResultSet rs;
+        ResultSet rs2;
         
-    } // updateQuestionWithAnswers
-    
-    void insertQuestion(String users_id, String quiz_id, String quest_id, String quest_name, String answer1, Boolean cor1, String answer2, Boolean cor2, String answer3, Boolean cor3, String answer4, Boolean cor4) {
-        try(Statement stmt = conn.createStatement()) {
-            String question = "INSERT INTO " + dbName + ".QUESTION " +
-                    "VALUES (" + quest_id + ", " + quiz_id + ", " + users_id + ", '" + quest_name + "')";
-            String a1 = "INSERT INTO " +dbName + ".ANSWER " +
-                    "VALUES (1, " + quest_id + ", " + quiz_id + ", " + users_id + ", '" + answer1 + "', " + cor1 + ")";
-            String a2 = "INSERT INTO " +dbName + ".ANSWER " +
-                    "VALUES (2, " + quest_id + ", " + quiz_id + ", " + users_id + ", '" + answer2 + "', " + cor2 + ")";
-            String a3 = "INSERT INTO " +dbName + ".ANSWER " +
-                    "VALUES (3, " + quest_id + ", " + quiz_id + ", " + users_id + ", '" + answer3 + "', " + cor3 + ")";
-            String a4 = "INSERT INTO " +dbName + ".ANSWER " +
-                    "VALUES (4, " + quest_id + ", " + quiz_id + ", " + users_id + ", '" + answer4 + "', " + cor4 + ")";
+        // credentials
+        // quiz
+        String quizName;
+        // question 
+        int questionId;
+        String question;
+        // answer
+        int answerId;
+        String answer;
+        Boolean correct;
+        
+        JsonObjectBuilder jsObjQBuilder = Json.createObjectBuilder();
+        JsonArrayBuilder jsArrQueBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder jsArrABuilder = Json.createArrayBuilder();
+        
+        try {
+            // Quiz credentials
+            sql = "Select NAME FROM " + dbName + ".Quiz " +
+                    "WHERE QUIZ_ID = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, quizId);
+            rs = stmt.executeQuery();
+            if( rs.next() ) {
+                quizName = rs.getString("NAME");
+                jsObjQBuilder.add("quiz_id", quizId);
+                jsObjQBuilder.add("quiz_name", quizName);
+                jsObjQBuilder.add("questions", jsArrQueBuilder);
+            }
             
-            stmt.executeUpdate(a1);
-            stmt.executeUpdate(a2);
-            stmt.executeUpdate(a3);
-            stmt.executeUpdate(a4);            
+            // question credentials
+            sql = "SELECT QUESTION_ID, QUESTION FROM " + dbName + ".Question " +
+                    "WHERE QUIZ_ID_F = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, quizId);
+            rs = stmt.executeQuery();
+            
+            // answer credentials 
+            sql = "SELECT ANSWER_ID, ANSWER, CORRECT FROM " + dbName + ".ANSWER " +
+                    "WHERE QUESTION_ID_F = ?";
+            stmt = conn.prepareStatement(sql);
+            
+            while( rs.next() ) {
+                questionId = rs.getInt("QUESTION_ID");
+                question = rs.getString("QUESTION");
+                jsArrQueBuilder.add(Json.createObjectBuilder()
+                        .add("question_id", questionId)
+                        .add("question", question)
+                        .add("answers", jsArrABuilder));                
+                
+                stmt.setInt(1, questionId);
+                rs2 = stmt.executeQuery();
+                while ( rs2.next() ) {
+                    answerId = rs2.getInt("ANSWER_ID");
+                    answer = rs2.getString("ANSWER");
+                    correct = rs2.getBoolean("CORRECT");
+                    jsArrABuilder.add(Json.createObjectBuilder()
+                        .add("answer_id", answerId)
+                        .add("answer", answer)
+                        .add("correct", correct));
+                } 
+                
+            }
         } catch (SQLException e) {
-            System.err.println("We got an exception!");
+            System.err.println("Got an exception");
             System.err.println(e.getMessage());
         }
-            
+        String json = jsObjQBuilder.build().toString();
+        return json;
     }
     
 } // Class QuizServerDB

@@ -221,10 +221,7 @@ public class QuizServerDB {
                 System.out.println("Wasdalos hier");
                 questionId = rs.getInt("QUESTION_ID");
                 question = rs.getString("QUESTION");
-                jsArrQueBuilder.add(Json.createObjectBuilder()
-                        .add("question_id", questionId)
-                        .add("question", question)
-                        .add("answers", jsArrABuilder));                
+                              
                 stmt2.setInt(1, questionId);
                 rs2 = stmt2.executeQuery();
                 
@@ -237,7 +234,11 @@ public class QuizServerDB {
                         .add("answer_id", answerId)
                         .add("answer", answer)
                         .add("correct", correct));
-                } 
+                }
+                jsArrQueBuilder.add(Json.createObjectBuilder()
+                        .add("question_id", questionId)
+                        .add("question", question)
+                        .add("answers", jsArrABuilder));  
                 
             }
             jsObjQBuilder.add("questions", jsArrQueBuilder);

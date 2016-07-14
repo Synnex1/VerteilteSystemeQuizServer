@@ -72,39 +72,67 @@ public class ClientServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException { 
-
-        int i = 0; 
+            throws ServletException, IOException {
+        
+        String code = request.getParameter("code");
+        System.out.println("Der Code ist: " + code);
+        
         HttpSession session = request.getSession();
         if ( (QuizServerProxy)session.getAttribute("qsp") != null ) {
             qsp = (QuizServerProxy)session.getAttribute("qsp"); 
         }  else {
             qsp = null;
-        }                    
-        String id = (String)session.getAttribute("id");        
-                
-        if ( qsp != null ) { 
-                       
-            String al = qsp.getAllQuizFromUser(id);             
-            System.out.println("jsonString: " + al);        
+        }         
+        
+        // Dieser if-Block wird ausgeführt wenn der User ein Quiz bearbeiten möchte
+        if (code.equals("edit") ) {             
+            int quiz_id = Integer.parseInt( request.getParameter("quiz_id") );
+            System.out.println("quiz_id: " + quiz_id);
+            
+            String jsonString = qsp.getQuizInfo( quiz_id );
+            System.out.println("ServerResponseJson: " + jsonString);
+            
+            try {
+                PrintWriter out = response.getWriter();
+                out.print( jsonString );             
+            } catch (IOException ex) {
+                Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+                System.err.println(ex.getMessage());
+            }             
+        }
+        
+        // Dieser if-Block wird ausgeführt wenn das Dashboard aufgebaut wird und die 
+        // Quiz-Namen gebraucht werden
+        if (code.equals("getQuiz") ) {
+            System.out.println("Im getQuiz if");
+                    
+            int i = 0; 
+                   
+            String id = (String)session.getAttribute("id");        
 
-            try {
-                PrintWriter out = response.getWriter();
-                out.print( al );             
-            } catch (IOException ex) {
-                Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-                System.err.println(ex.getMessage());
-            }  
-        } else {
-            try {
-                PrintWriter out = response.getWriter();
-                response.setContentType("text/html");
-                out.print("Noch kein Quiz erstellt!");             
-            } catch (IOException ex) {
-                Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
-                System.err.println(ex.getMessage());
-            } 
-        }            
+            if ( qsp != null ) { 
+
+                String al = qsp.getAllQuizFromUser(id);             
+                System.out.println("jsonString: " + al);        
+
+                try {
+                    PrintWriter out = response.getWriter();
+                    out.print( al );             
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    System.err.println(ex.getMessage());
+                }  
+            } else {
+                try {
+                    PrintWriter out = response.getWriter();
+                    response.setContentType("text/html");
+                    out.print("Noch kein Quiz erstellt!");             
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    System.err.println(ex.getMessage());
+                } 
+            }
+        }
 } // doGet
 
     /**

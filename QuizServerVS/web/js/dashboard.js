@@ -32,8 +32,8 @@ function getHttpRequest(url) {
                 for (index = 0; index < jsObject.length; ++index) {
                     if (jsObject[index] !== null) {
                     htmlResponse +="<input readonly type=\"text\" class=\"form-control\" size=\"50\" placeholder=\""+jsObject[index].name+"\">" + ""
-                                 + "<button type=\"button\" class=\"btn btn-danger pull-right RbtnMargin\" id=\""+jsObject[index].quiz_Id+"\" >Starten</button> " + ""
-                                 + "<button type=\"button\" class=\"btn btn-danger pull-right\" id=\""+jsObject[index].quiz_Id+"\">Bearbeiten</button><br><br>"; 
+                                 + "<button type=\"button\" class=\"btn btn-danger pull-right RbtnMargin\" id=\""+jsObject[index].quiz_id+"\" >Starten</button> " + ""
+                                 + "<button type=\"button\" onclick=\"editQuiz("+jsObject[index].quiz_id+")\" class=\"btn btn-danger pull-right\" >Bearbeiten</button><br><br>"; 
                      }
                 }
                 $('quiz').innerHTML = htmlResponse;
@@ -42,8 +42,13 @@ function getHttpRequest(url) {
             }
         }
     };
-    xmlhttp.open("GET", url, true);    
+    xmlhttp.open("GET", url+"?code=getQuiz", true);    
     xmlhttp.send();
+}
+
+function editQuiz(quiz_id) {
+
+    window.location.replace("editQuiz.html?quiz_id="+quiz_id+" ");
 }
 
 function postHttpRequest(url) {

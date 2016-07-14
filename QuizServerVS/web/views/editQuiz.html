@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Quiz bearbeiten</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../js/fbCheckLogin.js"></script> 
+        <script type="text/javascript" src="../js/editQuiz.js"></script>              
+        
+        <style>
+            .jumbotron { 
+			    background-color: #f4511e;
+			    color: #fff;
+			    padding: 100px 25px; 
+                padding-bottom: 20px;    
+            }
+			.container-fluid {
+			    padding: 60px 50px;
+			}            
+            input.form-control:read-only { 
+                background-color: white;
+            }
+            input.form-control#q {
+            	background-color: #FFB;
+            	margin-left: -16px;
+            }
+            input.form-control#qn {
+            	background-color: #cdecf9;
+            	text-align: center;
+            	height: 60px;
+            	font-size: 30px;
+            }            
+            input.form-control#x {
+            	display: invisible;
+            }
+            .RbtnMargin { margin-left: 3px; }
+        </style>
+    </head>
+    <body onload="getJsonString()">
+        <div class="jumbotron text-center">
+            <div class="row">
+                <h1>Quiz Bearbeiten</h1> 
+                <p>- Verteilte Systeme -</p>  
+
+            	<form id="myForm" action="javascript:postHttpRequest();" method="POST" class="form-inline">
+                    <div id="q1">
+ 
+                    </div>
+                    <div id="button">
+                        <button type="button" class="btn btn-danger pull-right RbtnMargin" onclick="nextQuestin()">Neue Frage</button>
+                    </div>
+                </form>   
+            </div>
+        </div> 
+
+		<div class="container-fluid">
+		  <h2>Wie man ein Quiz bearbeitet</h2>
+		  <h4>Hilfe..</h4> 
+		  <p>...</p>
+		  <button class="btn btn-default btn-lg">Hilfe erhalten</button>
+		</div>
+    </body>
+</html>

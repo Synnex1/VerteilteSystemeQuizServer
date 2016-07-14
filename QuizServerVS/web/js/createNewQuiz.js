@@ -34,25 +34,27 @@ function nextQuestin() {
 
 function createJSON(question_counter) {
 
+
+
   var quizname = document.getElementById("myForm2").elements[0].value;
 
     var json = '{ "quiz_name":"'+quizname+'", "questions": [ ';
 
     for (var i = 0;i < question_counter;i++) {   
 
-        json +=      '{  "question":"'+document.getElementById("myForm").elements[0+(10*i)].value+'", ' +
-                       ' "answers": [ {' +
-                       ' "answer":"'+document.getElementById("myForm").elements[1+(10*i)].value+'" , ' +
-                       ' "correct":'+document.getElementById("myForm").elements[2+(10*i)].checked+' }, ' +
-                       ' {"answer":"'+document.getElementById("myForm").elements[3+(10*i)].value+'" , ' +
-                       ' "correct":'+document.getElementById("myForm").elements[4+(10*i)].checked+' }, ' +
-                       ' {"answer":"'+document.getElementById("myForm").elements[5+(10*i)].value+'" , ' +
-                       ' "correct":'+document.getElementById("myForm").elements[6+(10*i)].checked+' }, ' +
-                       ' {"answer":"'+document.getElementById("myForm").elements[7+(10*i)].value+'" , ';
+        json +=      '{  "question":"'+document.getElementById("myForm").elements[0+(9*i)].value+'", ' +
+                       ' "answers": [' +
+                       ' {"answer":"'+document.getElementById("myForm").elements[1+(9*i)].value+'" , ' +
+                       ' "correct":'+document.getElementById("myForm").elements[2+(9*i)].checked+' }, ' +
+                       ' {"answer":"'+document.getElementById("myForm").elements[3+(9*i)].value+'" , ' +
+                       ' "correct":'+document.getElementById("myForm").elements[4+(9*i)].checked+' }, ' +
+                       ' {"answer":"'+document.getElementById("myForm").elements[5+(9*i)].value+'" , ' +
+                       ' "correct":'+document.getElementById("myForm").elements[6+(9*i)].checked+' }, ' +
+                       ' {"answer":"'+document.getElementById("myForm").elements[7+(9*i)].value+'" , ';
                        if (i+1 != question_counter) {
-                        json += ' "correct":'+document.getElementById("myForm").elements[8+(10*i)].checked+' } ] }, ';
+                        json += ' "correct":'+document.getElementById("myForm").elements[8+(9*i)].checked+' } ] }, ';
                        } else {
-                        json += ' "correct":'+document.getElementById("myForm").elements[8+(10*i)].checked+' } ] } ] }';
+                        json += ' "correct":'+document.getElementById("myForm").elements[8+(9*i)].checked+' } ] } ] }';
                        }                       
     }
     return json;

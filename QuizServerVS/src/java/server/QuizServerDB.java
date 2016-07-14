@@ -271,12 +271,45 @@ public class QuizServerDB {
     public void updateQuestions(String jsonString) {
         JsonObject jsObj = Json.createReader(new StringReader(jsonString)).readObject();
         JsonArray jsArr = jsObj.getJsonArray("answers");
+        JsonObject jsObjA;
         
         int questionId = jsObj.getInt("question_id");
         String question = jsObj.getString("question");
         int answerId;
         String answer;
         Boolean correct;
+        
+        String sql;
+        PreparedStatement stmt;
+        sql = "UPDATE " + dbName + ".QUESTION " +
+                "SET QUESTION = ? " +
+                "WHERE QUESTION_ID = ?";
+        try{
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, question);
+            stmt.setInt(2, questionId);
+            stmt.executeQuery();
+            
+            sql = "UPDATE " + dbName + ".ANSWER " +
+                    "SET ANSWER = ?, CORRECT = ? " +
+                    "WHERE ANSWER_ID = ?";
+            stmt = conn.prepareStatement(sql);
+            for(int i = 0; i < jsArr.size(); i++) {
+                jsObjA = jsArr.getJsonObject(i);
+                answerId = jsObjA.getInt("answer_id");
+                answer = jsObjA.getString("answer");
+                correct = jsObjA.getBoolean("correct");
+                
+                stmt.setString(1, answer);
+                stmt.setBoolean(2, correct);
+                stmt.setInt(3, answerId);
+                stmt.executeUpdate();
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Got an exception");
+            System.err.println(e.getMessage());
+        }
         
     }
     

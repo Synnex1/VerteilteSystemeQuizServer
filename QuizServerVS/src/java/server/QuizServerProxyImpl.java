@@ -38,5 +38,10 @@ public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServ
     public void updateQuiz(int quizId, String quizName) throws RemoteException {
         qsdb.updateQuiz(quizId, quizName);
     }
+
+    @Override
+    public void updateQuestions(String jsonString) throws RemoteException {
+        qsdb.updateQuestions(jsonString);
+    }
     
 }

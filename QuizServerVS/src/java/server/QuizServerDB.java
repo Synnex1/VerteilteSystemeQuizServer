@@ -3,6 +3,8 @@ package server;
 import java.io.StringReader;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.*;
 
 public class QuizServerDB {
@@ -165,13 +167,14 @@ public class QuizServerDB {
         } catch (SQLException e) {
             System.err.println("Got an exception");
             System.err.println(e.getMessage());
-            e.printStackTrace();
         }
     }
     
     public String getQuizInfo(int quizId) {
         PreparedStatement stmt;
+        PreparedStatement stmt2;
         String sql;
+        String sql2;
         ResultSet rs;
         ResultSet rs2;
         
@@ -212,10 +215,9 @@ public class QuizServerDB {
             rs = stmt.executeQuery();
             
             // answer credentials 
-            sql = "SELECT ANSWER_ID, ANSWER, CORRECT FROM " + dbName + ".ANSWER " +
+            sql2 = "SELECT ANSWER_ID, ANSWER, CORRECT FROM " + dbName + ".ANSWER " +
                     "WHERE QUESTION_ID_F = ?";
-            stmt = conn.prepareStatement(sql);
-            
+            stmt2 = conn.prepareStatement(sql2);
             while( rs.next() ) {
                 questionId = rs.getInt("QUESTION_ID");
                 question = rs.getString("QUESTION");
@@ -223,8 +225,7 @@ public class QuizServerDB {
                         .add("question_id", questionId)
                         .add("question", question)
                         .add("answers", jsArrABuilder));                
-                
-                stmt.setInt(1, questionId);
+                stmt2.setInt(1, questionId);
                 rs2 = stmt.executeQuery();
                 while ( rs2.next() ) {
                     answerId = rs2.getInt("ANSWER_ID");
@@ -243,6 +244,34 @@ public class QuizServerDB {
         }
         String json = jsObjQBuilder.build().toString();
         return json;
+    }
+    
+    public void updateQuiz(int quizId, String quizName) {
+        PreparedStatement stmt;
+        String sql = "UPDATE " + dbName + ".QUIZ " +
+                "SET NAME = ? " +
+                "WHERE QUIZ_ID = ?";
+        try{
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, quizName);
+            stmt.setInt(2, quizId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        }
+    }
+    
+    public void updateQuestions(String jsonString) {
+        JsonObject jsObj = Json.createReader(new StringReader(jsonString)).readObject();
+        JsonArray jsArr = jsObj.getJsonArray("answers");
+        
+        int questionId = jsObj.getInt("question_id");
+        String question = jsObj.getString("question");
+        int answerId;
+        String answer;
+        Boolean correct;
+        
     }
     
 } // Class QuizServerDB

@@ -204,7 +204,6 @@ public class QuizServerDB {
                 quizName = rs.getString("NAME");
                 jsObjQBuilder.add("quiz_id", quizId);
                 jsObjQBuilder.add("quiz_name", quizName);
-                jsObjQBuilder.add("questions", jsArrQueBuilder);
             }
             
             // question credentials
@@ -219,6 +218,7 @@ public class QuizServerDB {
                     "WHERE QUESTION_ID_F = ?";
             stmt2 = conn.prepareStatement(sql2);
             while( rs.next() ) {
+                System.out.println("Wasdalos hier");
                 questionId = rs.getInt("QUESTION_ID");
                 question = rs.getString("QUESTION");
                 jsArrQueBuilder.add(Json.createObjectBuilder()
@@ -227,7 +227,9 @@ public class QuizServerDB {
                         .add("answers", jsArrABuilder));                
                 stmt2.setInt(1, questionId);
                 rs2 = stmt2.executeQuery();
+                
                 while ( rs2.next() ) {
+                    System.out.println("Wasdaloshier2");
                     answerId = rs2.getInt("ANSWER_ID");
                     answer = rs2.getString("ANSWER");
                     correct = rs2.getBoolean("CORRECT");
@@ -238,6 +240,8 @@ public class QuizServerDB {
                 } 
                 
             }
+            jsObjQBuilder.add("questions", jsArrQueBuilder);
+            
         } catch (SQLException e) {
             System.err.println("Got an exception");
             System.err.println(e.getMessage());

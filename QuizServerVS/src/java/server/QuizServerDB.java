@@ -111,7 +111,7 @@ public class QuizServerDB {
             stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, userId);
             stmt.setString(2, quizName);
-            stmt.execute();
+            stmt.executeUpdate();
             rs = stmt.getGeneratedKeys();
             if(rs.next()){
                 quizId = rs.getInt(1);
@@ -133,7 +133,7 @@ public class QuizServerDB {
                 stmt.setInt(1, quizId);
                 stmt.setString(2, userId);
                 stmt.setString(3, question);
-                stmt.execute();
+                stmt.executeUpdate();
                 rs = stmt.getGeneratedKeys();
                 if ( rs.next() ) {
                     questionId = rs.getInt(1);
@@ -157,7 +157,7 @@ public class QuizServerDB {
                     stmt.setString(4, userId);
                     stmt.setString(5, answer);
                     stmt.setBoolean(6, correct);
-                    stmt.execute();
+                    stmt.executeUpdate();
                     answerId++;
                 }
                 

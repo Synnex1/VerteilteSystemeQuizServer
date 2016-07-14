@@ -93,7 +93,7 @@ public class QuizServerDB {
         int answerId = 1;
         PreparedStatement stmt;
         ResultSet rs;
-        
+
         JsonObject jsObjQuiz = Json.createReader(new StringReader(jsonString)).readObject();
         JsonArray jsArrQ = jsObjQuiz.getJsonArray("questions");
         JsonObject jsObjQ;

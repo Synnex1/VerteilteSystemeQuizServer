@@ -226,7 +226,7 @@ public class QuizServerDB {
                         .add("question", question)
                         .add("answers", jsArrABuilder));                
                 stmt2.setInt(1, questionId);
-                rs2 = stmt.executeQuery();
+                rs2 = stmt2.executeQuery();
                 while ( rs2.next() ) {
                     answerId = rs2.getInt("ANSWER_ID");
                     answer = rs2.getString("ANSWER");

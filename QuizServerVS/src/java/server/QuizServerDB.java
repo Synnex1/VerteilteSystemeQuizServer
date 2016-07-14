@@ -91,6 +91,7 @@ public class QuizServerDB {
         String answer;
         Boolean correct;
         int answerId = 1;
+        PreparedStatement stmt;
         ResultSet rs;
         
         JsonObject jsObjQuiz = Json.createReader(new StringReader(jsonString)).readObject();
@@ -100,19 +101,18 @@ public class QuizServerDB {
         JsonObject jsObjA;
         
         quizName = jsObjQuiz.getString("quiz_name");
-        
-        try (Statement stmt = conn.createStatement()) {
+        try {
             // Insert quiz into quiz table
-            sql = "INSERT INTO " + dbName + ".QUIZ " +
-                    "Values (" + userId + ". '" + quizName + "')";
-            stmt.executeUpdate(sql);
-            
-            // Get quiz id
-            sql = "SELECT QUIZ_ID FROM " + dbName + ".QUIZ " +
-                    "WHERE NAME = '" + quizName + "'";
-            rs = stmt.executeQuery(sql);
+            sql = "INSERT INTO " + dbName + ".QUIZ (USERS_ID_F, NAME) " +
+                    "Values (?,?)";
+
+            stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, userId);
+            stmt.setString(2, quizName);
+            stmt.execute();
+            rs = stmt.getGeneratedKeys();
             if(rs.next()){
-                quizId = rs.getInt("QUIZ_ID");
+                quizId = rs.getInt(1);
             } else {
                 System.err.println("EIN FEHLER!");
             }
@@ -124,16 +124,16 @@ public class QuizServerDB {
                 jsArrA = jsObjQ.getJsonArray("answers");
                 
                 // Insert question into table question
-                sql = "INSERT INTO " + dbName + ".QUESTION " +
-                        "VALUES (" + quizId + ", " + userId + ", '" + question + "')";
-                stmt.executeUpdate(sql);
-                
-                // Get question id from table question
-                sql = "SELECT QUESTION_ID FROM " + dbName + ".QUESTION " +
-                        "WHERE QUESTION = '" + question + "'";
-                rs = stmt.executeQuery(sql);
+                sql = "INSERT INTO " + dbName + ".QUESTION (QUIZ_ID_F, USERS_ID_F, QUESTION) " +
+                        "VALUES (?,?,?)";
+                stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stmt.setInt(1, quizId);
+                stmt.setString(2, userId);
+                stmt.setString(3, question);
+                stmt.execute();
+                rs = stmt.getGeneratedKeys();
                 if ( rs.next() ) {
-                    questionId = rs.getInt("QUESTION_ID");
+                    questionId = rs.getInt(1);
                 } else {
                     System.err.println("EIN FEHLER 2!");
                 }
@@ -145,11 +145,16 @@ public class QuizServerDB {
                     answer = jsObjA.getString("answer");
                     correct = jsObjA.getBoolean("correct");
                     
-                    sql = "INSERT INTO " + dbName + ".ANSWER " +
-                            "VALUES (" + answerId + ", " + questionId + ", "  + 
-                            quizId + ", " + userId + ", '" + answer + "', '" + 
-                            correct + "')";
-                    stmt.executeUpdate(sql);
+                    sql = "INSERT INTO " + dbName + ".ANSWER (ANSWER_ID, QUESTION_ID_F, QUIZ_ID_F, USERS_ID_F, ANSWER, CORRECT) " +
+                            "VALUES (?,?,?,?,?,?)";
+                    stmt = conn.prepareStatement(sql);
+                    stmt.setInt(1, answerId);
+                    stmt.setInt(2, questionId);
+                    stmt.setInt(3, quizId);
+                    stmt.setString(4, userId);
+                    stmt.setString(5, answer);
+                    stmt.setBoolean(6, correct);
+                    stmt.execute();
                     answerId++;
                 }
                 
@@ -159,6 +164,7 @@ public class QuizServerDB {
         } catch (SQLException e) {
             System.err.println("Got an exception");
             System.err.println(e.getMessage());
+            e.printStackTrace();
         }
     }
     

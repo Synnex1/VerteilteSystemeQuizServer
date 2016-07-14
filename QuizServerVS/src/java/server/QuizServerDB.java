@@ -241,6 +241,7 @@ public class QuizServerDB {
         } catch (SQLException e) {
             System.err.println("Got an exception");
             System.err.println(e.getMessage());
+            e.printStackTrace();
         }
         String json = jsObjQBuilder.build().toString();
         return json;

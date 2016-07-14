@@ -86,14 +86,17 @@ public class QuizServerDB {
     
     public void createQuiz(String jsonString, String userId) {
         // Credentials
-        String sql;
         int quizId = 0;
         String quizName;
         int questionId = 0;
         String question;
         String answer;
         Boolean correct;
+        
+        String sql;
+        String sql2;
         PreparedStatement stmt;
+        PreparedStatement stmt2;
         ResultSet rs;
 
         JsonObject jsObjQuiz = Json.createReader(new StringReader(jsonString)).readObject();
@@ -122,14 +125,14 @@ public class QuizServerDB {
             
             // Insert question into table question
             sql = "INSERT INTO " + dbName + ".QUESTION (QUIZ_ID_F, USERS_ID_F, QUESTION) " +
-                    "VALUES (?,?,?)";
+                "VALUES (?,?,?)";
             stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
             for (int i = 0; i < jsArrQ.size(); i++) {
                 jsObjQ = jsArrQ.getJsonObject(i);
                 question = jsObjQ.getString("question");
                 jsArrA = jsObjQ.getJsonArray("answers");
 
-                
                 stmt.setInt(1, quizId);
                 stmt.setString(2, userId);
                 stmt.setString(3, question);
@@ -140,24 +143,24 @@ public class QuizServerDB {
                 } else {
                     System.err.println("EIN FEHLER 2!");
                 }
-                rs.close();
-                sql = "INSERT INTO " + dbName + ".ANSWER (ANSWER_ID, QUESTION_ID_F, QUIZ_ID_F, USERS_ID_F, ANSWER, CORRECT) " +
+                
+                sql2 = "INSERT INTO " + dbName + ".ANSWER (ANSWER_ID, QUESTION_ID_F, QUIZ_ID_F, USERS_ID_F, ANSWER, CORRECT) " +
                             "VALUES (?,?,?,?,?,?)";
-                stmt = conn.prepareStatement(sql);
+                stmt2 = conn.prepareStatement(sql2);
                 
                 // Insert answers into table answer
                 for (int j = 0, answerId = 1; j < jsArrA.size(); j++) {
                     jsObjA = jsArrA.getJsonObject(j);
                     answer = jsObjA.getString("answer");
                     correct = jsObjA.getBoolean("correct");
-                    
-                    stmt.setInt(1, answerId);
-                    stmt.setInt(2, questionId);
-                    stmt.setInt(3, quizId);
-                    stmt.setString(4, userId);
-                    stmt.setString(5, answer);
-                    stmt.setBoolean(6, correct);
-                    stmt.executeUpdate();
+
+                    stmt2.setInt(1, answerId);
+                    stmt2.setInt(2, questionId);
+                    stmt2.setInt(3, quizId);
+                    stmt2.setString(4, userId);
+                    stmt2.setString(5, answer);
+                    stmt2.setBoolean(6, correct);
+                    stmt2.executeUpdate();
                     answerId++;
                 }
                 

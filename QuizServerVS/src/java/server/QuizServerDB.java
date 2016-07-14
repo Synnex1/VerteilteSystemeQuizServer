@@ -93,7 +93,6 @@ public class QuizServerDB {
         String question;
         String answer;
         Boolean correct;
-        int answerId = 1;
         PreparedStatement stmt;
         ResultSet rs;
 
@@ -121,15 +120,16 @@ public class QuizServerDB {
             }
             rs.close();
             
+            // Insert question into table question
+            sql = "INSERT INTO " + dbName + ".QUESTION (QUIZ_ID_F, USERS_ID_F, QUESTION) " +
+                    "VALUES (?,?,?)";
+            stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             for (int i = 0; i < jsArrQ.size(); i++) {
                 jsObjQ = jsArrQ.getJsonObject(i);
                 question = jsObjQ.getString("question");
                 jsArrA = jsObjQ.getJsonArray("answers");
+
                 
-                // Insert question into table question
-                sql = "INSERT INTO " + dbName + ".QUESTION (QUIZ_ID_F, USERS_ID_F, QUESTION) " +
-                        "VALUES (?,?,?)";
-                stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 stmt.setInt(1, quizId);
                 stmt.setString(2, userId);
                 stmt.setString(3, question);
@@ -141,16 +141,16 @@ public class QuizServerDB {
                     System.err.println("EIN FEHLER 2!");
                 }
                 rs.close();
+                sql = "INSERT INTO " + dbName + ".ANSWER (ANSWER_ID, QUESTION_ID_F, QUIZ_ID_F, USERS_ID_F, ANSWER, CORRECT) " +
+                            "VALUES (?,?,?,?,?,?)";
+                stmt = conn.prepareStatement(sql);
                 
                 // Insert answers into table answer
-                for (int j = 0; j < jsArrA.size(); j++) {
+                for (int j = 0, answerId = 1; j < jsArrA.size(); j++) {
                     jsObjA = jsArrA.getJsonObject(j);
                     answer = jsObjA.getString("answer");
                     correct = jsObjA.getBoolean("correct");
                     
-                    sql = "INSERT INTO " + dbName + ".ANSWER (ANSWER_ID, QUESTION_ID_F, QUIZ_ID_F, USERS_ID_F, ANSWER, CORRECT) " +
-                            "VALUES (?,?,?,?,?,?)";
-                    stmt = conn.prepareStatement(sql);
                     stmt.setInt(1, answerId);
                     stmt.setInt(2, questionId);
                     stmt.setInt(3, quizId);
@@ -218,7 +218,6 @@ public class QuizServerDB {
                     "WHERE QUESTION_ID_F = ?";
             stmt2 = conn.prepareStatement(sql2);
             while( rs.next() ) {
-                System.out.println("Wasdalos hier");
                 questionId = rs.getInt("QUESTION_ID");
                 question = rs.getString("QUESTION");
                               
@@ -226,7 +225,6 @@ public class QuizServerDB {
                 rs2 = stmt2.executeQuery();
                 
                 while ( rs2.next() ) {
-                    System.out.println("Wasdaloshier2");
                     answerId = rs2.getInt("ANSWER_ID");
                     answer = rs2.getString("ANSWER");
                     correct = rs2.getBoolean("CORRECT");

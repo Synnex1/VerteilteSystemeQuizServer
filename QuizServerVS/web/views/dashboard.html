@@ -13,15 +13,30 @@
         
         <style>
             .jumbotron { 
-                background-color: #f4511e; /* Orange */
-                color: #ffffff;
-                padding: 100px 25px;  
-                height: 100vh;     
+                background-color: #f4511e;
+                color: #fff;
+                padding: 60px 25px; 
+                padding-bottom: 30px;    
             }
-
             input.form-control:read-only { 
                 background-color: white;
             }
+            input.form-control.pin { 
+                text-align: center;
+                padding: 30px;
+                background-color: #FFB;
+                margin-bottom: 13px;
+            } 
+            #newQuiz { 
+                background-color: #63c08d;
+            } 
+            #newQuiz:hover { 
+                background-color: #3cb371;
+            }                                   
+            .container-fluid {
+                padding: 0px 50px;
+                padding-bottom: 20px;
+            }            
 
             .RbtnMargin { margin-left: 3px; }
 
@@ -34,18 +49,19 @@
         <div class="jumbotron text-center">
             <div class="row">
                     <h1>QuizServer</h1> 
-                    <p>- Verteilte Systeme -</p>
+                    <p>- Dashboard -</p>
 
                     <form class="form-inline">
                         <div class="input-group">
                             <div id="quiz">
                                 <script type="text/javascript"> getHttpRequest('../ClientServlet') </script>
                             </div>
-                        <p></p>
+                            <p></p>
+
                             <!-- Quiz Pin -->                    
-                            <input type="tel" maxlength="6" class="form-control" size="50" placeholder="Quiz Pin">
-                            <button type="button" class="btn btn-danger pull-right RbtnMargin">Teilnehmen</button>
-                            <button type="button" onclick="window.location='createNewQuiz.html'" class="btn btn-danger pull-right RbtnMargin">Eigenes Quiz erstellen</button>
+                            <input type="tel" maxlength="6" class="form-control pin" size="50" placeholder="Quiz Pin"><button type="button" class="btn btn-danger RbtnMargin">Teilnehmen</button>
+                            <p></p>
+                            <button type="button" onclick="window.location='createNewQuiz.html'" class="btn btn-danger RbtnMargin" id="newQuiz">Eigenes Quiz erstellen</button>
                         </div>
                         <p></p>
                         <div id="timestamp" style="font-family:arial;font-size:10pt;">                            
@@ -55,15 +71,15 @@
         </div>
 
         <div class="container-fluid">
-          <h2>Über den Quiz Server</h2>
-          <h4>Lorem ipsum..</h4> 
-          <p>Lorem ipsum..</p>
-          <button class="btn btn-default btn-lg">Get in Touch</button>
+          <h2>Über den Quiz Server...</h2>
+          <h4>Verteilte Systeme</h4> 
+          <p>Projektteilnehmer: Mike Morthorst &amp; Alexander Baumtrog</p>
+          <button class="btn btn-default btn-lg">Infos</button>
         </div>
                 
         <script type="text/javascript">
             window.setInterval(function() {
-                $('timestamp').innerHTML = new Date().toString();
+              //  $('timestamp').innerHTML = new Date().toString();
             }, 10000);
         </script>  
     </body>

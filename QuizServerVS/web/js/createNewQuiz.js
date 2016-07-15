@@ -19,7 +19,7 @@ function questionHtml(question_counter) {
     return html;
 }
 
-function nextQuestin() {
+function nextQuestion() {
 
     question_counter++;
 
@@ -33,8 +33,6 @@ function nextQuestin() {
 }
 
 function createJSON(question_counter) {
-
-
 
   var quizname = document.getElementById("myForm2").elements[0].value;
 
@@ -60,25 +58,22 @@ function createJSON(question_counter) {
     return json;
 }
 
-function postHttpRequest(url) {
+function postHttpRequest() {
     var xmlhttp = null;
     url = "../ClientServlet2";
                   
-    // Mozilla
     if (window.XMLHttpRequest) {
-        xmlhttp = new XMLHttpRequest();
-    }
-    // IE
+        xmlhttp = new XMLHttpRequest(); // Mozilla
+    }    
     else if (window.ActiveXObject) {
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); // IE
     }
 
     xmlhttp.onreadystatechange = function() {
-        if(xmlhttp.readyState !== 4) {
-            // Do something
-        }
         if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            console.log("Json an Servlet übertragen");
+            console.log("Json an Servlet übertragen");            
+            window.setTimeout('window.location = "dashboard.html"',3000);
+            alert("Das Quiz wurde erfolgreich erstellt. Sie werden in 3 Sekunden zum Dashboard weitergeleitet");
         }
     };
 
@@ -87,6 +82,6 @@ function postHttpRequest(url) {
 
     var quiz = createJSON(question_counter);
 
-    var param = "js="+quiz+"";
+    var param = "js="+quiz+"&code=create";
     xmlhttp.send(param);
 }

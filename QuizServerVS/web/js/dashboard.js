@@ -31,9 +31,9 @@ function getHttpRequest(url) {
                            
                 for (index = 0; index < jsObject.length; ++index) {
                     if (jsObject[index] !== null) {
-                    htmlResponse +="<input readonly type=\"text\" class=\"form-control\" size=\"50\" placeholder=\""+jsObject[index].name+"\">" + ""
-                                 + "<button type=\"button\" class=\"btn btn-danger pull-right RbtnMargin\" id=\""+jsObject[index].quiz_id+"\" >Starten</button> " + ""
-                                 + "<button type=\"button\" onclick=\"editQuiz("+jsObject[index].quiz_id+")\" class=\"btn btn-danger pull-right\" >Bearbeiten</button><br><br>"; 
+                    htmlResponse +="<input readonly type=\"text\" class=\"form-control\" size=\"50\" placeholder=\""+jsObject[index].name+"\">" +
+                                   "<button type=\"button\" class=\"btn btn-danger RbtnMargin\" id=\""+jsObject[index].quiz_id+"\" >Starten</button> " +
+                                   "<button type=\"button\" onclick=\"editQuiz("+jsObject[index].quiz_id+")\" class=\"btn btn-danger\" >Bearbeiten</button><br><br>"; 
                      }
                 }
                 $('quiz').innerHTML = htmlResponse;

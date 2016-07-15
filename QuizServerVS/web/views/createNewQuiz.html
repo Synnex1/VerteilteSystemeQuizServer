@@ -10,17 +10,32 @@
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/fbCheckLogin.js"></script> 
         <script type="text/javascript" src="../js/createNewQuiz.js"></script>              
+
+<script type="text/javascript">
+	function delayer(){
+		window.setTimeout('window.location = "dashboard.html"',2000);
+	}
+</script>        
         
         <style>
             .jumbotron { 
 			    background-color: #f4511e;
 			    color: #fff;
-			    padding: 100px 25px; 
-                padding-bottom: 20px;    
+			    padding: 60px 25px; 
+                padding-bottom: 30px;    
             }
 			.container-fluid {
-			    padding: 60px 50px;
-			}            
+			    padding: 0px 50px;
+			    padding-bottom: 20px;
+			}
+			.save {
+				background-color: #708393;
+			}  
+			.btn-danger.save:hover {
+			    color: #fff;
+			    background-color: #4682b4;
+			    border-color: #ac2925;
+			}         
             input.form-control:read-only { 
                 background-color: white;
             }
@@ -32,7 +47,7 @@
             	background-color: #cdecf9;
             	text-align: center;
             	height: 60px;
-            	font-size: 30px;
+            	font-size: 20px;
             }            
             input.form-control#x {
             	display: invisible;
@@ -64,18 +79,19 @@
                         <p></p>                          
                     </div>
                     <div id="button">
-                        <button type="button" class="btn btn-danger pull-right RbtnMargin" onclick="nextQuestin()">Weitere Frage...</button>
-                        <button type="submit" class="btn btn-danger pull-right RbtnMargin" >Quiz speichern</button>
+                    	<button type="button" class="btn btn-danger RbtnMargin" onclick="delayer()">Zum Dashboard</button>
+                        <button type="button" class="btn btn-danger RbtnMargin" onclick="nextQuestion()">Weitere Frage...</button>
+                        <button type="submit" class="btn btn-danger save RbtnMargin" >Quiz speichern</button>
                     </div>
                 </form>   
             </div>
         </div> 
 
 		<div class="container-fluid">
-		  <h2>Über den Quiz Server</h2>
-		  <h4>Lorem ipsum..</h4> 
-		  <p>Lorem ipsum..</p>
-		  <button class="btn btn-default btn-lg">Get in Touch</button>
+		  <h2>Wie du ganz einfach ein Quiz erstellst...</h2>
+		  <h4>Mit diesen Tipps wirst du zum Quiz Master !</h4> 
+		  <p> </p>
+		  <button class="btn btn-default btn-lg">Tipps anzeigen</button>
 		</div>
     </body>
 </html>

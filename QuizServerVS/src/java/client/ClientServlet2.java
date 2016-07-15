@@ -42,14 +42,14 @@ public class ClientServlet2 extends HttpServlet {
         QuizServerProxy qsp = (QuizServerProxy) session.getAttribute("qsp");
         
         if ( qsp != null ) {
-            System.out.println("if");
+            System.out.println("qsp != null");
         }  else {
             qsp = null;
-            System.out.println("else");
-        }                    
-        String id = (String)session.getAttribute("id");                       
-        
-        String param = request.getParameter("js"); 
+            System.out.println("qsp == null");
+        }     
+        String code = request.getParameter("code");
+        String id = (String)session.getAttribute("id");                               
+        String param = request.getParameter("js");
         
         if (param == null) {
             System.out.println("param == null");
@@ -58,9 +58,23 @@ public class ClientServlet2 extends HttpServlet {
             // e.g. http://hostname.com?param=&a=b
             System.out.println("else if (\"\".equals(param)");
         } else if (param.equals( request.getParameter("js") )) {   
-            
+             
+            System.out.println("code: " + code);
             System.out.println("param: " + param);
-            qsp.createQuiz(param, id);            
+            if (code.equals("update")) {
+                qsp.updateQuestion(param);
+            }
+            if (code.equals("updateName")) {
+                System.out.println("updateName()");
+                int quiz_id = Integer.parseInt( request.getParameter("quiz_id") );
+                qsp.updateQuiz(quiz_id, param);
+            }
+            if (code.equals("create")){
+                qsp.createQuiz(param, id); 
+            } 
+            if (code.equals("addQuiz")) {
+                qsp.createQuestions(param, id);
+            }
         }
     }
 

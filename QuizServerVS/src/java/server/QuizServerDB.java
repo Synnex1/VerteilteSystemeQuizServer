@@ -1,10 +1,7 @@
 package server;
 
 import java.io.StringReader;
-import java.math.BigDecimal;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.json.*;
 
 public class QuizServerDB {
@@ -291,8 +288,8 @@ public class QuizServerDB {
             stmt.executeUpdate();
             
             sql = "UPDATE " + dbName + ".ANSWER " +
-                    "SET ANSWER = ?, CORRECT = ? " +
-                    "WHERE ANSWER_ID = ?";
+                    "SET ANSWER_ID, ANSWER = ?, CORRECT = ? " +
+                    "WHERE QUESTION_ID = ?";
             stmt = conn.prepareStatement(sql);
             for(int i = 0; i < jsArr.size(); i++) {
                 jsObjA = jsArr.getJsonObject(i);
@@ -300,9 +297,10 @@ public class QuizServerDB {
                 answer = jsObjA.getString("answer");
                 correct = jsObjA.getBoolean("correct");
                 
-                stmt.setString(1, answer);
-                stmt.setBoolean(2, correct);
-                stmt.setInt(3, answerId);
+                stmt.setInt(1, answerId);
+                stmt.setString(2, answer);
+                stmt.setBoolean(3, correct);
+                stmt.setInt(4, questionId);
                 stmt.executeUpdate();
             }
             

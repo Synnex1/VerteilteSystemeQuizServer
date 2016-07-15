@@ -19,7 +19,7 @@ public class QuizServerDB {
     Connection conn = null;
     
     
-    QuizServerDB () {      
+    public QuizServerDB () {      
         try{
             System.out.println("Connecting to a selected database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -59,7 +59,6 @@ public class QuizServerDB {
         return true;
     }
     
-
     public String getAllQuizFromUser(String User_Id) { 
 
         try (Statement stmt = conn.createStatement())
@@ -269,7 +268,7 @@ public class QuizServerDB {
         }
     }
     
-    public void updateQuestions(String jsonString) {
+    public void updateQuestion(String jsonString) {
         JsonObject jsObj = Json.createReader(new StringReader(jsonString)).readObject();
         JsonArray jsArr = jsObj.getJsonArray("answers");
         JsonObject jsObjA;
@@ -313,5 +312,7 @@ public class QuizServerDB {
         }
         
     }
+    
+    public void 
     
 } // Class QuizServerDB

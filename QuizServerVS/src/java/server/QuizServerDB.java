@@ -32,7 +32,7 @@ public class QuizServerDB {
     
     public void closeConn() {
         try {
-            System.err.println("Closing connection to selected Database...");
+            System.out.println("Closing connection to selected Database...");
             conn.close();
             System.out.println("Database connection closed.");
         } catch (SQLException e) {
@@ -302,7 +302,7 @@ public class QuizServerDB {
             
             sql = "UPDATE " + dbName + ".ANSWER " +
                     "SET ANSWER = ?, CORRECT = ? " +
-                    "WHERE QUESTION_ID = ? AND ANSWER_ID = ?";
+                    "WHERE QUESTION_ID_F = ? AND ANSWER_ID = ?";
             stmt = conn.prepareStatement(sql);
             for(int i = 0; i < jsArr.size(); i++) {
                 jsObjA = jsArr.getJsonObject(i);

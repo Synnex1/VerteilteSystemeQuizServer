@@ -36,11 +36,13 @@ public class QuizServerImpl implements QuizServer{
     public QuizServerProxy checkUser(String id, String name) throws RemoteException {
         System.out.println("HIER BIN ICH!");
         if (qsdb.checkUser(id, name)) {
-            System.out.println("HIE RBIN ICH RICHTIG!");
+            System.out.println("HIER BIN ICH RICHTIG!");
             QuizServerProxy qsp;
             qsp = new QuizServerProxyImpl();
+            qsdb.closeConn();
             return qsp;
         } else {
+            qsdb.closeConn();
             return null;
         }
         

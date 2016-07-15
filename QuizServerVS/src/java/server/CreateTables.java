@@ -100,7 +100,7 @@ public class CreateTables {
                 "NAME VARCHAR(25) NOT NULL, " +
                 "PRIMARY KEY (QUIZ_ID, USERS_ID_F), " +
                 "FOREIGN KEY (USERS_ID_F) REFERENCES " + dbName +
-                ".USERS (USERS_ID))";
+                ".USERS (USERS_ID) ON DELETE CASCADE)";
         
         return createQuiz;
     }
@@ -115,7 +115,7 @@ public class CreateTables {
                 "QUESTION VARCHAR(500) NOT NULL, " +
                 "PRIMARY KEY (QUESTION_ID, QUIZ_ID_F, USERS_ID_F), " +
                 "FOREIGN KEY (QUIZ_ID_F, USERS_ID_F) REFERENCES " + dbName + 
-                ".QUIZ (QUIZ_ID, USERS_ID_F))";
+                ".QUIZ (QUIZ_ID, USERS_ID_F) ON DELETE CASCADE)";
         return createQuestion;
     }
     
@@ -130,7 +130,8 @@ public class CreateTables {
                 "ANSWER VARCHAR(250) NOT NULL, " +
                 "CORRECT BOOLEAN NOT NULL, " +
                 "PRIMARY KEY (ANSWER_ID, QUESTION_ID_F, QUIZ_ID_F, USERS_ID_F), " +
-                "FOREIGN KEY (QUESTION_ID_F, QUIZ_ID_F, USERS_ID_F) REFERENCES " + dbName + ".QUESTION (QUESTION_ID, QUIZ_ID_F, USERS_ID_F))";  
+                "FOREIGN KEY (QUESTION_ID_F, QUIZ_ID_F, USERS_ID_F) REFERENCES " + dbName + 
+                ".QUESTION (QUESTION_ID, QUIZ_ID_F, USERS_ID_F) ON DELETE CASCADE)";  
         return createAnswer;
     }
 }

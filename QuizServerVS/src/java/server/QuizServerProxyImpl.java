@@ -48,5 +48,15 @@ public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServ
     public void createQuestions(String jsonString, String userId) throws RemoteException {
         qsdb.createQuestions(jsonString, userId);
     }
+
+    @Override
+    public void deleteQuiz(int quizId) throws RemoteException {
+        qsdb.deleteQuiz(quizId);
+    }
+
+    @Override
+    public void deleteQuestion(int questionId) throws RemoteException {
+        qsdb.deleteQuestion(questionId);
+    }
     
 }

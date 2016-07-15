@@ -376,7 +376,32 @@ public class QuizServerDB {
     }
     
     public void deleteQuiz(int quizId) {
-        String sql = "DELETE FROM " + dbName + ".ANSWER " +
-                "WHERE QUIZ_ID_F = ?";
+        String sql = "DELETE FROM " + dbName + ".QUIZ " +
+                "WHERE QUIZ_ID = ?";
+        PreparedStatement stmt;
+        
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, quizId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        }
+    }
+    
+    public void deleteQuestion(int questionId) {
+        String sql = "DELETE FROM " + dbName + ".QUESTION " +
+                "WHERE QUESTION_ID = ?";
+        PreparedStatement stmt;
+        
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, questionId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        }
     }
 } // Class QuizServerDB

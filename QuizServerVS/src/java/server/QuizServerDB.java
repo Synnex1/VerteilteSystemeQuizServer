@@ -2,6 +2,8 @@ package server;
 
 import java.io.StringReader;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.*;
 
 public class QuizServerDB {
@@ -26,6 +28,17 @@ public class QuizServerDB {
             System.err.println("Got an exception!");
             System.err.println(e.getMessage());
         }//end try       
+    }
+    
+    public void closeConn() {
+        try {
+            System.err.println("Closing connection to selected Database...");
+            conn.close();
+            System.out.println("Database connection closed.");
+        } catch (SQLException e) {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        }
     }
     
     public boolean checkUser(String id, String name) {
@@ -288,8 +301,8 @@ public class QuizServerDB {
             stmt.executeUpdate();
             
             sql = "UPDATE " + dbName + ".ANSWER " +
-                    "SET ANSWER_ID, ANSWER = ?, CORRECT = ? " +
-                    "WHERE QUESTION_ID = ?";
+                    "SET ANSWER = ?, CORRECT = ? " +
+                    "WHERE QUESTION_ID = ? AND ANSWER_ID = ?";
             stmt = conn.prepareStatement(sql);
             for(int i = 0; i < jsArr.size(); i++) {
                 jsObjA = jsArr.getJsonObject(i);
@@ -297,10 +310,10 @@ public class QuizServerDB {
                 answer = jsObjA.getString("answer");
                 correct = jsObjA.getBoolean("correct");
                 
-                stmt.setInt(1, answerId);
-                stmt.setString(2, answer);
-                stmt.setBoolean(3, correct);
-                stmt.setInt(4, questionId);
+                stmt.setString(1, answer);
+                stmt.setBoolean(2, correct);
+                stmt.setInt(3, questionId);
+                stmt.setInt(4, answerId);
                 stmt.executeUpdate();
             }
             

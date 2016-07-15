@@ -288,7 +288,7 @@ public class QuizServerDB {
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, question);
             stmt.setInt(2, questionId);
-            stmt.executeQuery();
+            stmt.executeUpdate();
             
             sql = "UPDATE " + dbName + ".ANSWER " +
                     "SET ANSWER = ?, CORRECT = ? " +
@@ -313,4 +313,70 @@ public class QuizServerDB {
         
     }
     
+    public void createQuestions(String jsonString, String userId) {
+        JsonObject jsObj = Json.createReader(new StringReader(jsonString)).readObject();
+        JsonArray jsArrQue = jsObj.getJsonArray("questions");
+        JsonObject jsObjQue;
+        JsonArray jsArrA;
+        JsonObject jsObjA;
+        
+        int quizId = jsObj.getInt("quiz_id");
+        int questionId = 0;
+        String question;
+        String answer;
+        Boolean correct;
+        
+        String sqlQuestion = "INSERT INTO " + dbName + ".QUESTION (QUIZ_ID_F, USERS_ID_F, QUESTION) " + 
+                "VALUES (?, ?, ?)";
+        String sqlAnswer = "INSERT INTO " + dbName + ".ANSWER (ANSWER_ID, QUESTION_ID_F, QUIZ_ID_F, USERS_ID_F, ANSWER, CORRECT) " +
+                            "VALUES (?,?,?,?,?,?)";
+        PreparedStatement stmt;
+        PreparedStatement stmt2;
+        ResultSet rs;
+        
+        try {
+            stmt = conn.prepareStatement(sqlQuestion, Statement.RETURN_GENERATED_KEYS);
+            stmt2 = conn.prepareStatement(sqlAnswer);
+            for (int i = 0; i < jsArrQue.size(); i++) {
+                jsObjQue = jsArrQue.getJsonObject(i);
+                question = jsObjQue.getString("question");
+                jsArrA = jsObjQue.getJsonArray("answers");
+                
+                stmt.setInt(1, quizId);
+                stmt.setString(2, userId);
+                stmt.setString(3, question);
+                stmt.executeUpdate();
+                rs = stmt.getGeneratedKeys();
+                if(rs.next()) {
+                    questionId = rs.getInt(1);
+                }
+                if(questionId != 0) {
+                    for (int j = 0, answerId = 1 ; j < jsArrA.size(); j++) {
+                    jsObjA = jsArrA.getJsonObject(i);
+                    answer = jsObjA.getString("answer");
+                    correct = jsObjA.getBoolean("correct");
+                    
+                    stmt2.setInt(1, answerId);
+                    stmt2.setInt(2, questionId);
+                    stmt2.setInt(3, quizId);
+                    stmt2.setString(4, userId);
+                    stmt2.setString(5, answer);
+                    stmt2.setBoolean(6, correct);
+                    stmt2.executeUpdate();
+                    }
+                } else {
+                    System.err.println("Got an Exception at createQuestions!");
+                } 
+                
+            }
+        } catch (SQLException e) {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        }
+    }
+    
+    public void deleteQuiz(int quizId) {
+        String sql = "DELETE FROM " + dbName + ".ANSWER " +
+                "WHERE QUIZ_ID_F = ?";
+    }
 } // Class QuizServerDB

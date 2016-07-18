@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>QuizServer</title>
+        <title>QS - Dashboard</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -9,64 +9,58 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/fbCheckLogin.js"></script>
-        <script type="text/javascript" src="../js/dashboard.js"></script>        
-        
-        <style>
-            .jumbotron { 
-                background-color: #f4511e;
-                color: #fff;
-                padding: 60px 25px; 
-                padding-bottom: 30px;    
-            }
-            input.form-control:read-only { 
-                background-color: white;
-            }
-            input.form-control.pin { 
-                text-align: center;
-                padding: 30px;
-                background-color: #FFB;
-                margin-bottom: 13px;
-            } 
-            #newQuiz { 
-                background-color: #63c08d;
-            } 
-            #newQuiz:hover { 
-                background-color: #3cb371;
-            }                                   
-            .container-fluid {
-                padding: 0px 50px;
-                padding-bottom: 20px;
-            }            
-
-            .RbtnMargin { margin-left: 3px; }
-
-        </style>
+        <script type="text/javascript" src="../js/dashboard.js"></script>
+        <link rel="stylesheet" href="../styles/style.css">
 
     </head>
 
-    <body>
+    <body style="background-color: white;">
 
+        <!-- Nav-Bar -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span> 
+              </button>
+              <a class="navbar-brand" href="#">LOGO</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="createNewQuiz.html">QUIZ ERSTELLEN</a></li>
+                <li><a onclick="startQuiz()">STARTEN</a></li>
+                <li><a onclick="editQuiz(this.id)">BEARBEITEN</a></li>
+                <li><a href="#contact">INFORMATIONEN</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Body -->
         <div class="jumbotron text-center">
             <div class="row">
-                    <h1>QuizServer</h1> 
+                    <h1 id="shadow">QuizServer</h1> 
                     <p>- Dashboard -</p>
-
-                    <form class="form-inline">
-                        <div class="input-group">
-                            <div id="quiz">
-                                <script type="text/javascript"> getHttpRequest('../ClientServlet') </script>
-                            </div>
-                            <p></p>
-
-                            <!-- Quiz Pin -->                    
-                            <input type="tel" maxlength="6" class="form-control pin" size="50" placeholder="Quiz Pin"><button type="button" class="btn btn-danger RbtnMargin">Teilnehmen</button>
-                            <p></p>
-                            <button type="button" onclick="window.location='createNewQuiz.html'" class="btn btn-danger RbtnMargin" id="newQuiz">Eigenes Quiz erstellen</button>
+                    
+                    <form>
+                        <div id="quiz" class="form-inline">
+                            <script type="text/javascript"> getHttpRequest('../ClientServlet') </script>
                         </div>
+                        <p></p>
+                    </form>
+                        <!-- Quiz Pin --> 
+                        <div class="form-inline">                   
+                            <input type="tel" maxlength="6" class="form-control pin" size="50" placeholder="Quiz Pin" autofocus> <br>
+                            <button type="button" class="btn btn-danger RbtnMargin">Teilnehmen</button>
+                        </div>
+                        <p></p>
+                     
                         <p></p>
                         <div id="timestamp" style="font-family:arial;font-size:10pt;">                            
                         </div>
-                    </form>    
+   
             </div>
         </div>
 
@@ -84,20 +78,3 @@
         </script>  
     </body>
 </html>
-
-<!--
-<!DOCTYPE html>
-
-<html>
-    <head>
-        <title>Dashboard</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <h1>Willkommen auf unserem Quizserver!</h1>
-        <button onclick="window.location='createNewQuiz.html'">Create a new quiz</button>
-        <button onclick="window.location='createNewQuiz.html'">Create a new quiz</button>
-    </body>
-</html>
--->

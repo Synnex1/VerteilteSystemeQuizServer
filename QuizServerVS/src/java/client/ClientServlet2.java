@@ -6,6 +6,7 @@
 package client;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
 import javax.json.Json;
@@ -64,16 +65,25 @@ public class ClientServlet2 extends HttpServlet {
             if (code.equals("update")) {
                 qsp.updateQuestion(param);
             }
-            if (code.equals("updateName")) {
+            else if (code.equals("updateName")) {
                 System.out.println("updateName()");
                 int quiz_id = Integer.parseInt( request.getParameter("quiz_id") );
                 qsp.updateQuiz(quiz_id, param);
             }
-            if (code.equals("create")){
+            else if (code.equals("create")){
                 qsp.createQuiz(param, id); 
             } 
-            if (code.equals("addQuiz")) {
+            else if (code.equals("addQuiz")) {
                 qsp.createQuestions(param, id);
+                qsp.deleteQuestion(0);
+            }
+            else if (code.equals("deleteQuestion")) {
+                int question_id = Integer.parseInt( request.getParameter("question_id") );
+                qsp.deleteQuestion(question_id);
+            }
+            else if (code.equals("deleteQuiz")) {
+                int quiz_id = Integer.parseInt( request.getParameter("quiz_id") );
+                qsp.deleteQuiz( quiz_id );
             }
         }
     }

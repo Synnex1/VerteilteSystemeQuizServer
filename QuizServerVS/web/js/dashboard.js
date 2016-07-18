@@ -2,6 +2,28 @@ function $(id) {
     return document.getElementById(id);
 }
 
+var activeQuizId = null;
+
+function setActiveQuizId(thisId) {
+    activeQuizId = thisId;
+    console.log("setActiveQuizId(): " + thisId);
+}
+
+function getActiveQuizId() {
+    console.log("getActiveQuizId(): " + activeQuizId);
+    return activeQuizId;
+}
+
+function checkRadioPressedOrNot() {
+    var quizName = document.forms[0];
+    for (var i = 0; i < quizName.length; i++) {
+        if (quizName[i].checked) {
+            return true;
+        }
+    }
+    return false;    
+}
+
 function getHttpRequest(url) {
     var xmlhttp = null;
     // Mozilla
@@ -32,8 +54,7 @@ function getHttpRequest(url) {
                 for (index = 0; index < jsObject.length; ++index) {
                     if (jsObject[index] !== null) {
                     htmlResponse +="<input readonly type=\"text\" class=\"form-control\" size=\"50\" placeholder=\""+jsObject[index].name+"\">" +
-                                   "<button type=\"button\" class=\"btn btn-danger RbtnMargin\" id=\""+jsObject[index].quiz_id+"\" >Starten</button> " +
-                                   "<button type=\"button\" onclick=\"editQuiz("+jsObject[index].quiz_id+")\" class=\"btn btn-danger\" >Bearbeiten</button><br><br>"; 
+                                   "<input          type=\"radio\"class=\"form-control radio\" name=\"quizName\" onclick=\"setActiveQuizId(this.id)\" value=\""+jsObject[index].quiz_id+"\" id=\""+jsObject[index].quiz_id+"\"></input> <br><br>"; 
                      }
                 }
                 $('quiz').innerHTML = htmlResponse;
@@ -47,18 +68,18 @@ function getHttpRequest(url) {
 }
 
 function editQuiz(quiz_id) {
-
-    window.location.replace("editQuiz.html?quiz_id="+quiz_id+" ");
+    if ( checkRadioPressedOrNot() === true) {
+        window.location.replace("editQuiz.html?quiz_id="+getActiveQuizId()+" ");
+    } else {
+        alert("Sie müssen ein Quiz auswählen, indem Sie einen Radio-Button aktivieren!");
+    }
 }
 
-function postHttpRequest(url) {
-    // TO BE IMPLEMENTED!!!
-}
-
-function putHttpRequest(url, id) {
-    // TO BE IMPLEMENTED!!!
-}
-
-function deleteHttpRequest(url, id) {
-    // TO BE IMPLEMENTED!!!
+function startQuiz() {
+    if ( checkRadioPressedOrNot() === true) {
+        window.location.replace("quizGame/startScreen.html?quiz_id="+getActiveQuizId()+" ");
+        console.log("Muss noch implementiert werden");
+    } else {
+        alert("Sie müssen ein Quiz auswählen, indem Sie einen Radio-Button aktivieren!");
+    }    
 }

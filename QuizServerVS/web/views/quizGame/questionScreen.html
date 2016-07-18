@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Quiz</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../js/playQuiz.js"></script>
+        <script type="text/javascript" src=""></script>
+        <link rel="stylesheet" href="../../styles/style.css">
+
+        <style>
+
+        html, body{
+          height: 100%;
+          width: 100%;
+          background-color: white;
+        }
+
+        #question_header {
+          width: 100%;
+          height: 97%;
+          line-height: 6;
+          background-color: white;
+          color: black;
+          text-align: center;
+          font-weight: bold;
+          font-size: 20px;
+        }
+
+        #statusBar {
+          background-color: purple;
+          color: purple;
+          height: 3%;
+        }
+
+        #gamePin {
+          width: 100%;
+          height: 8%;
+          line-height: 4;
+          background-color: white;
+          color: black;
+          text-align: left;
+          font-weight: bold;
+          font-size: 15px;  
+          margin-left: 10px; 
+
+          position: fixed;
+          bottom: 0;               
+        }
+
+        #border {
+          border-top: thick black;  
+          border-top-style: solid;
+          margin-left: -10px !important; 
+          height: 3%;        
+        }
+
+        #content_text {
+          position:absolute;
+          top:50%;
+          left:50%;
+          width:30em;
+          height:20em;
+          margin-left:-15em;
+          margin-top:-10em;
+
+        }
+
+        /* Neu */
+        #content {
+          width: 100%;
+          height: 65%;
+          color: black;
+          text-align: center;
+          font-weight: bold;
+          font-size: 20px; 
+          position: relative;
+          overflow: hidden;                    
+        }
+        #container1 {
+          width: 100%;
+          height: 15%;
+        }
+        #container2 {
+          width: 100%;
+          height: 65%;
+          text-align: center;
+        }
+        #container3 {
+          width: 100%;
+          height: 20%;
+        }
+        #content_left {
+          float: left;
+          width: 25%;
+          height: 100%;         
+        }
+        #content_middle {
+          float: left;
+          width: 50%;
+          height: 100%;          
+        }
+        #content_right {
+          width: 25%;
+          height: 100%;
+          float: left;
+        }
+        #answer {
+          height: 50%;
+          width: 100%;
+          text-align: center;
+          margin-top: 5px;
+        }
+        #verticalAlign {
+          width: 150px;
+          height: 150px;          
+          border-radius: 100px; 
+          background-color: red;
+        }
+        #wrapper {
+          margin-top: -25px;
+          height: 100%
+        }
+        #timer {
+          background-color: purple;
+          margin: auto;
+          width: 100px;
+          height: 100px;
+          color: white;
+          border-radius: 100px;
+          font-weight: bold;
+          font-size: 30px;
+          display: table-cell;
+          vertical-align: middle;
+          text-align: center;
+        }
+        #timer_wrapper {
+          width: 100px;
+          margin: auto;
+        }
+        #question {
+          display: inline-block;
+          vertical-align: middle;  
+          text-align: center;
+          margin: auto; 
+          font-size: 20px;                 
+        }
+        #question_wrapper {
+          width: 94%;
+          margin: auto;
+          height: auto;
+          text-align: center;
+          border-left: 6px solid #1368ce;
+        }
+        #question_wrapper:before {
+          content: ' ';
+          display: inline-block;
+          vertical-align: middle; /* vertical alignment of the inline element */
+          height: 94%;
+        }
+        #answers {
+          margin-top: 20px;
+          font-size: 20px;
+          font-weight: bold;
+        }
+        .correct {
+          height: 30px;
+          width: 30px;
+          right: 5px;
+          visibility: hidden;
+        }
+        .answerButton {
+          width: 47%;
+          height: 70px;
+          background-color: #1368ce;
+          color: white;
+          font-weight: bold;          
+        }        
+        span.answerLabel {
+          text-align: left;  
+          left: 10px;              
+        }
+        .spaceHolder {
+          height: 30px;
+          width: 30px;
+          visibility: none;
+        }
+        .selected {
+          visibility: hidden;
+          height: 25px;
+          width: 25px;
+        }
+
+        </style>
+
+    </head>
+
+    <body>
+
+    <div id="wrapper">
+
+    <div id="container1">
+      <div id="question_header">Frage 0/0</div>
+      <div id="border"></div>      
+    </div>
+
+    <div id="container2">
+
+      <br>
+      <div id="timer_wrapper">
+        <div id="timer">25</div>
+      </div>
+      <br>
+      <div id="question_wrapper">
+        <div id="question">F</div> 
+      </div>    
+      <br>
+      <div id="answers">X Antworten</div>
+
+    </div>
+
+    <div id="container3">
+      <form id="myForm">
+          <div id="answer">
+            <button type="button" name="btn1" class="answerButton" id="1" onclick="setAnswer(this.id)">
+              <img class="spaceHolder" src="../../pictures/letter_a.png">
+              <span class="answerLabel">Answer 1</span>
+              <img class="selected" name="selected1" src="../../pictures/selected.png">              
+              <img name="correct1" class="correct"   src="../../pictures/correct.png">
+            </button>
+            <button type="button" name="btn2" class="answerButton" id="2" onclick="setAnswer(this.id)">
+              <img class="spaceHolder" src="../../pictures/letter_b.png">
+              <span class="answerLabel">Answer 2</span>
+              <img name="correct2" class="correct"   src="../../pictures/correct.png">  
+              <img class="selected" name="selected2" src="../../pictures/selected.png">            
+            </button>
+          </div>
+          <div id="answer">
+            <button type="button" name="btn3" class="answerButton" id="3" onclick="setAnswer(this.id)">
+              <img class="spaceHolder" src="../../pictures/letter_c.png">              
+              <span name="correct3" class="answerLabel">Answer 3</span>
+              <img class="correct"   src="../../pictures/correct.png">
+              <img class="selected" name="selected3" src="../../pictures/selected.png">
+            </button>
+            <button type="button" name="btn4" class="answerButton" id="4" onclick="setAnswer(this.id)">
+              <img class="spaceHolder" src="../../pictures/letter_d.png">
+              <span class="answerLabel">Answer 4</span>
+              <img name="correct4" class="correct"   src="../../pictures/correct.png">
+              <img class="selected" name="selected4" src="../../pictures/selected.png">
+            </button>
+          </div>
+      </form>
+    </div>           
+
+    </body>
+</html>

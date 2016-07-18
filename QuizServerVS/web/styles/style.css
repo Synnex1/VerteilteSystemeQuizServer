@@ -1,0 +1,95 @@
+/* Navigations-Bar */
+.navbar {
+    margin-bottom: 0;
+    background-color: #f4511e;
+    z-index: 9999;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+}
+
+.navbar li a, .navbar .navbar-brand {
+    color: #fff !important;
+    font-size: 12px !important;
+}
+
+.navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #f4511e !important;
+    background-color: #fff !important;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #fff !important;
+}
+
+/* HTML-Elemente */
+
+body {background-color: #f4511e}
+
+.jumbotron { 
+    background-color: #f4511e;
+    color: #fff;
+    padding: 60px 25px; 
+    padding-bottom: 30px;    
+}
+input.form-control:read-only { 
+    background-color: #fffafa;
+    margin-right: 10px;
+    border-radius: 10px;                
+    font-weight: bold;
+}
+input.form-control.radio { 
+    margin-top: 0px;
+}
+input.form-control.pin { 
+    text-align: center;
+    padding: 30px;
+    background-color: #FFB;
+    margin-bottom: 13px;
+    font-size: initial;
+    color: black;
+    font-weight: bold;
+    border-radius: 20px;    
+} 
+input.form-control.question {
+    background-color: #FFB;
+}
+input.form-control.quizName {
+    background-color: #cdecf9;
+    text-align: center;
+    height: 60px;
+    font-size: 20px;
+    border-radius: 20px;
+}
+input.form-control#x {
+    display: invisible;
+}
+input.form-control#q {
+    background-color: #FFB;
+}
+input.form-control#qn {
+    background-color: #cdecf9;
+    text-align: center;
+    height: 60px;
+    font-size: 20px;
+    border-radius: 20px;
+}
+#newQuiz { 
+    background-color: #63c08d;
+} 
+#newQuiz:hover { 
+    background-color: #3cb371;
+}                                   
+.container-fluid {
+    padding: 0px 50px;
+    padding-bottom: 20px;
+}            
+.RbtnMargin { 
+    margin-left: 3px; 
+}
+#shadow {
+    text-shadow: 2px 3px 0 black;
+}

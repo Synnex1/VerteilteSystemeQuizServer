@@ -7,7 +7,7 @@ function statusChangeCallback(response) {
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
     testAPI();
-    setTimeout(function(){location.href="views/dashboard.html";} , 10000);
+    setTimeout(function(){location.href="views/dashboard.html";} , 5000);
     // window.location = "views/dashboard.html";
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
@@ -69,14 +69,11 @@ FB.getLoginStatus(function(response) {
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
 function testAPI() {
-  console.log('Welcome!  Fetching your information.... ');
   FB.api('/me', function(response) {
-    console.log('Successful login for: ' + response.name);
-    console.log(JSON.stringify(response));
+    console.log('Login erfolgreich für: ' + response.name);
     postHttpRequest('ClientServlet', response);
-    console.log(response);
     document.getElementById('status').innerHTML =
-      'Thanks for logging in, ' + response.name + '!';
+      'Login erfolgreich, du wirst in 5 Sekunden weitergeleitet ' + response.name + ' !';
   });
 }
 

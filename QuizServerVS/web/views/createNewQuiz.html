@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>QuizServer</title>
+        <title>Neues Quiz</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -9,65 +9,52 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/fbCheckLogin.js"></script> 
-        <script type="text/javascript" src="../js/createNewQuiz.js"></script>              
+        <script type="text/javascript" src="../js/createNewQuiz.js"></script>
+        <link rel="stylesheet" href="../styles/style.css">              
 
-<script type="text/javascript">
-	function delayer(){
-		window.setTimeout('window.location = "dashboard.html"',2000);
-	}
-</script>        
-        
-        <style>
-            .jumbotron { 
-			    background-color: #f4511e;
-			    color: #fff;
-			    padding: 60px 25px; 
-                padding-bottom: 30px;    
-            }
-			.container-fluid {
-			    padding: 0px 50px;
-			    padding-bottom: 20px;
+		<script type="text/javascript">
+			function delayer(){
+				window.setTimeout('window.location = "dashboard.html"',1000);
 			}
-			.save {
-				background-color: #708393;
-			}  
-			.btn-danger.save:hover {
-			    color: #fff;
-			    background-color: #4682b4;
-			    border-color: #ac2925;
-			}         
-            input.form-control:read-only { 
-                background-color: white;
-            }
-            input.form-control#q {
-            	background-color: #FFB;
-            	margin-left: -16px;
-            }
-            input.form-control#qn {
-            	background-color: #cdecf9;
-            	text-align: center;
-            	height: 60px;
-            	font-size: 20px;
-            }            
-            input.form-control#x {
-            	display: invisible;
-            }
-            .RbtnMargin { margin-left: 3px; }
-        </style>
+		</script>        
+        
     </head>
+
+    <!-- Nav-Bar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </button>
+          <a class="navbar-brand" onclick="delayer()">ZUM DASHBOARD</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a onclick="nextQuestion()">FRAGE HINZUFÜGEN</a></li>
+            <li><a onclick="createQuiz()">QUIZ SPEICHERN</a></li>
+            <li><a href="#contact">INFORMATIONEN</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
     <body>
         <div class="jumbotron text-center">
             <div class="row">
-                <h1>Quiz Erstellen</h1> 
-                <p>- Verteilte Systeme -</p>  
+                <h1 id="shadow">QuizServer</h1> 
+                <p>- Erstellen -</p>  
 
                 <form id="myForm2" action="javascript:postHttpRequest();" method="POST" class="form-inline">
-                	<input type="text" class="form-control" size="50" placeholder="Quizname" name="quizname" id="qn" /> <br><br>
+                	<input type="text" class="form-control" size="50" placeholder="Quizname" name="quizname" id="qn" autofocus/> <br><br>
                 </form>
 
             	<form id="myForm" action="javascript:postHttpRequest();" method="POST" class="form-inline">
             		<div id="q1">
-                		<input type="text" class="form-control" size="50" placeholder="Frage" name="question_1" id="q" /> <br>  	               	
+                		<input type="text" class="form-control" size="50" placeholder="Frage" name="question_1" id="q" />
+                		<input type="checkbox" name="hidden_checkbox" style="visibility:hidden;"/> <br>
                         <input type="text" class="form-control" size="50" placeholder="Antwort 1 hier eintragen" name="answer_1_1"/> 
                 		<input type="checkbox" name="chk1_1" /> <br>                            
                         <input type="text" class="form-control" size="50" placeholder="Antwort 2 hier eintragen" name="answer_1_2"/>
@@ -78,20 +65,8 @@
                         <input type="checkbox" name="chk1_4" /> <br>
                         <p></p>                          
                     </div>
-                    <div id="button">
-                    	<button type="button" class="btn btn-danger RbtnMargin" onclick="delayer()">Zum Dashboard</button>
-                        <button type="button" class="btn btn-danger RbtnMargin" onclick="nextQuestion()">Weitere Frage...</button>
-                        <button type="submit" class="btn btn-danger save RbtnMargin" >Quiz speichern</button>
-                    </div>
                 </form>   
             </div>
         </div> 
-
-		<div class="container-fluid">
-		  <h2>Wie du ganz einfach ein Quiz erstellst...</h2>
-		  <h4>Mit diesen Tipps wirst du zum Quiz Master !</h4> 
-		  <p> </p>
-		  <button class="btn btn-default btn-lg">Tipps anzeigen</button>
-		</div>
     </body>
 </html>

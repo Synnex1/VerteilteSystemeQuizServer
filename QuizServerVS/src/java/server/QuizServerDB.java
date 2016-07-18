@@ -374,6 +374,7 @@ public class QuizServerDB {
                     stmt2.setString(5, answer);
                     stmt2.setBoolean(6, correct);
                     stmt2.executeUpdate();
+                    answerId++;
                     }
                 } else {
                     System.err.println("Got an Exception at createQuestions!");

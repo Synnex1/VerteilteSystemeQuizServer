@@ -23,7 +23,6 @@ import javax.servlet.http.HttpSession;
 
 import server.QuizServer;
 import server.QuizServerProxy;
-import server.entities.Quiz;
 
 /**
  *
@@ -33,7 +32,6 @@ import server.entities.Quiz;
 public class ClientServlet extends HttpServlet {
     QuizServer qs = null;
     QuizServerProxy qsp = null;
-    Quiz q = null;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

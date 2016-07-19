@@ -21,4 +21,7 @@ public interface QuizServerProxy extends Remote{
     public void createQuestions(String jsonString, String userId) throws RemoteException;
     public void deleteQuiz(int quizId) throws RemoteException;
     public void deleteQuestion(int questionId) throws RemoteException;
+    public String readyQuiz(int quizId) throws RemoteException;
+    public void startQuiz(String code) throws RemoteException;
+    public Boolean joinQuiz(String code, String userId) throws RemoteException;
 }

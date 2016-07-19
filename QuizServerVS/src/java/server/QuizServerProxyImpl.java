@@ -14,6 +14,7 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServerProxy{
     QuizServerDB qsdb;
+    QuizServerImpl qs;
     
     public QuizServerProxyImpl() throws RemoteException {
         this.qsdb = new QuizServerDB();
@@ -57,6 +58,33 @@ public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServ
     @Override
     public void deleteQuestion(int questionId) throws RemoteException {
         qsdb.deleteQuestion(questionId);
+    }
+
+    @Override
+    public String readyQuiz(int quizId) throws RemoteException {
+        String code = qs.readyQuiz(quizId);
+        return qsdb.getQuizInfo(quizId, code);
+    }
+    
+    @Override
+    public void startQuiz(String code) throws RemoteException {
+        qs.startQuiz(code);
+    }
+
+    @Override
+    public Boolean joinQuiz(String code, String userId) throws RemoteException {
+        String name = qsdb.getUserName(userId);
+        if ( name == null ) {
+            System.err.println("Datenbank gab keinen Usernamen zur UserId aus!");
+            return false;
+        } else {
+            if( qs.joinQuiz(code, userId, name) ) {
+                return true;
+            } else {
+                System.err.println("Konnte Client dem Quiz net zuweisen!");
+                return false;
+            }
+        }
     }
     
 }

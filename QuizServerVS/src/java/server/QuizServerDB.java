@@ -69,6 +69,31 @@ public class QuizServerDB {
         return true;
     }
     
+    public String getUserName(String userId) {
+        String name = null;
+        
+        PreparedStatement stmt;
+        ResultSet rs;
+        String sql = "SELECT FIRSTNAME, LASTNAME FROM " + dbName + ".USERS " +
+                "WHERE USERS_ID = ?";
+        
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, userId);
+            rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                name = rs.getString("FIRSTNAME") + " " + rs.getString("LASTNAME");
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        }
+        
+        return name;
+    }
+    
     public String getAllQuizFromUser(String User_Id) { 
 
         try (Statement stmt = conn.createStatement())
@@ -214,6 +239,87 @@ public class QuizServerDB {
             rs = stmt.executeQuery();
             if( rs.next() ) {
                 quizName = rs.getString("NAME");
+                jsObjQBuilder.add("quiz_id", quizId);
+                jsObjQBuilder.add("quiz_name", quizName);
+            }
+            
+            // question credentials
+            sql = "SELECT QUESTION_ID, QUESTION FROM " + dbName + ".Question " +
+                    "WHERE QUIZ_ID_F = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, quizId);
+            rs = stmt.executeQuery();
+            
+            // answer credentials 
+            sql2 = "SELECT ANSWER_ID, ANSWER, CORRECT FROM " + dbName + ".ANSWER " +
+                    "WHERE QUESTION_ID_F = ?";
+            stmt2 = conn.prepareStatement(sql2);
+            while( rs.next() ) {
+                questionId = rs.getInt("QUESTION_ID");
+                question = rs.getString("QUESTION");
+                              
+                stmt2.setInt(1, questionId);
+                rs2 = stmt2.executeQuery();
+                
+                while ( rs2.next() ) {
+                    answerId = rs2.getInt("ANSWER_ID");
+                    answer = rs2.getString("ANSWER");
+                    correct = rs2.getBoolean("CORRECT");
+                    jsArrABuilder.add(Json.createObjectBuilder()
+                        .add("answer_id", answerId)
+                        .add("answer", answer)
+                        .add("correct", correct));
+                }
+                jsArrQueBuilder.add(Json.createObjectBuilder()
+                        .add("question_id", questionId)
+                        .add("question", question)
+                        .add("answers", jsArrABuilder));  
+                
+            }
+            jsObjQBuilder.add("questions", jsArrQueBuilder);
+            
+        } catch (SQLException e) {
+            System.err.println("Got an exception");
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+        String json = jsObjQBuilder.build().toString();
+        return json;
+    }
+    
+    public String getQuizInfo(int quizId, String code) {
+        PreparedStatement stmt;
+        PreparedStatement stmt2;
+        String sql;
+        String sql2;
+        ResultSet rs;
+        ResultSet rs2;
+        
+        // credentials
+        // quiz
+        String quizName;
+        // question 
+        int questionId;
+        String question;
+        // answer
+        int answerId;
+        String answer;
+        Boolean correct;
+        
+        JsonObjectBuilder jsObjQBuilder = Json.createObjectBuilder();
+        JsonArrayBuilder jsArrQueBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder jsArrABuilder = Json.createArrayBuilder();
+        
+        try {
+            // Quiz credentials
+            sql = "Select NAME FROM " + dbName + ".Quiz " +
+                    "WHERE QUIZ_ID = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, quizId);
+            rs = stmt.executeQuery();
+            if( rs.next() ) {
+                quizName = rs.getString("NAME");
+                jsObjQBuilder.add("code", code);
                 jsObjQBuilder.add("quiz_id", quizId);
                 jsObjQBuilder.add("quiz_name", quizName);
             }

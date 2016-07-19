@@ -86,5 +86,20 @@ public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServ
             }
         }
     }
+
+    @Override
+    public Boolean increaseHighscore(String code, String userId, int time) throws RemoteException {
+        if (qs.increaseHighscore(code, userId, time)) {
+            return true;
+        } else {
+            return false;
+        }      
+    }
+
+    @Override
+    public String getHighscore(String code) throws RemoteException {
+        return qs.getHighscore(code);
+    }
+    
     
 }

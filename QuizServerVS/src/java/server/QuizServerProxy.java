@@ -24,4 +24,6 @@ public interface QuizServerProxy extends Remote{
     public String readyQuiz(int quizId) throws RemoteException;
     public void startQuiz(String code) throws RemoteException;
     public Boolean joinQuiz(String code, String userId) throws RemoteException;
+    public Boolean increaseHighscore(String code, String userId, int time) throws RemoteException;
+    public String getHighscore(String code) throws RemoteException;
 }

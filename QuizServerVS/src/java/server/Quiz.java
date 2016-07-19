@@ -45,4 +45,15 @@ public class Quiz {
         }
         return jArrB.build().toString();
     }
+    
+    public Boolean increaseHighscore(String userId, int time) {
+        Client c = cMap.get(userId);
+        if ( c == null ) {
+            System.err.println("UserId nicht gefunden!");
+            return false;
+        } else {
+            c.increaseHighscore(time);
+            return true;
+        }
+    }
 }

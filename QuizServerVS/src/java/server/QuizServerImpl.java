@@ -107,4 +107,29 @@ public class QuizServerImpl implements QuizServer{
             
         }
     }
+    
+    public Boolean increaseHighscore(String code, String userId, int time) {
+        Quiz q = qMap.get(code);
+        if (q == null) {
+            System.err.println("Code nicht gefunden!");
+            return false;
+        } else {
+            if (q.increaseHighscore(userId, time)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    
+    public String getHighscore(String code) {
+        Quiz q = qMap.get(code);
+        if ( q == null ) {
+            System.err.println("Code nicht gefunden!");
+            return null;
+        } else {
+            return q.getHighscore();
+        }
+    }
+    
 }

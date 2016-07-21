@@ -5,6 +5,7 @@
  */
 package server;
 
+import client.ClientProxy;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -86,13 +87,13 @@ public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServ
     }
 
     @Override
-    public String joinQuiz(String code, String userId) throws RemoteException {
+    public String joinQuiz(String code, String userId, ClientProxy clp) throws RemoteException {
         String name = qsdb.getUserName(userId);
         if ( name == null ) {
             System.err.println("Datenbank gab keinen Usernamen zur UserId aus!");
             return null;
         } else {
-            return qs.joinQuiz(code, userId, name);
+            return qs.joinQuiz(code, userId, name, clp);
         }
     }
 

@@ -5,6 +5,7 @@
  */
 package server;
 
+import client.ClientProxy;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -108,9 +109,10 @@ public class QuizServerImpl implements QuizServer{
      * @param code
      * @param userId
      * @param name
+     * @param clp
      * @return
      */
-    public String joinQuiz(String code, String userId, String name) {
+    public String joinQuiz(String code, String userId, String name, ClientProxy clp) {
         Quiz q = qMap.get(code);
         
         if( q == null ) {
@@ -118,7 +120,7 @@ public class QuizServerImpl implements QuizServer{
             return null;
         } else {
             if (q.joinFlag) {
-                return q.addClient(userId, name);
+                return q.addClient(userId, name, clp);
             } else {
                 System.err.println("Quiz ist bereits gestartet!");
                 return null;

@@ -5,6 +5,8 @@
  */
 package server;
 
+import client.ClientProxy;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.json.Json;
@@ -29,12 +31,12 @@ public class Quiz {
         this.questions = questions;
     }
     
-    public String addClient(String clientId, String clientName) {
+    public String addClient(String clientId, String clientName, ClientProxy clp) {
         if (!this.joinFlag) {
             return null;
         }
         
-        Client cl = new Client(clientName);
+        Client cl = new Client(clientName, clp);
         cMap.put(clientId, cl);
         return this.quizName;
     }
@@ -61,8 +63,16 @@ public class Quiz {
     
     public String nextQuestion() {
         JsonObject nextQuestion;
-        
         this.questionIndex++;
+        
+        for(Map.Entry<String, Client> entry : cMap.entrySet()) {
+            try {
+                entry.getValue().clp.setFlag();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+
         nextQuestion = questions.getJsonObject(questionIndex);
         return nextQuestion.toString();
     }

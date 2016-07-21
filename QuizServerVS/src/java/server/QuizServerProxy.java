@@ -5,6 +5,7 @@
  */
 package server;
 
+import client.ClientProxy;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -96,10 +97,11 @@ public interface QuizServerProxy extends Remote{
      *
      * @param code
      * @param userId
+     * @param clp
      * @return
      * @throws RemoteException
      */
-    public String joinQuiz(String code, String userId) throws RemoteException;
+    public String joinQuiz(String code, String userId, ClientProxy clp) throws RemoteException;
 
     /**
      *

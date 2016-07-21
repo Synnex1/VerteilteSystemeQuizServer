@@ -5,8 +5,12 @@
  */
 package server;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 
 /**
  *
@@ -62,8 +66,18 @@ public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServ
 
     @Override
     public String readyQuiz(int quizId) throws RemoteException {
-        String code = qs.readyQuiz(quizId);
-        return qsdb.getQuizInfo(quizId, code);
+        JsonObject obj = qsdb.getQuestions(quizId);
+        String quizName = obj.getString("quiz_name");
+        JsonArray questions = obj.getJsonArray("questions");
+        String code = qs.readyQuiz(quizName, questions);
+        
+        JsonObject returnObj = Json.createObjectBuilder()
+                .add("code", code)
+                .add("quizName", quizName)
+                .build();
+        
+        
+        return returnObj.toString();
     }
     
     @Override
@@ -72,18 +86,13 @@ public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServ
     }
 
     @Override
-    public Boolean joinQuiz(String code, String userId) throws RemoteException {
+    public String joinQuiz(String code, String userId) throws RemoteException {
         String name = qsdb.getUserName(userId);
         if ( name == null ) {
             System.err.println("Datenbank gab keinen Usernamen zur UserId aus!");
-            return false;
+            return null;
         } else {
-            if( qs.joinQuiz(code, userId, name) ) {
-                return true;
-            } else {
-                System.err.println("Konnte Client dem Quiz net zuweisen!");
-                return false;
-            }
+            return qs.joinQuiz(code, userId, name);
         }
     }
 
@@ -99,6 +108,21 @@ public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServ
     @Override
     public String getHighscore(String code) throws RemoteException {
         return qs.getHighscore(code);
+    }
+
+    @Override
+    public Boolean endQuiz(String code) throws RemoteException {
+        return qs.endQuiz(code);
+    }
+
+    @Override
+    public String nextQuestion(String code) throws RemoteException {
+        return qs.nextQuestion(code);
+    }
+
+    @Override
+    public String getNextQuestion(String code) throws RemoteException {
+        return qs.getNextQuestion(code);
     }
     
     

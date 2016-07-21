@@ -287,7 +287,7 @@ public class QuizServerDB {
         return json;
     }
     
-    public String getQuizInfo(int quizId, String code) {
+    public JsonObject getQuestions(int quizId) {
         PreparedStatement stmt;
         PreparedStatement stmt2;
         String sql;
@@ -319,8 +319,6 @@ public class QuizServerDB {
             rs = stmt.executeQuery();
             if( rs.next() ) {
                 quizName = rs.getString("NAME");
-                jsObjQBuilder.add("code", code);
-                jsObjQBuilder.add("quiz_id", quizId);
                 jsObjQBuilder.add("quiz_name", quizName);
             }
             
@@ -352,7 +350,6 @@ public class QuizServerDB {
                         .add("correct", correct));
                 }
                 jsArrQueBuilder.add(Json.createObjectBuilder()
-                        .add("question_id", questionId)
                         .add("question", question)
                         .add("answers", jsArrABuilder));  
                 
@@ -364,8 +361,8 @@ public class QuizServerDB {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }
-        String json = jsObjQBuilder.build().toString();
-        return json;
+        
+        return jsObjQBuilder.build();
     }
     
     public void updateQuiz(int quizId, String quizName) {

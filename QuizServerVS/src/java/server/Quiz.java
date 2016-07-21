@@ -8,33 +8,35 @@ package server;
 import java.util.HashMap;
 import java.util.Map;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 
 /**
  *
  * @author Mike
  */
 public class Quiz {
-    int quizId;
     String quizName;
-    String code;
+    JsonArray questions;
+    int questionIndex = -1;
     Boolean joinFlag = true;
     HashMap<String, Client> cMap = new HashMap();
     
     
-    public Quiz(int quizId, String code) {
-        this.quizId = quizId;
-        this.code = code;
+    public Quiz(String quizName, JsonArray questions) {
+        this.quizName = quizName;
+        this.questions = questions;
     }
     
-    public Boolean addClient(String clientId, String clientName) {
+    public String addClient(String clientId, String clientName) {
         if (!this.joinFlag) {
-            return false;
+            return null;
         }
         
         Client cl = new Client(clientName);
         cMap.put(clientId, cl);
-        return true;
+        return this.quizName;
     }
     
     public String getHighscore() {
@@ -55,5 +57,19 @@ public class Quiz {
             c.increaseHighscore(time);
             return true;
         }
+    }
+    
+    public String nextQuestion() {
+        JsonObject nextQuestion;
+        
+        this.questionIndex++;
+        nextQuestion = questions.getJsonObject(questionIndex);
+        return nextQuestion.toString();
+    }
+    
+    public String getNextQuestion() {
+        JsonObject nextQuestion;
+        nextQuestion = questions.getJsonObject(questionIndex);
+        return nextQuestion.toString();
     }
 }

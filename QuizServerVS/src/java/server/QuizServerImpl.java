@@ -11,6 +11,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Random;
+import javax.json.JsonArray;
 
 /**
  *
@@ -27,8 +28,7 @@ public class QuizServerImpl implements QuizServer{
     public static void main(String[] args) {
         //CreateTables ct = new CreateTables();
         //ct.createTables();  
-        
-        
+
         try {
             QuizServerImpl obj = new QuizServerImpl();
             QuizServer stub = (QuizServer) UnicastRemoteObject.exportObject(obj, 0);
@@ -52,10 +52,16 @@ public class QuizServerImpl implements QuizServer{
         
     }
     
-    public String readyQuiz (int quizId) {
+    /**
+     *
+     * @param quizName
+     * @param questions
+     * @return
+     */
+    public String readyQuiz (String quizName, JsonArray questions) {
         String code = getSaltString();
         Boolean contains = true;
-        Quiz q = new Quiz(quizId, code);
+        Quiz q = new Quiz(quizName, questions);
         
         do {
             if(qMap.containsKey(code)) {
@@ -68,6 +74,10 @@ public class QuizServerImpl implements QuizServer{
         return code;               
     }
     
+    /**
+     *
+     * @param code
+     */
     public void startQuiz (String code ) {
         Quiz q = qMap.get(code);
         if (q == null) {
@@ -77,7 +87,10 @@ public class QuizServerImpl implements QuizServer{
         }
     }
     
-    // generate a random alpha-numeric String
+    /**
+     *
+     * @return
+     */
     protected String getSaltString() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
@@ -90,24 +103,37 @@ public class QuizServerImpl implements QuizServer{
         return saltStr;
     }
     
-    public Boolean joinQuiz(String code, String userId, String name) {
+    /**
+     *
+     * @param code
+     * @param userId
+     * @param name
+     * @return
+     */
+    public String joinQuiz(String code, String userId, String name) {
         Quiz q = qMap.get(code);
         
         if( q == null ) {
             System.err.println("Code falsch!");
-            return false;
+            return null;
         } else {
             if (q.joinFlag) {
-                q.addClient(userId, name);
-                return true;
+                return q.addClient(userId, name);
             } else {
                 System.err.println("Quiz ist bereits gestartet!");
-                return false;
+                return null;
             }
             
         }
     }
     
+    /**
+     *
+     * @param code
+     * @param userId
+     * @param time
+     * @return
+     */
     public Boolean increaseHighscore(String code, String userId, int time) {
         Quiz q = qMap.get(code);
         if (q == null) {
@@ -122,6 +148,11 @@ public class QuizServerImpl implements QuizServer{
         }
     }
     
+    /**
+     *
+     * @param code
+     * @return
+     */
     public String getHighscore(String code) {
         Quiz q = qMap.get(code);
         if ( q == null ) {
@@ -132,4 +163,38 @@ public class QuizServerImpl implements QuizServer{
         }
     }
     
+    /**
+     *
+     * @param code
+     * @return
+     */
+    public Boolean endQuiz(String code) {
+        if(qMap.containsKey(code)) {
+            qMap.remove(code);
+            return true;
+        } else {
+            System.err.println("Code wurde nicht gefunden!");
+            return false;
+        }
+    }
+    
+    public String nextQuestion(String code) {
+        Quiz q = qMap.get(code);
+        if(q == null){
+            System.err.println("Code nicht gefunden!");
+            return null;
+        } else {
+            return q.nextQuestion();
+        }
+    }
+    
+    public String getNextQuestion(String code) {
+        Quiz q = qMap.get(code);
+        if(q == null) {
+            System.err.println("Code nicht gefunden!");
+            return null;
+        } else {
+            return q.getNextQuestion();
+        }
+    }
 }

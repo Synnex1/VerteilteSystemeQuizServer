@@ -21,7 +21,8 @@ public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServ
     QuizServerDB qsdb;
     QuizServerImpl qs;
     
-    public QuizServerProxyImpl() throws RemoteException {
+    public QuizServerProxyImpl(QuizServerImpl qs) throws RemoteException {
+        this.qs = qs;
         this.qsdb = new QuizServerDB();
     }
 

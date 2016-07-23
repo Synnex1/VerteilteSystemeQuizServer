@@ -43,7 +43,7 @@ public class QuizServerImpl implements QuizServer{
         if (qsdb.checkUser(id, name)) {
             System.out.println("HIER BIN ICH RICHTIG!");
             QuizServerProxy qsp;
-            qsp = new QuizServerProxyImpl();
+            qsp = new QuizServerProxyImpl(this);
             qsdb.closeConn();
             return qsp;
         } else {

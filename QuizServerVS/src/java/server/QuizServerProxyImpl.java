@@ -6,7 +6,6 @@
 package server;
 
 import client.ClientProxy;
-import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import javax.json.Json;

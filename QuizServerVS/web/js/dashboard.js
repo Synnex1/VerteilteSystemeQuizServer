@@ -76,10 +76,35 @@ function editQuiz(quiz_id) {
 }
 
 function startQuiz() {
-    if ( checkRadioPressedOrNot() === true) {
-        window.location.replace("quizGame/startScreen.html?quiz_id="+getActiveQuizId()+" ");
-        console.log("Muss noch implementiert werden");
+    if ( checkRadioPressedOrNot() === true) {    
+        window.location.replace('quizGame/startScreen.html?quiz_id='+getActiveQuizId()+'');
     } else {
         alert("Sie müssen ein Quiz auswählen, indem Sie einen Radio-Button aktivieren!");
     }    
+}
+
+function joinQuiz() {
+    var pin = document.getElementById('pin').value;
+    var xmlhttp = null;
+    var url = '../ClientServlet3';
+
+    if (window.XMLHttpRequest) {
+        xmlhttp = new XMLHttpRequest(); // Mozilla
+    }    
+    else if (window.ActiveXObject) {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); // IE
+    }
+   
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+
+            var Response = xmlhttp.responseText;
+            console.log("joinQuiz(): " + Response);
+
+            window.location.replace('quizGame/userLobby.html?pin='+ pin +'&role=player');
+        }
+    };
+    xmlhttp.open("GET", url+'?js='+pin+'&code=joinQuiz', true);    
+    xmlhttp.send();    
+
 }

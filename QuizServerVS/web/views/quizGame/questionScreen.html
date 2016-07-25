@@ -8,8 +8,7 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../../js/playQuiz.js"></script>
-        <script type="text/javascript" src=""></script>
+        <script type="text/javascript" src="../../js/questionScreen.js"></script>
         <link rel="stylesheet" href="../../styles/style.css">
 
         <style>
@@ -216,7 +215,7 @@
       </div>
       <br>
       <div id="question_wrapper">
-        <div id="question">F</div> 
+        <div id="question">Frage</div> 
       </div>    
       <br>
       <div id="answers">X Antworten</div>
@@ -228,33 +227,37 @@
           <div id="answer">
             <button type="button" name="btn1" class="answerButton" id="1" onclick="setAnswer(this.id)">
               <img class="spaceHolder" src="../../pictures/letter_a.png">
-              <span class="answerLabel">Answer 1</span>
+              <span class="answerLabel" id="a1">Answer 1</span>
               <img class="selected" name="selected1" src="../../pictures/selected.png">              
               <img name="correct1" class="correct"   src="../../pictures/correct.png">
+              <input type="hidden" id="h1" value=""></input>
             </button>
             <button type="button" name="btn2" class="answerButton" id="2" onclick="setAnswer(this.id)">
               <img class="spaceHolder" src="../../pictures/letter_b.png">
-              <span class="answerLabel">Answer 2</span>
+              <span class="answerLabel" id="a2">Answer 2</span>
               <img name="correct2" class="correct"   src="../../pictures/correct.png">  
-              <img class="selected" name="selected2" src="../../pictures/selected.png">            
+              <img class="selected" name="selected2" src="../../pictures/selected.png">  
+              <input type="hidden" id="h2" value=""></input>          
             </button>
           </div>
           <div id="answer">
             <button type="button" name="btn3" class="answerButton" id="3" onclick="setAnswer(this.id)">
               <img class="spaceHolder" src="../../pictures/letter_c.png">              
-              <span name="correct3" class="answerLabel">Answer 3</span>
+              <span name="correct3" class="answerLabel" id="a3">Answer 3</span>
               <img class="correct"   src="../../pictures/correct.png">
               <img class="selected" name="selected3" src="../../pictures/selected.png">
+              <input type="hidden" id="h3" value=""></input>
             </button>
             <button type="button" name="btn4" class="answerButton" id="4" onclick="setAnswer(this.id)">
               <img class="spaceHolder" src="../../pictures/letter_d.png">
-              <span class="answerLabel">Answer 4</span>
+              <span class="answerLabel" id="a4">Answer 4</span>
               <img name="correct4" class="correct"   src="../../pictures/correct.png">
               <img class="selected" name="selected4" src="../../pictures/selected.png">
+              <input type="hidden" id="h4" value=""></input>
             </button>
           </div>
       </form>
-    </div>           
+    </div>         
 
     </body>
 </html>

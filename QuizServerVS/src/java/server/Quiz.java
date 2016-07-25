@@ -70,6 +70,7 @@ public class Quiz {
                 entry.getValue().clp.setFlag();
             } catch (RemoteException e) {
                 e.printStackTrace();
+                System.err.println(e.getMessage());                
             }
         }
 

@@ -70,7 +70,8 @@ public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServ
     public String readyQuiz(int quizId) throws RemoteException {
         JsonObject obj = qsdb.getQuestions(quizId);
         String quizName = obj.getString("quiz_name");
-        JsonArray questions = obj.getJsonArray("questions");
+        JsonArray questions = obj.getJsonArray("questions");        
+        
         String code = qs.readyQuiz(quizName, questions);
         
         JsonObject returnObj = Json.createObjectBuilder()

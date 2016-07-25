@@ -42,6 +42,8 @@ public class ClientServlet2 extends HttpServlet {
         HttpSession session = request.getSession();
         QuizServerProxy qsp = (QuizServerProxy) session.getAttribute("qsp");
         
+        
+        
         if ( qsp != null ) {
             System.out.println("qsp != null");
         }  else {

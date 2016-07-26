@@ -17,7 +17,8 @@ import javax.servlet.http.HttpSession;
 public class ClientProxyImpl extends UnicastRemoteObject implements ClientProxy, Serializable{
     HttpSession session;
     
-    public ClientProxyImpl() throws RemoteException {
+    public ClientProxyImpl(HttpSession session) throws RemoteException {
+        this.session = session;
     }
     
     @Override

@@ -168,7 +168,7 @@ public class ClientServlet extends HttpServlet {
                 Registry registry = LocateRegistry.getRegistry();                
                 qs = (QuizServer) registry.lookup("QuizServer");
                 System.out.println("qs: " + qs);
-                //chatsrv = (ChatServer)Naming.lookup("rmi://131.173.110.7/ChatServer");               
+                //qs = (QuizServer)Naming.lookup("rmi://131.173.110.7/QuizServer");               
                 
                 // checkUser im QuizServer implementieren!
                 qsp = qs.checkUser(id, name);

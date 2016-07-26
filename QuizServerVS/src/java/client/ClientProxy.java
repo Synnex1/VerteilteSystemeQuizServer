@@ -14,4 +14,5 @@ import java.rmi.RemoteException;
  */
 public interface ClientProxy extends Remote {
     public void setFlag() throws RemoteException;
+    public void setEndFlag() throws RemoteException;
 }

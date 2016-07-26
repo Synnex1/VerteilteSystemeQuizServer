@@ -25,5 +25,10 @@ public class ClientProxyImpl extends UnicastRemoteObject implements ClientProxy,
     public void setFlag() throws RemoteException {
         session.setAttribute("nextQuestionFlag", true);
     }
+
+    @Override
+    public void setEndFlag() throws RemoteException {
+        session.setAttribute("endQuizFlag", true);
+    }
     
 }

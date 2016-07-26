@@ -63,19 +63,29 @@ public class Quiz {
     
     public String nextQuestion() {
         JsonObject nextQuestion;
+        ClientProxy cp;
         this.questionIndex++;
         
         for(Map.Entry<String, Client> entry : cMap.entrySet()) {
             try {
-                entry.getValue().clp.setFlag();
+                cp = entry.getValue().clp;
+                cp.setFlag();
+                if( questionIndex > questions.size() ) {
+                    cp.setEndFlag();
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
                 System.err.println(e.getMessage());                
             }
         }
-
-        nextQuestion = questions.getJsonObject(questionIndex);
-        return nextQuestion.toString();
+        if ( questionIndex < questions.size() ) {
+            nextQuestion = questions.getJsonObject(questionIndex);
+            return nextQuestion.toString();
+        } else {
+            return null;
+        }
+        
+        
     }
     
     public String getNextQuestion() {

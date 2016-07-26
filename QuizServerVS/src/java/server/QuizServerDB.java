@@ -2,8 +2,6 @@ package server;
 
 import java.io.StringReader;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.json.*;
 
 public class QuizServerDB {

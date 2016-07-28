@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
  */
 public class ClientProxyImpl extends UnicastRemoteObject implements ClientProxy, Serializable{
     HttpSession session;
+    Boolean quizEndFlag = false;
     
     public ClientProxyImpl(HttpSession session) throws RemoteException {
         this.session = session;
@@ -28,7 +29,15 @@ public class ClientProxyImpl extends UnicastRemoteObject implements ClientProxy,
 
     @Override
     public void setEndFlag() throws RemoteException {
-        session.setAttribute("endQuizFlag", true);
+        this.quizEndFlag = true;
+    }
+    
+    public Boolean getQuizEndFlag() {
+        return this.quizEndFlag;
+    }
+    
+    public void setQuizEndFlag(Boolean quizEndFlag) {
+        this.quizEndFlag = quizEndFlag;
     }
     
 }

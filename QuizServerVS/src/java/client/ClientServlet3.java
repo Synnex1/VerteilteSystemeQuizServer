@@ -38,21 +38,13 @@ public class ClientServlet3 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
                
         HttpSession session = request.getSession();
-        QuizServerProxy qsp = (QuizServerProxy) session.getAttribute("qsp");
-        ClientProxy clp = (ClientProxy) session.getAttribute("clp");
-        
-        if ( clp != null ) {
-            System.out.println("ClientServlet3: clp != null");
-        }  else {
-            session.setAttribute("clp", clp);
-            System.out.println("ClientServlet3: clp erstellt");
-        }        
+        QuizServerProxy qsp = (QuizServerProxy) session.getAttribute("qsp");      
                         
         if ( qsp != null ) {
-            System.out.println("ClientServlet3: qsp != null");
+            // System.out.println("ClientServlet3: qsp != null");
         }  else {
             qsp = null;
-            System.out.println("ClientServlet3: qsp == null");
+            // System.out.println("ClientServlet3: qsp == null");
         }     
         String code = request.getParameter("code");
         String user_Id = (String)session.getAttribute("id");                               
@@ -62,13 +54,11 @@ public class ClientServlet3 extends HttpServlet {
         if (param == null) {
             System.out.println("ClientServlet3 param == null");
         } else if ("".equals(param)) {
-            // The request parameter 'param' was present in the query string but has no value
-            // e.g. http://hostname.com?param=&a=b
             System.out.println("else if (\"\".equals(param)");
         } else if (param.equals( request.getParameter("js") )) {   
              
             System.out.println("ClientServlet3 code: " + code);
-            System.out.println("ClientServlet3 param: " + param);
+            // System.out.println("ClientServlet3 param: " + param);
             
             if (code.equals("beginQuiz")) {
                 System.out.println("+++ beginQuiz +++");
@@ -80,17 +70,20 @@ public class ClientServlet3 extends HttpServlet {
                 System.out.println("joinQuiz()");
                 String pin = request.getParameter("js");
                 System.out.println("pin: " + pin);
-                answer = qsp.joinQuiz(pin, user_Id, clp);                
+                ClientProxy cp = new ClientProxyImpl(session);
+                answer = qsp.joinQuiz(pin, user_Id, cp);                
             }
             else if (code.equals("getPlayers")) {
-                System.out.println("getPlayers()");
+                // System.out.println("getPlayers()");
                 String pin = request.getParameter("js");
                 answer = qsp.getHighscore(pin);
             }
             else if (code.equals("startQuiz")) {
                 System.out.println("startQuiz()");
                 String pin = request.getParameter("js");
-                qsp.startQuiz(pin);                
+                if ( request.getParameter("param") == "startSEssion" ) {
+                    qsp.startQuiz(pin);                    
+                }                
                 System.out.println("Pin: " + pin);
                 answer = qsp.nextQuestion(pin);                    
             }
@@ -98,9 +91,14 @@ public class ClientServlet3 extends HttpServlet {
                 System.out.println("updatePoints()");
                 String pin = request.getParameter("js");
                 int time = Integer.parseInt( request.getParameter("param") );                
-                Boolean increase = qsp.increaseHighscore(pin, user_Id, time);                
+                Boolean increase = qsp.increaseHighscore(pin, user_Id, time);             
                 answer = qsp.getHighscore(pin);                                
-            }  
+            }
+            else if (code.equals("getPoints")) {
+                System.out.println("getPoints()");
+                String pin = request.getParameter("js");  
+                answer = qsp.getHighscore(pin);                                
+            }
             else if (code.equals("waitForStart")) {
                 System.out.println("waitForStart()");
                 Boolean ready = false;
@@ -108,23 +106,48 @@ public class ClientServlet3 extends HttpServlet {
                     session = request.getSession();
                     if ( (Boolean) session.getAttribute("nextQuestionFlag") != null ) {
                         ready = (Boolean) session.getAttribute("nextQuestionFlag");
-                        System.err.println((Boolean) session.getAttribute("nextQuestionFlag"));
-                        System.err.println("if");
-                    } else {
-                        System.err.println("else Brah");
                     }
                     try {
-                        Thread.sleep(4000);
+                        Thread.sleep(1);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ClientServlet3.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                     answer = ("nextQuestionFlag: " + session.getAttribute("nextQuestionFlag"));
+                    session.setAttribute("nextQuestionFlag", false);
             }
+            else if (code.equals("getNextQuestionClient")) {
+                System.out.println("getNextQuestionClient()");
+                String pin = request.getParameter("js");
+                answer = qsp.getNextQuestion(pin);
+            }    
+            else if (code.equals("nextQuestion")) {
+                System.out.println("nextQuestion()");
+                String pin = request.getParameter("js");
+                answer = qsp.nextQuestion(pin);                
+            }             
             else if (code.equals("test")) {
                 System.out.println("test()");
-                session.setAttribute("nextQuestionFlag", (Boolean)true);
+                answer = ""+session.getAttribute("nextQuestionFlag");
             }  
+            else if (code.equals("checkEndQuizFlag")) {
+                System.out.println("checkEndQuizFlag()");
+                System.err.println("session.getAttribute(\"endQuizFlag\") == " + (Boolean)session.getAttribute("endQuizFlag"));
+                if ( (Boolean) session.getAttribute("endQuizFlag") != null ) {
+                    System.err.println("1. if");
+                    if ( (Boolean) session.getAttribute("endQuizFlag") == false ) {
+                    System.err.println("2. if");
+                        
+                        answer = "nicht gesetzt";                    
+                    } else {
+                    System.err.println("2. else");                        
+                        answer = "endQuizFlag";
+                    }
+                } else {
+                    System.err.println("1. else");                    
+                    answer = "endQuizFlag == null";
+                }
+            }            
             try {
                 PrintWriter out = response.getWriter();
                 out.print( answer );             

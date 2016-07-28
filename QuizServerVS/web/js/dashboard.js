@@ -25,14 +25,12 @@ function checkRadioPressedOrNot() {
 }
 
 function getHttpRequest(url) {
-    var xmlhttp = null;
-    // Mozilla
+    var xmlhttp = null;    
     if (window.XMLHttpRequest) {
-        xmlhttp = new XMLHttpRequest();
-    }
-    // IE
+        xmlhttp = new XMLHttpRequest(); // Mozilla
+    }    
     else if (window.ActiveXObject) {
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); // IE
     }
    
     xmlhttp.onreadystatechange = function() {

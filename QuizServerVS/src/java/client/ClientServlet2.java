@@ -73,6 +73,8 @@ public class ClientServlet2 extends HttpServlet {
                 qsp.updateQuiz(quiz_id, param);
             }
             else if (code.equals("create")){
+                System.out.println("param: " + param);
+                System.out.println("id: " + id);
                 qsp.createQuiz(param, id); 
             } 
             else if (code.equals("addQuiz")) {

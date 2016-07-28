@@ -1,4 +1,9 @@
 $(document).ready(function(){
+
+    var questionNo = '1';
+    console.log("startScreen: " + questionNo);
+    localStorage.setItem("questionNo", questionNo);
+
     beginQuizHttpRequest();
 });
 
@@ -72,8 +77,8 @@ function getPlayers() {
 		}
 
 		html += '</ul>';	            
-        console.log(jsonString);
-        console.log(players);
+        // console.log(jsonString);
+        // console.log(players);
        	document.getElementById('playerList').innerHTML = html;
     	document.getElementById('players').innerHTML = players;          
         }
@@ -83,5 +88,5 @@ function getPlayers() {
 }	
 
 function startQuiz() {
-	window.location.replace('questionScreen.html?pin='+ document.getElementById('pin').innerHTML +'');
+	window.location.replace('questionScreenMaster.html?param=startSession&pin='+ document.getElementById('pin').innerHTML +'');
 }

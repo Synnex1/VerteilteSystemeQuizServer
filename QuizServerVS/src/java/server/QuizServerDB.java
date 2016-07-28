@@ -42,10 +42,10 @@ public class QuizServerDB {
     public boolean checkUser(String id, String name) {
         try{
             String checkUserSql = "SELECT USERS_ID FROM " + dbName +".USERS " +
-                "WHERE USERS_ID = " + id;
+                "WHERE USERS_ID = " + id;           
             
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(checkUserSql);
+            Statement stmt = conn.createStatement();            
+            ResultSet rs = stmt.executeQuery(checkUserSql);                        
             
             if(rs.next()){
                 return true;

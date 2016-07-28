@@ -70,8 +70,9 @@ public class Quiz {
             try {
                 cp = entry.getValue().clp;
                 cp.setFlag();
-                if( questionIndex > questions.size() ) {
+                if( questionIndex == questions.size()-1 ) {
                     cp.setEndFlag();
+                    System.err.println("setEndFlag gesetzt");
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();

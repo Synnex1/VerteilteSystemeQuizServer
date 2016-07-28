@@ -203,7 +203,7 @@
     <div id="wrapper">
 
     <div id="container1">
-      <div id="question_header">Frage 0/0</div>
+      <div id="question_header">Frage <span id="currentQuestion"></span> / <span id="questionAmount">X</span></div>
       <div id="border"></div>      
     </div>
 
@@ -244,7 +244,7 @@
             <button type="button" name="btn3" class="answerButton" id="3" onclick="setAnswer(this.id)">
               <img class="spaceHolder" src="../../pictures/letter_c.png">              
               <span name="correct3" class="answerLabel" id="a3">Answer 3</span>
-              <img class="correct"   src="../../pictures/correct.png">
+              <img name="correct3" class="correct"   src="../../pictures/correct.png">
               <img class="selected" name="selected3" src="../../pictures/selected.png">
               <input type="hidden" id="h3" value=""></input>
             </button>
@@ -258,6 +258,6 @@
           </div>
       </form>
     </div>         
-
+    <audio id="countdown" src="../../music/timer.mp3">
     </body>
 </html>

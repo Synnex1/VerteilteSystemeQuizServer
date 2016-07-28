@@ -44,7 +44,7 @@ public class QuizServerImpl implements QuizServer{
             System.out.println("HIER BIN ICH RICHTIG!");
             QuizServerProxy qsp;
             qsp = new QuizServerProxyImpl(this);
-            qsdb.closeConn();
+          //  qsdb.closeConn();
             return qsp;
         } else {
             qsdb.closeConn();

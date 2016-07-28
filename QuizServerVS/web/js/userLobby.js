@@ -1,9 +1,13 @@
 $(document).ready(function(){
     document.getElementById('pin').innerHTML = getURLParameter('pin');
 
+    var questionNo = '1';
+    console.log("userLobby: " + questionNo);
+    localStorage.setItem("questionNo", questionNo);
+
     window.setInterval(function() {
         getPlayers();
-    }, 5000); 
+    }, 7000); 
 
     waitForStart();
 });
@@ -50,8 +54,8 @@ function getPlayers() {
 		}
 
 		html += '</ul>';	            
-        console.log(jsonString);
-        console.log(players);
+        // console.log(jsonString);
+        // console.log(players);
        	document.getElementById('playerList').innerHTML = html;
     	document.getElementById('players').innerHTML = players;          
         }
@@ -75,7 +79,8 @@ function waitForStart() {
     xmlhttp.onreadystatechange = function() {
         if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
             var answer = xmlhttp.responseText;              
-            console.log("antwort: " + answer);        
+            console.log("waitForStart() response: " + answer);
+            window.location.replace('questionScreen.html?pin='+ document.getElementById('pin').innerHTML +'');        
         }
     };
     xmlhttp.open("GET", url+"?code=waitForStart&js="+pin+"", true);    
@@ -95,9 +100,10 @@ function test() {
    
     xmlhttp.onreadystatechange = function() {
         if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            console.log("test_"+xmlhttp.responseText);          
+            console.log("test(): "+xmlhttp.responseText);          
         }
     };
     xmlhttp.open("GET", url+"?code=test&js=test", true);    
     xmlhttp.send();
 }
+

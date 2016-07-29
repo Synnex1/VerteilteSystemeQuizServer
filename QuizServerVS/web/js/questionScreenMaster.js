@@ -102,20 +102,21 @@ function getStats() {
       html = '<ol class="list-group">';
 
       for (var x in jsObject) {
-        html += '<li class="list-group-item list-group-item-success"><h3>'+jsObject[players].name+'</h3><h3>'+jsObject[players].highscore+'</h3></li>';     
+        html += '<li class="list-group-item list-group-item-success"><h3>'+jsObject[players].name+' -> '+jsObject[players].highscore+' XP</h3></li>';     
         players++;
       }
       
-      console.log("getIt: " + getIt);
       if ( getIt == true) {
-        console.log("checkEndQuizFlag: true");
         html += '<br><li> <button type="button" class="btn-lg btn-danger" id="endQuiz" onclick="endQuiz()">Quiz beenden</button> </li></ol>';
       } 
       if (getIt == false) {
-        console.log("checkEndQuizFlag: false");
         html += '<br><li> <button type="button" class="btn-lg btn-success" id="nextQuestion" onclick="nextQuestion()">Nächste Frage</button> </li></ol>';
       }
-      document.getElementById('container2').innerHTML = html;   
+      /*
+      document.getElementById('timer_wrapper').innerHTML = '';
+      document.getElementById('question').innerHTML = '<div id="answers">Scoreboard</div>';
+      */
+      document.getElementById('answers').innerHTML = html;   
       }       
   }; 
   xmlhttp.open("GET", url+'?code=getPoints&js='+getURLParameter('pin')+'', true);    
@@ -138,14 +139,12 @@ function checkEndQuizFlag() {
  
   xmlhttp.onreadystatechange = function() {
       if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-        var jsonString = xmlhttp.responseText;
-        console.log(jsonString);  
+        var jsonString = xmlhttp.responseText; 
           
         if (jsonString == "endQuizFlag") {
-          console.log("Im if");
+          console.log("Letzte Frage...");
           getIt = true;    
         } else {
-          console.log("Im else");
           getIt = false;              
         }         
       }       
@@ -156,6 +155,28 @@ function checkEndQuizFlag() {
 
 }
 
+function endQuiz() {
+  var xmlhttp = null;
+  var url = '../../ClientServlet3'; 
+  if (window.XMLHttpRequest) {
+      xmlhttp = new XMLHttpRequest(); // Mozilla
+  }    
+  else if (window.ActiveXObject) {
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); // IE
+  }
+ 
+  xmlhttp.onreadystatechange = function() {
+      if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        var jsonString = xmlhttp.responseText;
+        console.log(jsonString);  
+          
+        setTimeout(function(){ window.location.replace('../dashboard.html'); }, 3000);
 
+      }       
+  };
+  
+  xmlhttp.open("GET", url+'?code=endQuiz&js='+getURLParameter('pin')+'', true);    
+  xmlhttp.send();   
+}
 
 

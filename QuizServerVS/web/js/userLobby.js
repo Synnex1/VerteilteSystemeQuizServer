@@ -2,7 +2,6 @@ $(document).ready(function(){
     document.getElementById('pin').innerHTML = getURLParameter('pin');
 
     var questionNo = '1';
-    console.log("userLobby: " + questionNo);
     localStorage.setItem("questionNo", questionNo);
 
     window.setInterval(function() {
@@ -34,30 +33,17 @@ function getPlayers() {
         if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
             var jsonString = xmlhttp.responseText;
             var jsObject = JSON.parse( jsonString );
-            var i = 0;
 
             html = '<ul class="list-group">';
 
-		for (var x in jsObject) {
-		if (i = 0) {
-			html += '<li class="list-group-item list-group-item-success"><h3>'+jsObject[players].name+'</h3></li>';			
-		}
-		else if (i = 1) {
-			html += '<li class="list-group-item list-group-item-info"><h3>'+jsObject[players].name+'</h3></li>';
-		}
-		else if (i = 2) {
-			html += '<li class="list-group-item list-group-item-warning"><h3>'+jsObject[players].name+'</h3></li>';
-			var i = 0;
-		} 		    
-		i++;
-		players++;
-		}
+    		for (var x in jsObject) {
+    		  html += '<li class="list-group-item list-group-item-info"><h3>'+jsObject[players].name+'</h3></li>';		    
+    		  players++;
+    		}
 
-		html += '</ul>';	            
-        // console.log(jsonString);
-        // console.log(players);
-       	document.getElementById('playerList').innerHTML = html;
-    	document.getElementById('players').innerHTML = players;          
+    		html += '</ul>';	            
+           	document.getElementById('playerList').innerHTML = html;
+        	document.getElementById('players').innerHTML = players;          
         }
     };
     xmlhttp.open("GET", url+"?code=getPlayers&js="+ pin +"", true);    

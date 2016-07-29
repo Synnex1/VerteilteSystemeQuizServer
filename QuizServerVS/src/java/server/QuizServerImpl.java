@@ -117,13 +117,13 @@ public class QuizServerImpl implements QuizServer{
         
         if( q == null ) {
             System.err.println("Code falsch!");
-            return null;
+            return "Falscher Code";
         } else {
             if (q.joinFlag) {
                 return q.addClient(userId, name, clp);
             } else {
                 System.err.println("Quiz ist bereits gestartet!");
-                return null;
+                return "Quiz ist bereits gestartet!";
             }
             
         }
@@ -173,6 +173,7 @@ public class QuizServerImpl implements QuizServer{
     public Boolean endQuiz(String code) {
         if(qMap.containsKey(code)) {
             qMap.remove(code);
+            System.err.println("Key removed");
             return true;
         } else {
             System.err.println("Code wurde nicht gefunden!");

@@ -40,10 +40,7 @@ function setAnswer (btn) {
 
     if ( document.getElementById('h'+getAnswer()+'').value == 'true' ) {
       // Punkte updaten
-      console.log('Die Antwort war korrekt!');
       updatePoints();
-    } else {
-      console.log('Die Antwort war falsch!');
     }  
   }     
 }
@@ -138,13 +135,20 @@ function waitForNextQuestion() {
       if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
           var answer = xmlhttp.responseText;              
           console.log("waitForStart() response: " + answer);
-          window.location.replace('questionScreen.html?pin='+ getURLParameter('pin') +'');        
+          if ( answer == "endQuiz" ) {
+            var endQuizHtml = 'Das Quiz ist vorbei!<br><button type="button" class="btn-lg btn-danger" id="toDashboard" onclick="toDashboard()">Zum Dashboard</button>';
+            document.getElementById('answers').innerHTML = endQuizHtml;
+          } else {
+            window.location.replace('questionScreen.html?pin='+ getURLParameter('pin') +'');
+          }                  
       }
   };
   xmlhttp.open("GET", url+"?code=waitForStart&js="+pin+"", true);    
   xmlhttp.send();  
 }
 
-
+function toDashboard() {
+  window.location.replace('../dashboard.html');
+}
 
 

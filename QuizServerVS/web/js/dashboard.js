@@ -97,9 +97,20 @@ function joinQuiz() {
         if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
 
             var Response = xmlhttp.responseText;
+            var codeCheck = true;
             console.log("joinQuiz(): " + Response);
 
-            window.location.replace('quizGame/userLobby.html?pin='+ pin +'&role=player');
+            if (Response === "Falscher Code") {
+                alert('Der eingebene Code ist falsch!');
+                codeCheck = false;
+            }
+            if (Response === "Quiz ist bereits gestartet!") {
+                alert('Das Quiz hat bereits angefangen!');
+                codeCheck = false;
+            }
+            if (codeCheck === true) {
+                setTimeout(function(){ window.location.replace('quizGame/userLobby.html?pin='+ pin +'&role=player'); }, 3000);
+            }                                    
         }
     };
     xmlhttp.open("GET", url+'?js='+pin+'&code=joinQuiz', true);    

@@ -200,4 +200,14 @@ public class QuizServerImpl implements QuizServer{
             return q.getNextQuestion();
         }
     }
+    
+    public int questionCount(String code) {
+        Quiz q = qMap.get(code);
+        if(q == null) {
+            System.err.println("Code nicht gefunden!");
+            return 0;
+        } else {
+            return q.questionCount();
+        }
+    }
 }

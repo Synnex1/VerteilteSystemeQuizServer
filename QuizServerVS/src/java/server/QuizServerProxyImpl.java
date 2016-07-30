@@ -126,6 +126,11 @@ public class QuizServerProxyImpl extends UnicastRemoteObject implements QuizServ
     public String getNextQuestion(String code) throws RemoteException {
         return qs.getNextQuestion(code);
     }
+
+    @Override
+    public int questionCount(String code) throws RemoteException {
+        return qs.questionCount(code);
+    }
     
     
 }

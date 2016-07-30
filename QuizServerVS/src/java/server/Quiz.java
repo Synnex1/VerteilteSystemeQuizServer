@@ -94,4 +94,8 @@ public class Quiz {
         nextQuestion = questions.getJsonObject(questionIndex);
         return nextQuestion.toString();
     }
+    
+    public int questionCount() {
+        return questions.size();
+    }
 }

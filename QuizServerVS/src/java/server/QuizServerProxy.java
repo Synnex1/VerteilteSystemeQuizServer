@@ -132,4 +132,6 @@ public interface QuizServerProxy extends Remote{
      * @throws RemoteException
      */
     public Boolean endQuiz(String code) throws RemoteException;
+    
+    public int questionCount(String code) throws RemoteException;
 }

@@ -8,6 +8,7 @@ package client;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -166,8 +167,8 @@ public class ClientServlet extends HttpServlet {
         
         try {                   
                 Registry registry = LocateRegistry.getRegistry();                
-                qs = (QuizServer) registry.lookup("QuizServer");
-                //qs = (QuizServer)Naming.lookup("rmi://131.173.110.7/QuizServer");               
+                //qs = (QuizServer) registry.lookup("QuizServer");
+                qs = (QuizServer)Naming.lookup("rmi://91.96.224.205/QuizServer");               
                 
                 // checkUser im QuizServer implementieren!
                 qsp = qs.checkUser(id, name);

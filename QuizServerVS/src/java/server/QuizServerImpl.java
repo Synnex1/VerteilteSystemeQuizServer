@@ -113,14 +113,15 @@ public class QuizServerImpl implements QuizServer{
      * @return
      */
     public String joinQuiz(String code, String userId, String name, ClientProxy clp) {
-        Quiz q = qMap.get(code);
+        Quiz q = qMap.get(code);                
         
         if( q == null ) {
             System.err.println("Code falsch!");
             return "Falscher Code";
         } else {
+            String test = ""+q.getJoinFlag();
             if (q.joinFlag) {
-                return q.addClient(userId, name, clp);
+                return q.addClient(userId, name, clp) +" HUSO " + test;
             } else {
                 System.err.println("Quiz ist bereits gestartet!");
                 return "Quiz ist bereits gestartet!";

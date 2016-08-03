@@ -5,12 +5,16 @@ $(document).ready(function(){
   document.getElementById('currentQuestion').innerHTML = questionNo;
   localStorage.setItem("questionNo", ++questionNo);
 
+  document.getElementById('questionAmount').innerHTML = localStorage.getItem("questionAmount");
+  setTimeout(function(){ checkEndQuizFlag(); }, 7000);
+
 });
 
 var sec = 26;
 var myVar = setInterval(function(){ myTimer() }, 1000);
 var answer = 0;
 var time = 0;
+var getIt = false;
 
 function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
@@ -70,7 +74,13 @@ function stopQuestion() {
       $("[name=correct"+i+"]").css("visibility","visible");
     }
   }
-  waitForNextQuestion(); 
+  if (getIt == true) {
+    var endQuizHtml = 'Das Quiz ist vorbei!<br><button type="button" class="btn-lg btn-danger" id="toDashboard" onclick="toDashboard()">Zum Dashboard</button>';
+    document.getElementById('answers').innerHTML = endQuizHtml;
+  }
+  if (getIt == false) {
+    waitForNextQuestion(); 
+  }
 }
 
 function startQuizHttpRequest() {
@@ -112,7 +122,8 @@ function updatePoints() {
   xmlhttp.onreadystatechange = function() {
       if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
           var jsonString = xmlhttp.responseText;
-          console.log(jsonString);     
+          // Punkteliste
+          // console.log(jsonString);     
       }
   };
   xmlhttp.open("GET", url+'?code=updatePoints&js='+getURLParameter('pin')+'&param='+getTimer()+'', true);    
@@ -135,12 +146,7 @@ function waitForNextQuestion() {
       if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
           var answer = xmlhttp.responseText;              
           console.log("waitForStart() response: " + answer);
-          if ( answer == "endQuiz" ) {
-            var endQuizHtml = 'Das Quiz ist vorbei!<br><button type="button" class="btn-lg btn-danger" id="toDashboard" onclick="toDashboard()">Zum Dashboard</button>';
-            document.getElementById('answers').innerHTML = endQuizHtml;
-          } else {
-            window.location.replace('questionScreen.html?pin='+ getURLParameter('pin') +'');
-          }                  
+          window.location.replace('questionScreen.html?pin='+ getURLParameter('pin') +'');               
       }
   };
   xmlhttp.open("GET", url+"?code=waitForStart&js="+pin+"", true);    
@@ -151,4 +157,29 @@ function toDashboard() {
   window.location.replace('../dashboard.html');
 }
 
+function checkEndQuizFlag() {
+  var xmlhttp = null;
+  var url = '../../ClientServlet3'; 
+  if (window.XMLHttpRequest) {
+      xmlhttp = new XMLHttpRequest(); // Mozilla
+  }    
+  else if (window.ActiveXObject) {
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); // IE
+  }
+ 
+  xmlhttp.onreadystatechange = function() {
+      if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        var jsonString = xmlhttp.responseText; 
+          
+        if (jsonString == "true") {
+          getIt = true;    
+        } else {
+          getIt = false;              
+        }         
+      }       
+  };
+  
+  xmlhttp.open("GET", url+'?code=checkEndQuizFlag&js='+getURLParameter('pin')+'', true);    
+  xmlhttp.send(); 
 
+}

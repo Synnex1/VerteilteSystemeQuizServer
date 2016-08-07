@@ -84,7 +84,7 @@ public class QuizServerImpl implements QuizServer{
         if (q == null) {
             System.err.println("Code nicht vorhanden!");
         } else {
-            q.joinFlag = false;
+            q.setJoinFlag(false);
         }
     }
     

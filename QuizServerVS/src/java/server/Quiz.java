@@ -98,4 +98,8 @@ public class Quiz {
     public int questionCount() {
         return questions.size();
     }
+    
+    public void setJoinFlag(Boolean joinFlag) {
+        this.joinFlag = joinFlag;
+    }
 }

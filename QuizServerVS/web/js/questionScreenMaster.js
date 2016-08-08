@@ -3,16 +3,18 @@ $(document).ready(function(){
   var questionNo = localStorage.getItem("questionNo"); 
   document.getElementById('currentQuestion').innerHTML = questionNo;
   localStorage.setItem("questionNo", ++questionNo);
+  getQuestionAmount();
   
   startQuizHttpRequest();
-  setTimeout(function(){ checkEndQuizFlag(); }, 3000);    
+  // setTimeout(function(){ checkEndQuizFlag(); }, 7000);    
 });
 
 var sec = 26;
 var myVar = setInterval(function(){ myTimer() }, 1000);
 var answer = 0;
 var time = 0;  
-var getIt ;
+// var getIt;
+var questionAmount;
 
 function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
@@ -68,7 +70,8 @@ function startQuizHttpRequest() {
         
         var jsonString = xmlhttp.responseText;          
         var jsObject = JSON.parse( jsonString );
-        console.log(jsonString);
+        // Ausgabe des Quiz-JSON
+        // console.log(jsonString);
         document.getElementById('question').innerHTML = jsObject.question;
 
         for (var i = 1; i <= 4; i++) {
@@ -95,7 +98,8 @@ function getStats() {
   xmlhttp.onreadystatechange = function() {
       if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
       var jsonString = xmlhttp.responseText;
-      console.log(jsonString);  
+      // Ausgabe der Punkte mit Namen
+      // console.log(jsonString);  
       var jsObject = JSON.parse( jsonString );
       var players = 0;
 
@@ -105,11 +109,10 @@ function getStats() {
         html += '<li class="list-group-item list-group-item-success"><h3>'+jsObject[players].name+' -> '+jsObject[players].highscore+' XP</h3></li>';     
         players++;
       }
-      
-      if ( getIt == true) {
+      if ( localStorage.getItem("questionNo")-1 == questionAmount ) {
         html += '<br><li> <button type="button" class="btn-lg btn-danger" id="endQuiz" onclick="endQuiz()">Quiz beenden</button> </li></ol>';
       } 
-      if (getIt == false) {
+      else {
         html += '<br><li> <button type="button" class="btn-lg btn-success" id="nextQuestion" onclick="nextQuestion()">Nächste Frage</button> </li></ol>';
       }
       /*
@@ -126,7 +129,7 @@ function getStats() {
 function nextQuestion() {
   window.location.replace('questionScreenMaster.html?pin='+ getURLParameter('pin') +'');
 }
-
+/*
 function checkEndQuizFlag() {
   var xmlhttp = null;
   var url = '../../ClientServlet3'; 
@@ -140,20 +143,20 @@ function checkEndQuizFlag() {
   xmlhttp.onreadystatechange = function() {
       if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         var jsonString = xmlhttp.responseText; 
+        console.log("response: " + xmlhttp.responseText);
           
-        if (jsonString == "endQuizFlag") {
-          console.log("Letzte Frage...");
+        if (jsonString == "true") {
           getIt = true;    
         } else {
           getIt = false;              
-        }         
+        }
+        console.log("getIt->" + getIt);         
       }       
   };
   
   xmlhttp.open("GET", url+'?code=checkEndQuizFlag&js='+getURLParameter('pin')+'', true);    
   xmlhttp.send(); 
-
-}
+} */
 
 function endQuiz() {
   var xmlhttp = null;
@@ -179,4 +182,23 @@ function endQuiz() {
   xmlhttp.send();   
 }
 
-
+function getQuestionAmount() {
+    var xmlhttp = null;
+    var url = '../../ClientServlet3';
+    var pin = getURLParameter('pin');    
+    if (window.XMLHttpRequest) {
+        xmlhttp = new XMLHttpRequest(); // Mozilla
+    }    
+    else if (window.ActiveXObject) {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); // IE
+    }
+   
+    xmlhttp.onreadystatechange = function() {
+        if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {           
+            document.getElementById('questionAmount').innerHTML = xmlhttp.responseText;
+            questionAmount = xmlhttp.responseText;
+        }
+    };
+    xmlhttp.open("GET", url+'?code=getQuestionAmount&js='+pin+'', true);    
+    xmlhttp.send();    
+}

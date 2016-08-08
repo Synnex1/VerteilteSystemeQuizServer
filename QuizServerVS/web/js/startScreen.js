@@ -2,7 +2,6 @@ $(document).ready(function(){
 
     var questionNo = '1';
     localStorage.setItem("questionNo", questionNo);
-
     beginQuizHttpRequest();
 });
 

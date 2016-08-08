@@ -118,13 +118,8 @@ public class ClientServlet3 extends HttpServlet {
                         Logger.getLogger(ClientServlet3.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                ClientProxyImpl cp = (ClientProxyImpl) session.getAttribute("cp");
-                if ( cp.getQuizEndFlag() == true ) {
-                    answer = "endQuiz";
-                } else {
-                    answer = ("nextQuestionFlag: " + session.getAttribute("nextQuestionFlag"));
-                    session.setAttribute("nextQuestionFlag", false);                    
-                }
+                answer = ("nextQuestionFlag: " + session.getAttribute("nextQuestionFlag"));
+                session.setAttribute("nextQuestionFlag", false);                    
             }
             else if (code.equals("getNextQuestionClient")) {
                 System.out.println("getNextQuestionClient()");
@@ -143,21 +138,28 @@ public class ClientServlet3 extends HttpServlet {
             else if (code.equals("checkEndQuizFlag")) {
                 System.out.println("checkEndQuizFlag()");
                 ClientProxyImpl cp = (ClientProxyImpl) session.getAttribute("cp");
+                System.err.println("(ClientProxyImpl) session.getAttribute(\"cp\"); -> " + session.getAttribute("cp"));
 
                 if ( cp.getQuizEndFlag() == false) {
-                    System.err.println("if");                                       
-                    answer = "endQuizFlag";
-                    cp.setQuizEndFlag(false);
+                    System.err.println("cp.getQuizEndFlag() == false");                                       
+                    answer = "false";                    
                 }
-                else {
-                    System.err.println("else");                    
-                    answer = "endQuizFlag == null";
+                if ( cp.getQuizEndFlag() == true ) {
+                    System.err.println("cp.getQuizEndFlag() == true");                    
+                    answer = "true";
                 }
             }
             else if (code.equals("endQuiz")) {
+                ClientProxyImpl cp = (ClientProxyImpl) session.getAttribute("cp");
+                cp.setQuizEndFlag(false);
                 System.out.println("endQuiz()");
                 String pin = request.getParameter("js");
                 qsp.endQuiz(pin);
+            }   
+            else if (code.equals("getQuestionAmount")) {
+                System.out.println("getQuestionNo()");
+                String pin = request.getParameter("js");
+                answer = ""+qsp.questionCount(pin);
             }            
             try {
                 PrintWriter out = response.getWriter();

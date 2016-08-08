@@ -84,9 +84,7 @@ public class Quiz {
             return nextQuestion.toString();
         } else {
             return null;
-        }
-        
-        
+        }                
     }
     
     public String getNextQuestion() {
@@ -98,8 +96,12 @@ public class Quiz {
     public int questionCount() {
         return questions.size();
     }
-    
+
     public void setJoinFlag(Boolean joinFlag) {
         this.joinFlag = joinFlag;
     }
+
+    public Boolean getJoinFlag() {
+        return joinFlag;
+    }        
 }

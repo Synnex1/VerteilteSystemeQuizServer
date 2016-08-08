@@ -119,9 +119,8 @@ public class QuizServerImpl implements QuizServer{
             System.err.println("Code falsch!");
             return "Falscher Code";
         } else {
-            String test = ""+q.getJoinFlag();
-            if (q.joinFlag) {
-                return q.addClient(userId, name, clp) +" HUSO " + test;
+            if (q.getJoinFlag()) {
+                return q.addClient(userId, name, clp) +" HUSO " + q.getJoinFlag();
             } else {
                 System.err.println("Quiz ist bereits gestartet!");
                 return "Quiz ist bereits gestartet!";

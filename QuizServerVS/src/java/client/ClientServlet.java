@@ -166,9 +166,9 @@ public class ClientServlet extends HttpServlet {
         session.setAttribute("name", name);
         
         try {                   
-                Registry registry = LocateRegistry.getRegistry();                
-                qs = (QuizServer) registry.lookup("QuizServer");
-                // qs = (QuizServer)Naming.lookup("rmi://91.96.224.205/QuizServer");               
+        Registry registry = LocateRegistry.getRegistry();                
+        qs = (QuizServer) registry.lookup("QuizServer");
+        // qs = (QuizServer)Naming.lookup("rmi://91.96.224.205/QuizServer");               
                 
                 // checkUser im QuizServer implementieren!
                 qsp = qs.checkUser(id, name);

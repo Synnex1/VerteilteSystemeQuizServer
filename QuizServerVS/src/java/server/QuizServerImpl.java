@@ -34,20 +34,19 @@ public class QuizServerImpl implements QuizServer{
             QuizServerImpl obj = new QuizServerImpl();
             QuizServer stub = (QuizServer) UnicastRemoteObject.exportObject(obj, 0);
             LocateRegistry.createRegistry(Registry.REGISTRY_PORT).rebind("QuizServer", stub);
-        } catch (Exception e) {}     
+        } catch (Exception e) {
+            System.err.println("Ein Fehler ist bei der Registrierung des Servers aufgetreten!");
+            System.err.println(e.getMessage());
+        }     
     }
     
     @Override
     public QuizServerProxy checkUser(String id, String name) throws RemoteException {
-        System.out.println("HIER BIN ICH!");
         if (qsdb.checkUser(id, name)) {
-            System.out.println("HIER BIN ICH RICHTIG!");
             QuizServerProxy qsp;
             qsp = new QuizServerProxyImpl(this);
-          //  qsdb.closeConn();
             return qsp;
         } else {
-            qsdb.closeConn();
             return null;
         }
         

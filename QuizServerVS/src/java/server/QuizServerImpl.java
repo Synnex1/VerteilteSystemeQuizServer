@@ -82,7 +82,6 @@ public class QuizServerImpl implements QuizServer{
         } else {
             Boolean jFlag = false;
             q.setJoinFlag(jFlag);
-
         }
         System.err.println(q.getJoinFlag());
     }

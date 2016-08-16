@@ -98,9 +98,9 @@ public class Quiz {
         return questions.size();
     }
 
-    public void setJoinFlag(Boolean joinFlag) {
+    public void setJoinFlag(Boolean joinFlagt) {
         System.out.println(this.joinFlag);
-        this.joinFlag = joinFlag;
+        this.joinFlag = joinFlagt;
     }
 
     public Boolean getJoinFlag() {

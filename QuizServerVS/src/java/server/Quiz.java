@@ -26,13 +26,25 @@ public class Quiz {
     Boolean joinFlag;
     HashMap<String, Client> cMap = new HashMap();
     
-    
+    /**
+     * Constructor
+     * @param quizName The name of the quiz
+     * @param questions A JSON array containing the questions of the quiz
+     */
     public Quiz(String quizName, JsonArray questions) {
         this.quizName = quizName;
         this.questions = questions;
         this.joinFlag = true;
     }
     
+    /**
+     * Creates a client object and adds it with the given client-id as key into the map.
+     *
+     * @param clientId Represents the user-id.
+     * @param clientName Full name of the user.
+     * @param clp ClientProxy object to remote call methods.
+     * @return Returns the name of the quiz.
+     */
     public String addClient(String clientId, String clientName, ClientProxy clp) {
         if (!this.joinFlag) {
             return null;
@@ -43,6 +55,11 @@ public class Quiz {
         return this.quizName;
     }
     
+    /**
+     * Builds a JSONarray of all players and their highscore. 
+     *
+     * @return Returns a JSONarray string of all players and their highscore.
+     */
     public String getHighscore() {
         JsonArrayBuilder jArrB = Json.createArrayBuilder();
         
@@ -52,6 +69,13 @@ public class Quiz {
         return jArrB.build().toString();
     }
     
+    /**
+     * Adds the given parameter time to the highscore of a player specified by the user-id in the map.
+     *
+     * @param userId User-id
+     * @param time Remaining time after clicked the correct answer as Integer.
+     * @return Returns true if the score is increased. Otherwise returns false.
+     */
     public Boolean increaseHighscore(String userId, int time) {
         Client c = cMap.get(userId);
         if ( c == null ) {
@@ -63,6 +87,12 @@ public class Quiz {
         }
     }
     
+    /**
+     * Increases the question-index parameter of the quiz by one and building a JSON string of the next question and its answers.
+     * This method is called only by the quizmaster.
+     *
+     * @return Returns JSON string of the question and its answeres pointed to by the question-index.
+     */
     public String nextQuestion() {
         JsonObject nextQuestion;
         ClientProxy cp;
@@ -89,23 +119,41 @@ public class Quiz {
         }                
     }
     
+    /**
+     * Builds a JSON string of the next question and its answers.
+     *
+     * @return Returns a JSON string of the question and its answeres pointed to by the question-index parameter.
+     */
     public String getNextQuestion() {
         JsonObject nextQuestion;
         nextQuestion = questions.getJsonObject(questionIndex);
         return nextQuestion.toString();
     }
     
+    /**
+     * Counts the question in the question array. 
+     *
+     * @return Returns the count of the questions in a quiz.
+     */
     public int questionCount() {
         return questions.size();
     }
 
-    public void setJoinFlag(Boolean joinFlagt) {
-        System.out.println(this.joinFlag);
-        this.joinFlag = joinFlagt;
+    /**
+     * Setter of the parameter joinFlag
+     *
+     * @param joinFlag The value joinFlag will change to.
+     */
+    public void setJoinFlag(Boolean joinFlag) {
+        this.joinFlag = joinFlag;
     }
 
+    /**
+     * Getter of the parameter joinFlag
+     *
+     * @return Returns the value of joinFlag
+     */
     public Boolean getJoinFlag() {
-        System.out.println(this.joinFlag);
         return this.joinFlag;
     }        
 }

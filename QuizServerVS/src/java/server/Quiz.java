@@ -100,7 +100,6 @@ public class Quiz {
     public void setJoinFlag(Boolean joinFlag) {
         System.out.println(this.joinFlag);
         this.joinFlag = joinFlag;
-        System.out.println(this.joinFlag);
     }
 
     public Boolean getJoinFlag() {

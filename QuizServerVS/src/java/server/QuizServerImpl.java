@@ -83,7 +83,6 @@ public class QuizServerImpl implements QuizServer{
             q.setJoinFlag(false);
 
         }
-        System.out.println("Hallo");
         System.err.println(q.getJoinFlag());
     }
     

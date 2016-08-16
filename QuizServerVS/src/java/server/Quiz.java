@@ -105,6 +105,6 @@ public class Quiz {
 
     public Boolean getJoinFlag() {
         System.out.println(this.joinFlag);
-        return joinFlag;
+        return this.joinFlag;
     }        
 }

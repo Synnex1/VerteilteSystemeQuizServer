@@ -528,7 +528,7 @@ public class QuizServerDB {
                 }
                 if(questionId != 0) {
                     for (int j = 0, answerId = 1 ; j < jsArrA.size(); j++) {
-                    jsObjA = jsArrA.getJsonObject(i);
+                    jsObjA = jsArrA.getJsonObject(j);
                     answer = jsObjA.getString("answer");
                     correct = jsObjA.getBoolean("correct");
                     

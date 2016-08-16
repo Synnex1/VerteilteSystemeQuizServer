@@ -31,15 +31,20 @@ public class CreateTables {
         }//end try            
     }
     
+    public static void main(String[] args) {
+        CreateTables ct = new CreateTables();
+        ct.createTables();
+    }
+    
     public void createTables() {
         try{
             Statement stmt = conn.createStatement();
        
-            // Drop all Tables
-            stmt.executeUpdate(dropAnswer());
-            stmt.executeUpdate(dropQuestion());
-            stmt.executeUpdate(dropQuiz());
-            stmt.executeUpdate(dropUsers());    
+//            // Drop all Tables
+//            stmt.executeUpdate(dropAnswer());
+//            stmt.executeUpdate(dropQuestion());
+//            stmt.executeUpdate(dropQuiz());
+//            stmt.executeUpdate(dropUsers());    
 
 
             //Create All Tables

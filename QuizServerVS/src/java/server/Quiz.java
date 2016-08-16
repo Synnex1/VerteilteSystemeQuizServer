@@ -15,6 +15,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
 /**
+ * Class that represents an active quiz.
  *
  * @author Mike
  */

@@ -8,6 +8,7 @@ package server;
 import java.sql.*;
 
 /**
+ * Test class to create all necessary classes in the database.
  *
  * @author Mike
  */

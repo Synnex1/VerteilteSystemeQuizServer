@@ -10,6 +10,7 @@ import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 
 /**
+ * Representing a player that is part of an active quiz.
  *
  * @author Mike
  */

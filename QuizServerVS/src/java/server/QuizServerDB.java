@@ -4,6 +4,11 @@ import java.io.StringReader;
 import java.sql.*;
 import javax.json.*;
 
+/**
+ * Database connection class.
+ * 
+ * @author Mike
+ */
 public class QuizServerDB {
     
     //  Database credentials
@@ -15,7 +20,9 @@ public class QuizServerDB {
     String dbName = "TEST";
     Connection conn = null;
     
-    
+    /**
+     *
+     */
     public QuizServerDB () {      
         try{
             System.out.println("Connecting to a selected database...");
@@ -28,6 +35,9 @@ public class QuizServerDB {
         }//end try       
     }
     
+    /**
+     * Closes the connection to the database.
+     */
     public void closeConn() {
         try {
             System.out.println("Closing connection to selected Database...");
@@ -39,6 +49,13 @@ public class QuizServerDB {
         }
     }
     
+    /**
+     * Checking if a user already exists in the database. Otherwise creates an entry of a new user in the database with the given paramaeters.
+     *
+     * @param id Facebook-id of the user.
+     * @param name Facebook-name of the user.
+     * @return Returns true if there is a user or a new user is created, false if a problem occured.
+     */
     public boolean checkUser(String id, String name) {
         try{
             String checkUserSql = "SELECT USERS_ID FROM " + dbName +".USERS " +
@@ -67,6 +84,12 @@ public class QuizServerDB {
         return true;
     }
     
+    /**
+     * Returns the full name of a user.
+     *
+     * @param userId Id of the user.
+     * @return
+     */
     public String getUserName(String userId) {
         String name = null;
         
@@ -92,6 +115,12 @@ public class QuizServerDB {
         return name;
     }
     
+    /**
+     * Returns the id and names of all quiz created by the user specifed by the given id.
+     * 
+     * @param User_Id 
+     * @return Returns a JSON string of an array including all quiz created by the given user.
+     */
     public String getAllQuizFromUser(String User_Id) { 
 
         try (Statement stmt = conn.createStatement())
@@ -116,6 +145,12 @@ public class QuizServerDB {
         }
     }
     
+    /**
+     * Creates a new quiz entry in the database.
+     *
+     * @param jsonString JSON string containing the information of the quiz, questions and their answers.
+     * @param userId 
+     */
     public void createQuiz(String jsonString, String userId) {
         // Credentials
         int quizId = 0;
@@ -205,6 +240,12 @@ public class QuizServerDB {
         }
     }
     
+    /**
+     * Returns a JSON string of the quiz with all questions and answers given by the quiz-id.
+     *
+     * @param quizId Id that specifies a quiz.
+     * @return Returns a JSON string of the quiz and its questions and answers.
+     */
     public String getQuizInfo(int quizId) {
         PreparedStatement stmt;
         PreparedStatement stmt2;
@@ -285,6 +326,12 @@ public class QuizServerDB {
         return json;
     }
     
+    /**
+     * Returns a JsonObject of all questions and answers to a quiz specified by the given quiz-id.
+     *
+     * @param quizId 
+     * @return Returns a JsonObject, that contains questions and answers.
+     */
     public JsonObject getQuestions(int quizId) {
         PreparedStatement stmt;
         PreparedStatement stmt2;
@@ -363,6 +410,12 @@ public class QuizServerDB {
         return jsObjQBuilder.build();
     }
     
+    /**
+     * Updates the name of the specified quiz given by the quiz-id.
+     *
+     * @param quizId
+     * @param quizName 
+     */
     public void updateQuiz(int quizId, String quizName) {
         PreparedStatement stmt;
         String sql = "UPDATE " + dbName + ".QUIZ " +
@@ -379,6 +432,11 @@ public class QuizServerDB {
         }
     }
     
+    /**
+     * Updates a question and its answers in the database, specified by the question-id given in the JSON string.
+     *
+     * @param jsonString JSON string that contains the information about the question and its answers.
+     */
     public void updateQuestion(String jsonString) {
         JsonObject jsObj = Json.createReader(new StringReader(jsonString)).readObject();
         JsonArray jsArr = jsObj.getJsonArray("answers");
@@ -425,6 +483,12 @@ public class QuizServerDB {
         
     }
     
+    /**
+     * Creates a new question entry in the database.
+     *
+     * @param jsonString JSON string that contains the information about the question and its answers.
+     * @param userId 
+     */
     public void createQuestions(String jsonString, String userId) {
         JsonObject jsObj = Json.createReader(new StringReader(jsonString)).readObject();
         JsonArray jsArrQue = jsObj.getJsonArray("questions");
@@ -488,6 +552,11 @@ public class QuizServerDB {
         }
     }
     
+    /**
+     * Deletes a quiz from the database specified by the given quiz-id.
+     *
+     * @param quizId
+     */
     public void deleteQuiz(int quizId) {
         String sql = "DELETE FROM " + dbName + ".QUIZ " +
                 "WHERE QUIZ_ID = ?";
@@ -503,6 +572,11 @@ public class QuizServerDB {
         }
     }
     
+    /**
+     * Deletes a question specified by the given question-id.
+     *
+     * @param questionId
+     */
     public void deleteQuestion(int questionId) {
         String sql = "DELETE FROM " + dbName + ".QUESTION " +
                 "WHERE QUESTION_ID = ?";

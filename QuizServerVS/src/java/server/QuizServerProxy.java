@@ -10,6 +10,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
+ * Interface class for the client to remote call methods.
  *
  * @author Mike
  */

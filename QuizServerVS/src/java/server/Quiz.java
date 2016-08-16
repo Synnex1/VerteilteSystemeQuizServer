@@ -22,13 +22,14 @@ public class Quiz {
     String quizName;
     JsonArray questions;
     int questionIndex = -1;
-    Boolean joinFlag = true;
+    Boolean joinFlag;
     HashMap<String, Client> cMap = new HashMap();
     
     
     public Quiz(String quizName, JsonArray questions) {
         this.quizName = quizName;
         this.questions = questions;
+        this.joinFlag = true;
     }
     
     public String addClient(String clientId, String clientName, ClientProxy clp) {

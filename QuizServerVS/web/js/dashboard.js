@@ -6,11 +6,9 @@ var activeQuizId = null;
 
 function setActiveQuizId(thisId) {
     activeQuizId = thisId;
-    console.log("setActiveQuizId(): " + thisId);
 }
 
 function getActiveQuizId() {
-    console.log("getActiveQuizId(): " + activeQuizId);
     return activeQuizId;
 }
 
@@ -108,9 +106,14 @@ function joinQuiz() {
                 alert('Das Quiz hat bereits angefangen!');
                 codeCheck = false;
             }
+            if (Response === "") {
+                alert('Kein Quiz gefunden');
+                codeCheck = false;
+            }            
             if (codeCheck === true) {
-                setTimeout(function(){ window.location.replace('quizGame/userLobby.html?pin='+ pin +'&role=player'); }, 3000);
-            }                                    
+                setTimeout(function(){ window.location.replace('quizGame/userLobby.html?pin='+
+                pin +'&role=player'); }, 1000);
+            }                                            
         }
     };
     xmlhttp.open("GET", url+'?js='+pin+'&code=joinQuiz', true);    

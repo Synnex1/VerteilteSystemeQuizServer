@@ -44,15 +44,15 @@ input.form-control:read-only {
 input.form-control.radio { 
     margin-top: 0px;
 }
-input.form-control.pin { 
+input.form-control.pin {
     text-align: center;
-    padding: 30px;
     background-color: #FFB;
     margin-bottom: 13px;
     font-size: initial;
     color: black;
     font-weight: bold;
-    border-radius: 20px;    
+    border-radius: 20px;
+    height:60px;  
 } 
 input.form-control.question {
     background-color: #FFB;
@@ -92,4 +92,26 @@ input.form-control#qn {
 }
 #shadow {
     text-shadow: 2px 3px 0 black;
+}
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+.modal-title {
+    margin: 0;
+    line-height: 1.42857143;
+    text-align: center;
 }

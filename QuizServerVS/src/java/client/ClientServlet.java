@@ -71,6 +71,7 @@ public class ClientServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         System.out.println("+++doGet() vom ClientServlet+++");
         
         String code = request.getParameter("code");
@@ -115,7 +116,7 @@ public class ClientServlet extends HttpServlet {
 
             if ( qsp != null ) { 
 
-                String al = qsp.getAllQuizFromUser(id);             
+                String al = qsp.getAllQuizFromUser(id);
                 System.out.println("return dashboardJsonString: " + al);        
 
                 try {

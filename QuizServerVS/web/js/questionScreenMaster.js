@@ -7,7 +7,7 @@ $(document).ready(function(){
   
   startQuizHttpRequest();
   // setTimeout(function(){ checkEndQuizFlag(); }, 7000);    
-});
+});     
 
 var sec = 26;
 var myVar = setInterval(function(){ myTimer() }, 1000);
@@ -45,7 +45,6 @@ function stopQuestion() {
       $("[name=correct"+i+"]").css("visibility","visible");
     }
   } 
-  // Die Statistik anzeigen
   document.getElementById("answers").innerHTML = "Ergebnisse werden geladen!";
   getStats();
 }
@@ -70,8 +69,7 @@ function startQuizHttpRequest() {
         
         var jsonString = xmlhttp.responseText;          
         var jsObject = JSON.parse( jsonString );
-        // Ausgabe des Quiz-JSON
-        // console.log(jsonString);
+        
         document.getElementById('question').innerHTML = jsObject.question;
 
         for (var i = 1; i <= 4; i++) {
@@ -101,13 +99,15 @@ function getStats() {
       // Ausgabe der Punkte mit Namen
       // console.log(jsonString);  
       var jsObject = JSON.parse( jsonString );
+      var sortedJsObject = jsObject.sort(function(a, b) {return b.highscore-a.highscore});
       var players = 0;
 
       html = '<ol class="list-group">';
 
-      for (var x in jsObject) {
-        html += '<li class="list-group-item list-group-item-success"><h3>'+jsObject[players].name+' -> '+jsObject[players].highscore+' XP</h3></li>';     
-        players++;
+      for (; players < 5; players++) {
+        if (sortedJsObject[players]) {
+          html += '<li class="list-group-item list-group-item-success">'+sortedJsObject[players].name+': <tab id=t'+players+'>'+sortedJsObject[players].highscore+' Punkte</li>';             
+        }        
       }
       if ( localStorage.getItem("questionNo")-1 == questionAmount ) {
         html += '<br><li> <button type="button" class="btn-lg btn-danger" id="endQuiz" onclick="endQuiz()">Quiz beenden</button> </li></ol>';
@@ -119,8 +119,10 @@ function getStats() {
       document.getElementById('timer_wrapper').innerHTML = '';
       document.getElementById('question').innerHTML = '<div id="answers">Scoreboard</div>';
       */
-      document.getElementById('answers').innerHTML = html;   
-      }       
+      document.getElementById('answers').innerHTML = '';
+      var answersDiv = document.getElementById('answers');
+      answersDiv.insertAdjacentHTML('beforeend', html);  
+      }   
   }; 
   xmlhttp.open("GET", url+'?code=getPoints&js='+getURLParameter('pin')+'', true);    
   xmlhttp.send();   
@@ -171,10 +173,9 @@ function endQuiz() {
   xmlhttp.onreadystatechange = function() {
       if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
         var jsonString = xmlhttp.responseText;
-        console.log(jsonString);  
+        console.log(jsonString);
           
         setTimeout(function(){ window.location.replace('../dashboard.html'); }, 3000);
-
       }       
   };
   

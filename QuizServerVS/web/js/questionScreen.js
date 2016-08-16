@@ -74,11 +74,15 @@ function stopQuestion() {
       $("[name=correct"+i+"]").css("visibility","visible");
     }
   }
+  var answersDiv = document.getElementById('answers');
   if (getIt == true) {
     var endQuizHtml = 'Das Quiz ist vorbei!<br><button type="button" class="btn-lg btn-danger" id="toDashboard" onclick="toDashboard()">Zum Dashboard</button>';
-    document.getElementById('answers').innerHTML = endQuizHtml;
+    answersDiv.innerHTML = '';
+    answersDiv.insertAdjacentHTML('beforeend', endQuizHtml);
   }
   if (getIt == false) {
+    var quitQuizHtml = '<button type="button" class="btn-lg btn-danger" id="toDashboard" onclick="toDashboard()">Quiz abbrechen</button>';
+    answersDiv.insertAdjacentHTML('beforeend', quitQuizHtml);
     waitForNextQuestion(); 
   }
 }

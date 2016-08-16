@@ -1,59 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Login - QuizServer</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <title>Login - QuizServer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="js/fblogin.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/fblogin.js"></script>
 
-</head>
+  </head>
 
-<style>
-.jumbotron { 
-    background-color: #f4511e; /* Orange */
-    color: #ffffff;
-    padding: 100px 25px;
-    height: 100vh;
-}
+  <style>
+  .jumbotron { 
+      background-color: #f4511e; /* Orange */
+      color: #ffffff;
+      padding: 100px 25px;
+      height: 100vh;
+  }
 
-input.form-control:read-only { 
-    background-color: white;
-}
+  input.form-control:read-only { 
+      background-color: white;
+  }
 
-.RbtnMargin { margin-left: 3px; }
+  .RbtnMargin { margin-left: 3px; }
 
-</style>
+  </style>
 
-<body>
+  <body>
 
-<div class="jumbotron text-center">
-    <div class="row">
-            <h1>QuizServer</h1> 
-            <p>- Verteilte Systeme -</p>
+    <div class="jumbotron text-center">
+        <div class="row">
+          <h1>ClassRoom Quiz</h1> 
+          <p>- Verteilte Systeme -</p>
 
-            <form class="form-inline">
+          <form class="form-inline">
 
-                <div class="input-group">                 
+              <div class="input-group">                 
 
-                    <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true" scope="public_profile,email" onlogin="checkLoginState();"></div>
+                  <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true" scope="public_profile,email" onlogin="checkLoginState();">
+                  </div>
 
-                </div>
-                    <div id="status">                    
-                    </div>
-            </form>    
-    </div> <!-- row -->
-</div>
+              </div>
+                  <div id="status">                    
+                  </div>
+          </form>    
+        </div> <!-- row -->
+    </div>
 
-<div class="container-fluid">
-  <h2>Über den Quiz Server</h2>
-  <h4>Lorem ipsum..</h4> 
-  <p>Lorem ipsum..</p>
-  <button class="btn btn-default btn-lg">Get in Touch</button>
-</div>
-
-</body>
+  </body>
 </html>

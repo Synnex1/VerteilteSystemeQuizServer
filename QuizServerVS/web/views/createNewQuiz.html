@@ -12,11 +12,11 @@
         <script type="text/javascript" src="../js/createNewQuiz.js"></script>
         <link rel="stylesheet" href="../styles/style.css">              
 
-		<script type="text/javascript">
-			function delayer(){
-				window.setTimeout('window.location = "dashboard.html"',1000);
-			}
-		</script>        
+        <script type="text/javascript">
+            function delayer(){
+                    window.setTimeout('window.location = "dashboard.html"',1000);
+            }
+        </script>        
         
     </head>
 
@@ -35,7 +35,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a onclick="nextQuestion()">FRAGE HINZUFÜGEN</a></li>
             <li><a onclick="createQuiz()">QUIZ SPEICHERN</a></li>
-            <li><a href="#contact">INFORMATIONEN</a></li>
+            <li><a data-toggle="modal" data-target="#myModal">INFORMATIONEN</a></li>
           </ul>
         </div>
       </div>
@@ -44,11 +44,11 @@
     <body>
         <div class="jumbotron text-center">
             <div class="row">
-                <h1 id="shadow">QuizServer</h1> 
+                <h1 id="shadow">ClassRoom Quiz</h1> 
                 <p>- Erstellen -</p>  
 
                 <form id="myForm2" action="javascript:postHttpRequest();" method="POST" class="form-inline">
-                	<input type="text" class="form-control" size="50" placeholder="Quizname" name="quizname" id="qn" autofocus/> <br><br>
+                	<input type="text" class="form-control" size="50" placeholder="Quiz Name" name="quizname" id="qn" autofocus/> <br><br>
                 </form>
 
             	<form id="myForm" action="javascript:postHttpRequest();" method="POST" class="form-inline">
@@ -68,5 +68,27 @@
                 </form>   
             </div>
         </div> 
+
+    <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">INFORMATION</h4>
+            </div>
+            <div class="modal-body">
+              <p>Zuerst gibst du einen Quiz Namen ein, sowie die erste Frage mit 4 Antworten. Du kannst zusätzliche Fragen erstellen,  indem du auf den Button "Frage hinzufügen" klickst. Um eine Antwort als korrekt zu markieren, klicke in die Checkbox der jeweiligen Antwort.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
     </body>
 </html>

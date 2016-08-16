@@ -38,7 +38,7 @@ function getPlayers() {
             html = '<ul class="list-group">';
 
     		for (var x in jsObject) {
-    		  html += '<li class="list-group-item list-group-item-info"><h3>'+jsObject[players].name+'</h3></li>';		    
+    		  html += '<li class="list-group-item list-group-item-info">'+jsObject[players].name+'</li>';
     		  players++;
     		}
 
@@ -72,26 +72,6 @@ function waitForStart() {
     };
     xmlhttp.open("GET", url+"?code=waitForStart&js="+pin+"", true);    
     xmlhttp.send();    
-}
-/* ################# Unnötig ? ############## */
-function test() {
-    var xmlhttp = null;
-    var url = '../../ClientServlet3';
-    var pin = getURLParameter('pin');
-    if (window.XMLHttpRequest) {
-        xmlhttp = new XMLHttpRequest(); // Mozilla
-    }    
-    else if (window.ActiveXObject) {
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); // IE
-    }
-   
-    xmlhttp.onreadystatechange = function() {
-        if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            console.log("test(): "+xmlhttp.responseText);          
-        }
-    };
-    xmlhttp.open("GET", url+"?code=test&js=test", true);    
-    xmlhttp.send();
 }
 
 function getQuestionAmount() {

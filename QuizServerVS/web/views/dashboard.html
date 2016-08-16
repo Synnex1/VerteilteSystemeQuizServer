@@ -25,14 +25,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span> 
               </button>
-              <a class="navbar-brand" href="#">LOGO</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="createNewQuiz.html">QUIZ ERSTELLEN</a></li>
                 <li><a onclick="startQuiz()">STARTEN</a></li>
                 <li><a onclick="editQuiz(this.id)">BEARBEITEN</a></li>
-                <li><a href="#contact">INFORMATIONEN</a></li>
+                <li><a data-toggle="modal" data-target="#myModal">INFORMATIONEN</a></li>
               </ul>
             </div>
           </div>
@@ -41,7 +40,7 @@
         <!-- Body -->
         <div class="jumbotron text-center">
             <div class="row">
-                    <h1 id="shadow">QuizServer</h1> 
+                    <h1 id="shadow">ClassRoom Quiz</h1> 
                     <p>- Dashboard -</p>
                     
                     <form>
@@ -65,13 +64,36 @@
         </div>
 
         <div class="container-fluid">
-          <h2>Über den Quiz Server...</h2>
+          <h2>Über das ClassRoom Quiz</h2>
           <h4>Verteilte Systeme</h4> 
           <p>Projektteilnehmer: Mike Morthorst &amp; Alexander Baumtrog</p>
-          <button class="btn btn-default btn-lg">Infos</button>
         </div>     
 
         <input type="hidden" id="hdn" value=""></input>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">INFORMATIONEN</h4>
+            </div>
+            <div class="modal-body">
+              <p><b>An einem Quiz teilnehmen:  </b><br />Um an einem Quiz teilzunehmen, gebe den quizspezifischen Code in das Eingabefeld ein. Sobald du auf Teilnehmen drückst gelangst du in eine Lobby in der alle anderen Mitspieler aufgelistet werden. Hier verweilst du bis der Quizmaster das Quiz startet. Dann werden dir nacheinander verschiedene Fragen mit 4 Antworten gestellt. Beantworte diese Frage innerhalb von 30 Sekunden, indem du auf eine der Antworten klickst! Es ist möglich, dass mehrere Antworten richtig sind. Nach jeder Frage wird dir eine Highscoreliste angezeigt in der du sehen kannst auf welchem Platz du bist und wieviele Punkte du gesammelt hast. Punkte werden berechnet, indem die verbliebene Zeit zum Antworten deinen Punkten bei richtiger Antwort hinzuaddiert werden.
+
+            <br /><br /><b>Ein Quiz erstellen oder bearbeiten:</b><br />
+                Ein Quiz erstellst du indem du in deinem Dashboard auf "Quiz erstellen" klickst und dort einen Namen für dein Quiz eingibst, sowie die erste Frage mit den 4 Antworten. Du kannst zusätzliche Fragen erstellen, indem du auf den Button "Frage hinzufügen" klickst. Um eine Antwort als korrekt zu markieren klicke in die Checkbox der jeweiligen Antwort. Um ein erstelltes Quiz zu bearbeiten, wähle im Dashboard das zu bearbeitende Quiz aus und klicke auf "Quiz bearbeiten". Hier kannst du nun den Namen deines Quizes verändern sowie die Fragen und deren Antworten.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+            </div>
+          </div>
+          
+        </div>
+        </div>        
   
     </body>
 </html>

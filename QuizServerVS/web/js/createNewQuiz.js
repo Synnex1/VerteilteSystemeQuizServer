@@ -123,7 +123,8 @@ function postHttpRequest() {
         if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
             console.log("Json an Servlet übertragen");            
             window.setTimeout('window.location = "dashboard.html"',3000);
-            alert("Das Quiz wurde erfolgreich erstellt. Sie werden in 3 Sekunden zum Dashboard weitergeleitet");
+            alert("Das Quiz wurde erfolgreich erstellt. Sie werden in 3 Sekunden\n\
+                  zum Dashboard weitergeleitet");
         }
     };
 

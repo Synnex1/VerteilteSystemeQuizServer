@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     var questionNo = '1';
     localStorage.setItem("questionNo", questionNo);
     beginQuizHttpRequest();
@@ -7,7 +6,7 @@ $(document).ready(function(){
 
 window.setInterval(function() {
   getPlayers();
-}, 5000); 
+}, 3000); 
 
 function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
@@ -27,10 +26,10 @@ function beginQuizHttpRequest() {
     xmlhttp.onreadystatechange = function() {
         if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
             var jsonString = xmlhttp.responseText;
-            var jsObject = JSON.parse( jsonString );
+            var jsObject = JSON.parse( jsonString );           
 
             document.getElementById('pin').innerHTML = jsObject.code;
-            // document.getElementById('players').innerHTML =jsObject.quizName;          
+            document.getElementById('shadow').innerText = jsObject.quizName + ' Quiz';         
         }
     };
     xmlhttp.open("GET", url+"?code=beginQuiz&js=beginQuiz&quiz_id="+quiz_id+"", true);    
@@ -59,7 +58,7 @@ function getPlayers() {
             html = '<ul class="list-group">';
 
     		for (var x in jsObject) {
-    		  html += '<li class="list-group-item list-group-item-info"><h3>'+jsObject[players].name+'</h3></li>';
+    		  html += '<li class="list-group-item list-group-item-info">'+jsObject[players].name+'</li>';
     		  players++;
     		}
 
